@@ -44,7 +44,6 @@
   .section { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 1rem; margin-bottom: 10px; }
   .section-title { font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.09em; margin-bottom: 0.8rem; }
 
-  /* HERO */
   .hero-row { display: grid; grid-template-columns: 160px 1fr; gap: 10px; margin-bottom: 10px; }
   .ring-box { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 1rem; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; }
   .ring-wrap { position: relative; width: 120px; height: 120px; }
@@ -56,24 +55,20 @@
 
   .today-box { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 1rem; }
   .habits-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 5px; }
-  .habit-chip { display: flex; align-items: center; gap: 7px; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 0.42rem 0.65rem; font-size: 0.78rem; }
+  .habit-chip { display: flex; align-items: center; gap: 7px; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 0.42rem 0.65rem; font-size: 0.78rem; transition: all 0.15s; }
   .habit-chip.done { background: rgba(255,255,255,0.03); }
   .habit-dot { width: 7px; height: 7px; border-radius: 50%; border: 1.5px solid var(--muted); flex-shrink: 0; }
-  .habit-chip.done .habit-dot { border-color: transparent; }
 
-  /* STATS */
   .stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; margin-bottom: 10px; }
   .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 0.85rem 0.9rem; }
   .stat-label { font-size: 0.63rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.25rem; }
   .stat-val { font-size: 1.4rem; font-weight: 700; font-family: var(--mono); letter-spacing: -0.03em; }
 
-  /* CONSISTENCY */
   .con-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-bottom: 10px; }
   .con-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 0.8rem; text-align: center; }
   .con-val { font-size: 1.1rem; font-weight: 700; font-family: var(--mono); }
   .con-label { font-size: 0.62rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; margin-top: 3px; }
 
-  /* HEATMAP */
   .heatmap-wrap { overflow-x: auto; padding-bottom: 4px; }
   .heatmap-header { display: flex; gap: 3px; margin-bottom: 4px; padding-left: 26px; }
   .month-label { font-size: 0.6rem; color: var(--muted); flex-shrink: 0; }
@@ -89,7 +84,6 @@
   .legend-cells { display: flex; gap: 2px; }
   .legend-cell { width: 10px; height: 10px; border-radius: 2px; }
 
-  /* CHARTS */
   .charts-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
   .donut-wrap { position: relative; max-width: 140px; margin: 0 auto; }
   .donut-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none; }
@@ -101,7 +95,6 @@
   .legend-count { margin-left: auto; font-family: var(--mono); font-size: 0.68rem; color: var(--muted); }
   .chart-container { position: relative; height: 160px; }
 
-  /* BARS */
   .bar-list { display: flex; flex-direction: column; gap: 9px; }
   .bar-row { display: flex; flex-direction: column; gap: 3px; }
   .bar-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.73rem; }
@@ -156,14 +149,14 @@
   <div class="stats-grid">
     <div class="stat-card"><div class="stat-label">Streak actuel</div><div class="stat-val" id="stat-streak" style="color:#4ade80">—</div></div>
     <div class="stat-card"><div class="stat-label">Meilleur streak</div><div class="stat-val" id="stat-best">—</div></div>
-    <div class="stat-card"><div class="stat-label">Total complétions</div><div class="stat-val" id="stat-total" style="color:#60a5fa">—</div></div>
+    <div class="stat-card"><div class="stat-label">Total complétions</div><div class="stat-val" id="stat-total" style="color:#38bdf8">—</div></div>
     <div class="stat-card"><div class="stat-label">Jours trackés</div><div class="stat-val" id="stat-days">—</div></div>
   </div>
 
   <div class="con-row">
     <div class="con-card"><div class="con-val" id="con-week" style="color:#4ade80">—</div><div class="con-label">Cette semaine</div></div>
-    <div class="con-card"><div class="con-val" id="con-month" style="color:#f97316">—</div><div class="con-label">Ce mois</div></div>
-    <div class="con-card"><div class="con-val" id="con-rate" style="color:#a78bfa">—</div><div class="con-label">Taux global</div></div>
+    <div class="con-card"><div class="con-val" id="con-month" style="color:#fb923c">—</div><div class="con-label">Ce mois</div></div>
+    <div class="con-card"><div class="con-val" id="con-rate" style="color:#c084fc">—</div><div class="con-label">Taux global</div></div>
   </div>
 
   <div class="section">
@@ -182,7 +175,7 @@
       </div>
     </div>
     <div class="heatmap-legend">
-      <span>Moins</span><div class="legend-cells" id="heatmap-legend-cells"></div><span>Plus</span>
+      <span>0</span><div class="legend-cells" id="heatmap-legend-cells"></div><span>10</span>
     </div>
   </div>
 
@@ -209,8 +202,23 @@
 </div>
 
 <script>
+// ── CONFIG ──
 const HABITS = ['Sport','Nutrition','Quran','Islam','Arabe','Pushup','No phone','Prayer','Skill','Chess'];
-const COLORS = ['#4ade80','#f97316','#a78bfa','#38bdf8','#fb923c','#f43f5e','#facc15','#34d399','#60a5fa','#e879f9'];
+
+// 10 couleurs vraiment distinctes — réparties sur tout le spectre chromatique
+const COLORS = [
+  '#ef4444', // Sport      — rouge vif
+  '#f97316', // Nutrition  — orange
+  '#eab308', // Quran      — jaune doré
+  '#22c55e', // Islam      — vert
+  '#06b6d4', // Arabe      — cyan
+  '#3b82f6', // Pushup     — bleu
+  '#8b5cf6', // No phone   — violet
+  '#ec4899', // Prayer     — rose
+  '#14b8a6', // Skill      — teal
+  '#f43f5e', // Chess      — rose-rouge
+];
+
 let allData = {}, donutChart = null, weekdayChart = null, ringChart = null;
 
 function saveConfig(t,d){localStorage.setItem('ht_token',t);localStorage.setItem('ht_db',d);}
@@ -229,6 +237,8 @@ async function fetchAll(token,dbId){
   return results;
 }
 
+// ── FIX: merge multiple rows for the same date using OR logic ──
+// If any row for a given date has a habit checked → habit is done
 function parsePages(pages){
   const out={};
   for(const page of pages){
@@ -236,8 +246,14 @@ function parsePages(pages){
     const dateVal=props['Date']?.date?.start;
     if(!dateVal)continue;
     const date=dateVal.substring(0,10);
-    out[date]={};
-    for(const h of HABITS)out[date][h]=props[h]?.checkbox===true;
+    if(!out[date]){
+      out[date]={};
+      for(const h of HABITS) out[date][h]=false;
+    }
+    // OR merge: if already true keep true, if new row has true set true
+    for(const h of HABITS){
+      if(props[h]?.checkbox===true) out[date][h]=true;
+    }
   }
   return out;
 }
@@ -280,7 +296,7 @@ function renderRing(today){
   const d=allData[today]||{};
   const count=HABITS.filter(h=>d[h]).length;
   const pct=Math.round(count/HABITS.length*100);
-  const color=pct===100?'#4ade80':pct>=60?'#facc15':pct>=30?'#f97316':'#f43f5e';
+  const color=pct===100?'#22c55e':pct>=70?'#eab308':pct>=40?'#f97316':'#ef4444';
   document.getElementById('ring-pct').textContent=pct+'%';
   document.getElementById('ring-pct').style.color=color;
   document.getElementById('ring-sub').textContent=`${count} / ${HABITS.length} habitudes`;
@@ -296,8 +312,8 @@ function renderTodayChips(today){
   const d=allData[today]||{};
   document.getElementById('today-chips').innerHTML=HABITS.map((h,i)=>{
     const done=d[h]===true;
-    return `<div class="habit-chip${done?' done':''}" style="${done?`border-color:${COLORS[i]}30;`:''}">
-      <div class="habit-dot" style="${done?`background:${COLORS[i]};border-color:transparent;`:''}"></div>
+    return `<div class="habit-chip${done?' done':''}" style="${done?`border-color:${COLORS[i]}40;background:${COLORS[i]}0d;`:''}">
+      <div class="habit-dot" style="${done?`background:${COLORS[i]};border-color:transparent;`:`border-color:${COLORS[i]}60;`}"></div>
       <span style="${done?`color:${COLORS[i]};font-weight:500;`:''}">${h}</span>
     </div>`;
   }).join('');
@@ -324,7 +340,6 @@ function renderConsistency(today){
     if(allData[s]){wD+=HABITS.filter(h=>allData[s][h]).length;wT+=HABITS.length;}
   }
   document.getElementById('con-week').textContent=(wT>0?Math.round(wD/wT*100):0)+'%';
-
   const mStart=new Date(now.getFullYear(),now.getMonth(),1);
   let mD=0,mT=0;
   for(let d=new Date(mStart);d<=now;d.setDate(d.getDate()+1)){
@@ -332,7 +347,6 @@ function renderConsistency(today){
     if(allData[s]){mD+=HABITS.filter(h=>allData[s][h]).length;mT+=HABITS.length;}
   }
   document.getElementById('con-month').textContent=(mT>0?Math.round(mD/mT*100):0)+'%';
-
   const aD=Object.values(allData).reduce((a,d)=>a+HABITS.filter(h=>d[h]).length,0);
   const aT=Object.keys(allData).length*HABITS.length;
   document.getElementById('con-rate').textContent=(aT>0?Math.round(aD/aT*100):0)+'%';
@@ -348,13 +362,14 @@ function renderYearSelector(){
   sel.value=cy;
 }
 
+// Heatmap: 6 niveaux vraiment distincts de gris foncé → vert vif
 function getHeatColor(count){
-  if(count===0)return'#18181b';
-  if(count<=2)return'#14532d';
-  if(count<=4)return'#166534';
-  if(count<=6)return'#15803d';
-  if(count<=8)return'#16a34a';
-  return'#4ade80';
+  if(count===0) return '#18181b';   // vide - gris très foncé
+  if(count<=2)  return '#14532d';   // 1-2  - vert très sombre
+  if(count<=4)  return '#15803d';   // 3-4  - vert sombre
+  if(count<=6)  return '#16a34a';   // 5-6  - vert moyen
+  if(count<=8)  return '#22c55e';   // 7-8  - vert clair
+  return '#4ade80';                 // 9-10 - vert vif
 }
 
 function renderHeatmap(){
@@ -381,9 +396,9 @@ function renderHeatmap(){
       const dd=allData[dateStr]||{};
       const count=HABITS.filter(h=>dd[h]).length;
       cell.style.background=getHeatColor(count);
-      cell.addEventListener('mouseenter',e=>{
+      cell.addEventListener('mouseenter',()=>{
         const dones=HABITS.filter(h=>dd[h]);
-        tooltip.innerHTML=`<strong>${dateStr}</strong> · ${count} habitude${count!==1?'s':''}<br><span style="color:var(--muted);font-size:0.68rem;">${dones.length?dones.join(', '):'Aucune'}</span>`;
+        tooltip.innerHTML=`<strong>${dateStr}</strong> · ${count}/10<br><span style="color:var(--muted);font-size:0.68rem;">${dones.length?dones.join(', '):'Aucune'}</span>`;
         tooltip.style.display='block';
       });
       cell.addEventListener('mousemove',e=>{tooltip.style.left=(e.clientX+12)+'px';tooltip.style.top=(e.clientY-44)+'px';});
@@ -429,8 +444,8 @@ function renderWeekday(){
   if(weekdayChart)weekdayChart.destroy();
   weekdayChart=new Chart(document.getElementById('weekday-chart').getContext('2d'),{
     type:'bar',
-    data:{labels:['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'],datasets:[{data:avgs,backgroundColor:COLORS,borderRadius:6,borderSkipped:false}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>` ${ctx.raw} moy.`}}},
+    data:{labels:['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'],datasets:[{data:avgs,backgroundColor:['#ef4444','#f97316','#eab308','#22c55e','#06b6d4','#3b82f6','#8b5cf6'],borderRadius:6,borderSkipped:false}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>` ${ctx.raw} habitudes en moyenne`}}},
       scales:{x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#5a5a63',font:{size:11}}},
               y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#5a5a63',font:{size:11}},max:HABITS.length,beginAtZero:true}}}
   });
