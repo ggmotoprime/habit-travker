@@ -84,15 +84,24 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 .boss-check-item.checked label{text-decoration:line-through;opacity:.5;}
 .boss-footer{display:flex;align-items:center;justify-content:space-between;margin-top:10px;flex-wrap:wrap;gap:6px;}
 .boss-reward-info{font-size:.75rem;color:#fbbf24;font-weight:600;}
-.boss-penalty-info{font-size:.75rem;color:#f87171;font-weight:600;}
 .boss-hp-section{margin-top:10px;}
 .boss-hp-label{display:flex;justify-content:space-between;font-size:.65rem;color:#a78bfa;margin-bottom:4px;}
 .boss-hp-track{background:rgba(0,0,0,.4);border-radius:6px;height:10px;overflow:hidden;}
 [data-theme="light"] .boss-hp-track{background:rgba(109,40,217,.1);}
 .boss-hp-fill{height:100%;border-radius:6px;background:linear-gradient(90deg,#8b5cf6,#ec4899);transition:width 1s ease;}
-.boss-status-text{font-size:.7rem;color:#a78bfa;margin-top:5px;text-align:center;}
 .boss-defeated{font-size:.8rem;font-weight:700;color:#4ade80;text-align:center;margin-top:8px;padding:.5rem;background:rgba(74,222,128,.1);border-radius:8px;border:1px solid rgba(74,222,128,.2);}
-.boss-failed{font-size:.8rem;font-weight:700;color:#f87171;text-align:center;margin-top:8px;padding:.5rem;background:rgba(248,113,113,.1);border-radius:8px;border:1px solid rgba(248,113,113,.2);}
+
+/* MODAL / INFO PANELS */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:500;align-items:center;justify-content:center;padding:1rem;}
+.modal-overlay.open{display:flex;}
+.modal-box{background:var(--surface);border:1px solid var(--border2);border-radius:18px;padding:1.4rem;max-width:520px;width:100%;max-height:85vh;overflow-y:auto;}
+.modal-title{font-size:1rem;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;justify-content:space-between;}
+.modal-close{background:none;border:none;color:var(--muted);font-size:1.2rem;cursor:pointer;line-height:1;}
+.modal-close:hover{color:var(--text);}
+.info-list{display:flex;flex-direction:column;gap:8px;}
+.info-item{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;}
+.info-item-header{display:flex;align-items:center;gap:8px;margin-bottom:2px;}
+.info-badge{font-size:.65rem;font-weight:700;padding:2px 8px;border-radius:12px;}
 
 /* XP */
 .xp-section{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.1rem;margin-bottom:12px;}
@@ -116,9 +125,8 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 
 /* QUESTS */
 .quest-list{display:flex;flex-direction:column;gap:8px;}
-.quest-item{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:.85rem;transition:all .2s;position:relative;}
+.quest-item{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:.85rem;position:relative;}
 .quest-item.quest-done{border-color:rgba(74,222,128,.3);background:rgba(74,222,128,.04);}
-.quest-item.quest-failed{border-color:rgba(248,113,113,.3);background:rgba(248,113,113,.04);}
 .quest-header{display:flex;align-items:center;gap:8px;margin-bottom:5px;}
 .quest-icon{font-size:1.1rem;flex-shrink:0;}
 .quest-name{font-size:.82rem;font-weight:600;flex:1;}
@@ -129,13 +137,11 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 .quest-desc{font-size:.75rem;color:var(--text2);line-height:1.5;margin-bottom:8px;}
 .quest-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;}
 .quest-rewards{font-size:.72rem;color:#fbbf24;font-weight:600;}
-.quest-malus{font-size:.68rem;color:#f87171;}
 .quest-actions{display:flex;gap:5px;flex-wrap:wrap;}
 .q-btn{border:1px solid var(--border2);color:var(--text);border-radius:7px;font-size:.7rem;padding:.28rem .6rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;background:var(--surface3);}
-.q-btn:hover{opacity:.8;}
 .q-btn.success{background:rgba(74,222,128,.1);color:#4ade80;border-color:rgba(74,222,128,.3);}
-.q-btn.fail{background:rgba(248,113,113,.1);color:#f87171;border-color:rgba(248,113,113,.3);}
 .q-btn.swap{background:rgba(139,92,246,.1);color:#a78bfa;border-color:rgba(139,92,246,.3);}
+.q-btn.reset-q{background:rgba(248,113,113,.08);color:#f87171;border-color:rgba(248,113,113,.2);}
 .q-btn.disabled{opacity:.4;cursor:default;pointer-events:none;}
 
 /* WEEK NAV */
@@ -210,7 +216,6 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 .legend-item{display:flex;align-items:center;gap:7px;font-size:.72rem;}
 .legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
 .legend-count{margin-left:auto;font-family:'DM Mono',monospace;font-size:.68rem;color:var(--muted);}
-.chart-container{position:relative;height:160px;}
 
 .bar-list{display:flex;flex-direction:column;gap:9px;}
 .bar-row{display:flex;flex-direction:column;gap:3px;}
@@ -230,18 +235,37 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 .anim{animation:fadeUp .4s ease both;}
 .a1{animation-delay:.05s;}.a2{animation-delay:.1s;}.a3{animation-delay:.15s;}.a4{animation-delay:.2s;}.a5{animation-delay:.25s;}
 
-@media(max-width:520px){
-  .stats-grid{grid-template-columns:repeat(2,1fr);}
-  .charts-row{grid-template-columns:1fr;}
-  .hero-row{grid-template-columns:1fr;}
-  .bw-row{grid-template-columns:1fr;}
-  .rpg-grid{grid-template-columns:1fr 1fr;}
-  .badges-grid{grid-template-columns:repeat(2,1fr);}
-}
+@media(max-width:520px){.stats-grid{grid-template-columns:repeat(2,1fr);}.charts-row{grid-template-columns:1fr;}.hero-row{grid-template-columns:1fr;}.bw-row{grid-template-columns:1fr;}.rpg-grid{grid-template-columns:1fr 1fr;}.badges-grid{grid-template-columns:repeat(2,1fr);}}
 </style>
 </head>
 <body>
 <div id="tooltip"></div>
+
+<!-- MODALS -->
+<div class="modal-overlay" id="modal-ranks">
+  <div class="modal-box">
+    <div class="modal-title">🏆 Tous les rangs <button class="modal-close" onclick="closeModal('modal-ranks')">✕</button></div>
+    <div id="modal-ranks-content"></div>
+  </div>
+</div>
+<div class="modal-overlay" id="modal-bosses">
+  <div class="modal-box">
+    <div class="modal-title">⚔️ Tous les boss <button class="modal-close" onclick="closeModal('modal-bosses')">✕</button></div>
+    <div id="modal-bosses-content"></div>
+  </div>
+</div>
+<div class="modal-overlay" id="modal-badges">
+  <div class="modal-box">
+    <div class="modal-title">🎖️ Tous les badges <button class="modal-close" onclick="closeModal('modal-badges')">✕</button></div>
+    <div id="modal-badges-content"></div>
+  </div>
+</div>
+<div class="modal-overlay" id="modal-quests">
+  <div class="modal-box">
+    <div class="modal-title">📜 Toutes les quêtes <button class="modal-close" onclick="closeModal('modal-quests')">✕</button></div>
+    <div id="modal-quests-content"></div>
+  </div>
+</div>
 
 <div id="config-panel">
   <h1>⚡ Habit Tracker</h1>
@@ -261,7 +285,8 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
     </div>
     <div class="top-bar-right">
       <button class="icon-btn" id="refresh-btn" onclick="refresh()">↻ Actualiser</button>
-      <button class="icon-btn" onclick="toggleTheme()">☀️ / 🌙</button>
+      <button class="icon-btn" onclick="toggleTheme()">☀️/🌙</button>
+      <button class="icon-btn" onclick="showResetMenu()" style="color:#f87171;">↺ Reset</button>
       <button class="icon-btn" onclick="logout()">Déconnecter</button>
     </div>
   </div>
@@ -295,6 +320,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
         <div class="boss-name" id="boss-name"></div>
         <div style="margin-top:5px;display:flex;align-items:center;gap:8px;">
           <span class="boss-diff-badge" id="boss-diff"></span>
+          <button class="q-btn reset-q" onclick="resetBoss()" style="font-size:.65rem;padding:2px 8px;">↺ Reset boss</button>
         </div>
       </div>
     </div>
@@ -305,7 +331,6 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
     </div>
     <div class="boss-footer">
       <div class="boss-reward-info" id="boss-reward-info"></div>
-      <div class="boss-penalty-info" id="boss-penalty-info"></div>
     </div>
     <div class="boss-hp-section">
       <div class="boss-hp-label"><span>⚔️ HP du Boss</span><span id="boss-hp-pct">100%</span></div>
@@ -316,7 +341,10 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 
   <!-- XP -->
   <div class="xp-section anim a2">
-    <div class="section-title">Progression annuelle — Solo Leveling</div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+      <div class="section-title" style="margin:0;">Progression annuelle — Solo Leveling</div>
+      <button class="icon-btn" onclick="openModal('modal-ranks')" style="font-size:.7rem;padding:.25rem .6rem;">Voir les rangs</button>
+    </div>
     <div class="rank-header">
       <div>
         <div style="font-size:1rem;font-weight:700;" id="xp-level"></div>
@@ -340,13 +368,17 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
   <div class="section anim a3">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.9rem;">
       <div class="section-title" style="margin:0;">⚔️ Quêtes secondaires — <span style="color:var(--accent);">5 actives</span></div>
+      <button class="icon-btn" onclick="openModal('modal-quests')" style="font-size:.7rem;padding:.25rem .6rem;">Voir toutes</button>
     </div>
     <div class="quest-list" id="quest-list"></div>
   </div>
 
   <!-- BADGES -->
   <div class="section anim a3">
-    <div class="section-title">🎖️ Badges — survole pour voir comment obtenir</div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.9rem;">
+      <div class="section-title" style="margin:0;">🎖️ Badges</div>
+      <button class="icon-btn" onclick="openModal('modal-badges')" style="font-size:.7rem;padding:.25rem .6rem;">Voir tous</button>
+    </div>
     <div class="badges-grid" id="badges-grid"></div>
   </div>
 
@@ -379,13 +411,11 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
     <div class="week-scores" id="week-scores"></div>
   </div>
 
-  <!-- COMPARISON -->
   <div class="section anim a4">
     <div class="section-title">Comparaison</div>
     <div class="comp-grid" id="comp-grid"></div>
   </div>
 
-  <!-- HEATMAP -->
   <div class="section anim a4">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem;">
       <div class="section-title" style="margin:0;">Activité annuelle</div>
@@ -420,15 +450,9 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
     </div>
     <div class="section"><div class="section-title">Légende</div><div class="legend" id="donut-legend"></div></div>
   </div>
-
-  <div class="section anim a5">
-    <div class="section-title">Moyenne par jour de la semaine</div>
-    <div class="chart-container"><canvas id="weekday-chart"></canvas></div>
-  </div>
 </div>
 
 <script>
-// ══ CONSTANTS ══
 const HABITS=['Sport','Nutrition','Coran','Islam','Arabe','Pushup','No Scroll','Prière','Skill','Chess'];
 const NOTION_NAMES={'Sport':'Sport','Nutrition':'Nutrition','Quran':'Coran','Islam':'Islam','Arabe':'Arabe','Pushup':'Pushup','No phone':'No Scroll','Prayer':'Prière','Skill':'Skill','Chess':'Chess'};
 const NOTION_KEYS=Object.keys(NOTION_NAMES);
@@ -442,126 +466,69 @@ const RPG_STATS=[
 ];
 const CATEGORIES={'Tout':null,'Sport':['Sport','Pushup'],'Religion':['Coran','Islam','Prière'],'Apprentissage':['Arabe','Skill','Chess'],'Discipline':['No Scroll','Nutrition']};
 const RANKS=[
-  {name:'E — Recrue',emoji:'🪨',min:0,max:2000,color:'#9ca3af'},
-  {name:'D — Apprenti',emoji:'🛡️',min:2000,max:6000,color:'#cd7f32'},
-  {name:'C — Chasseur',emoji:'⚔️',min:6000,max:14000,color:'#a0a0a0'},
-  {name:'B — Guerrier',emoji:'🏹',min:14000,max:28000,color:'#f59e0b'},
-  {name:'A — Élite',emoji:'🔥',min:28000,max:50000,color:'#22c55e'},
-  {name:'S — Maître',emoji:'💎',min:50000,max:80000,color:'#60a5fa'},
-  {name:'SS — Légende',emoji:'👑',min:80000,max:120000,color:'#e879f9'},
-  {name:'SSS — Transcendant',emoji:'⭐',min:120000,max:Infinity,color:'#fbbf24'},
+  {name:'E — Recrue',emoji:'🪨',min:0,max:2000,color:'#9ca3af',desc:'Tu commences. Chaque jour compte.'},
+  {name:'D — Apprenti',emoji:'🛡️',min:2000,max:6000,color:'#cd7f32',desc:'La routine s\'installe. Continue.'},
+  {name:'C — Chasseur',emoji:'⚔️',min:6000,max:14000,color:'#a0a0a0',desc:'Tu es constant. La discipline est là.'},
+  {name:'B — Guerrier',emoji:'🏹',min:14000,max:28000,color:'#f59e0b',desc:'Solide. Tu dépasses la moyenne.'},
+  {name:'A — Élite',emoji:'🔥',min:28000,max:50000,color:'#22c55e',desc:'Tu es dans le top. Peu arrivent ici.'},
+  {name:'S — Maître',emoji:'💎',min:50000,max:80000,color:'#60a5fa',desc:'Exceptionnel. Ta discipline est un exemple.'},
+  {name:'SS — Légende',emoji:'👑',min:80000,max:120000,color:'#e879f9',desc:'Légendaire. Tu as transformé ta vie.'},
+  {name:'SSS — Transcendant',emoji:'⭐',min:120000,max:Infinity,color:'#fbbf24',desc:'Rang maximum. 365 jours de discipline absolue.'},
 ];
 
 const BOSSES=[
-  {name:'L\'Ascète du Silence',icon:'🔕',diff:'Difficile',color:'#8b5cf6',
-   lore:'Tu vis dans le bruit. Cette semaine : aucune musique, aucun YouTube, aucun podcast. 7 jours de silence total. Apprends à vivre avec tes pensées.',
-   steps:['Aucune musique lundi','Aucune musique mardi','Aucune musique mercredi','Aucune musique jeudi','Aucune musique vendredi','Aucune vidéo (YT/Netflix) toute la semaine','Aucun podcast toute la semaine'],
-   reward:600,penalty:300},
-  {name:'Le Réveil du Guerrier',icon:'🌅',diff:'Extrême',color:'#f97316',
-   lore:'Les grands se lèvent avant le monde. 5h du matin, 7 jours de suite. Ton corps va résister. Ta volonté doit être plus forte.',
-   steps:['Réveil 5h00 lundi','Réveil 5h00 mardi','Réveil 5h00 mercredi','Réveil 5h00 jeudi','Réveil 5h00 vendredi','Réveil 5h00 samedi','Réveil 5h00 dimanche'],
-   reward:800,penalty:400},
-  {name:'Le Marcheur de l\'Infini',icon:'🦶',diff:'Extrême',color:'#22c55e',
-   lore:'150 000 pas en 7 jours — soit 21 000 pas par jour. Marche, cours, prends les escaliers. Ton corps est fait pour bouger.',
-   steps:['21k pas lundi','21k pas mardi','21k pas mercredi','21k pas jeudi','21k pas vendredi','21k pas samedi','21k pas dimanche'],
-   reward:900,penalty:450},
-  {name:'Le Bain de Glace',icon:'🧊',diff:'Difficile',color:'#06b6d4',
-   lore:'La douche froide chaque matin active ton système nerveux et brise ta zone de confort. 7 jours, eau froide, sans exception.',
-   steps:['Douche froide lundi matin','Douche froide mardi matin','Douche froide mercredi matin','Douche froide jeudi matin','Douche froide vendredi matin','Douche froide samedi matin','Douche froide dimanche matin'],
-   reward:500,penalty:250},
-  {name:'Le Conquérant des Échecs',icon:'♟️',diff:'Légendaire',color:'#fbbf24',
-   lore:'100 points d\'Elo en une semaine. Analyse chaque partie, apprends de chaque défaite. La stratégie se forge dans la douleur.',
-   steps:['Analyser 1 partie perdue par jour','5 parties minimum par jour','Gagner 3 parties consécutives','Finir avec +100 Elo net sur la semaine'],
-   reward:1000,penalty:500},
-  {name:'L\'Ermite Numérique',icon:'📵',diff:'Légendaire',color:'#ef4444',
-   lore:'Téléphone éteint chaque soir à 20h. L\'écran vole tes heures les plus précieuses. Reprends-les.',
-   steps:['Téléphone éteint à 20h lundi','Téléphone éteint à 20h mardi','Téléphone éteint à 20h mercredi','Téléphone éteint à 20h jeudi','Téléphone éteint à 20h vendredi','Téléphone éteint à 20h samedi','Téléphone éteint à 20h dimanche'],
-   reward:700,penalty:350},
-  {name:'Le Double Effort',icon:'💥',diff:'Extrême',color:'#f43f5e',
-   lore:'Deux séances de sport par jour, 5 jours. Matin et soir. Ton corps va crier. Continue quand même.',
-   steps:['2 séances lundi','2 séances mardi','2 séances mercredi','2 séances jeudi','2 séances vendredi'],
-   reward:850,penalty:425},
-  {name:'La Récitation Totale',icon:'📖',diff:'Légendaire',color:'#a78bfa',
-   lore:'3 nouvelles sourates mémorisées et récitées en entier cette semaine. La mémoire est un muscle. Entraîne-le.',
-   steps:['Mémoriser sourate 1 (jours 1-2)','Réciter sourate 1 sans regarder','Mémoriser sourate 2 (jours 3-4)','Réciter sourate 2 sans regarder','Mémoriser sourate 3 (jours 5-6)','Réciter les 3 d\'affilée dimanche'],
-   reward:1000,penalty:500},
-  {name:'Le Centurion',icon:'💪',diff:'Extrême',color:'#3b82f6',
-   lore:'100 pompes d\'affilée. Pas en plusieurs fois. D\'affilée. Entraîne-toi toute la semaine et brise le record dimanche.',
-   steps:['Séance pompes lundi — noter le max','Séance pompes mercredi — battre le record','Séance pompes vendredi — s\'approcher de 100','100 pompes consécutives dimanche'],
-   reward:750,penalty:375},
-  {name:'Le Journal du Sage',icon:'✍️',diff:'Normale',color:'#14b8a6',
-   lore:'Une page de journal chaque soir avant de dormir. Réflexions, objectifs, gratitude. 7 jours, 7 pages. L\'écriture clarifie la pensée.',
-   steps:['Page journal lundi soir','Page journal mardi soir','Page journal mercredi soir','Page journal jeudi soir','Page journal vendredi soir','Page journal samedi soir','Page journal dimanche soir'],
-   reward:400,penalty:200},
-  {name:'L\'Abstinent Total',icon:'🚫',diff:'Difficile',color:'#f97316',
-   lore:'Zéro sucre ajouté, zéro junk food, zéro grignotage entre les repas. 7 jours de nutrition parfaite et consciente.',
-   steps:['Zéro sucre lundi','Zéro sucre mardi','Zéro sucre mercredi','Zéro sucre jeudi','Zéro sucre vendredi','Zéro sucre samedi','Zéro sucre dimanche'],
-   reward:600,penalty:300},
-  {name:'L\'Invisible Social',icon:'🗣️',diff:'Difficile',color:'#ec4899',
-   lore:'Initier une vraie conversation avec un inconnu chaque jour. Pas juste bonjour — une vraie interaction humaine. 7 inconnus en 7 jours.',
-   steps:['Conversation inconnu lundi','Conversation inconnu mardi','Conversation inconnu mercredi','Conversation inconnu jeudi','Conversation inconnu vendredi','Conversation inconnu samedi','Conversation inconnu dimanche'],
-   reward:650,penalty:325},
-  {name:'Le Moine du Lever',icon:'🌙',diff:'Extrême',color:'#8b5cf6',
-   lore:'Fajr chaque jour à l\'heure, suivi de 20 minutes de dhikr ou Coran, avant tout écran, avant tout café. 7 jours de discipline spirituelle totale.',
-   steps:['Fajr + 20min dhikr lundi','Fajr + 20min dhikr mardi','Fajr + 20min dhikr mercredi','Fajr + 20min dhikr jeudi','Fajr + 20min dhikr vendredi','Fajr + 20min dhikr samedi','Fajr + 20min dhikr dimanche'],
-   reward:800,penalty:400},
-  {name:'Le Polyglotte',icon:'🌍',diff:'Difficile',color:'#eab308',
-   lore:'15 nouveaux mots en arabe chaque jour — notés, révisés le soir, utilisés dans une phrase. À la fin : 105 mots nouveaux maîtrisés.',
-   steps:['15 mots + révision lundi','15 mots + révision mardi','15 mots + révision mercredi','15 mots + révision jeudi','15 mots + révision vendredi','15 mots + révision samedi','Test mémorisation dimanche (80% requis)'],
-   reward:700,penalty:350},
-  {name:'La Diète Mentale',icon:'🧘',diff:'Difficile',color:'#06b6d4',
-   lore:'Méditation 10 minutes chaque matin. Zéro téléphone dans les 30 premières minutes après le réveil. 7 jours de clarté mentale intentionnelle.',
-   steps:['10min méditation + 30min sans téléphone lundi','Idem mardi','Idem mercredi','Idem jeudi','Idem vendredi','Idem samedi','Idem dimanche'],
-   reward:500,penalty:250},
-  {name:'Le Lève-Tôt Absolu',icon:'⚡',diff:'Légendaire',color:'#fbbf24',
-   lore:'La semaine ultime. 5h du matin, douche froide, sport, Coran — tout avant 7h. Chaque matin. 7 jours. C\'est ce qui sépare les décidés des autres.',
-   steps:['Réveil 5h + douche froide lundi','Sport avant 7h lundi','Coran avant 7h lundi','Même protocole mardi','Même protocole mercredi','Même protocole jeudi-vendredi','Même protocole samedi-dimanche'],
-   reward:1200,penalty:600},
+  {name:'L\'Ascète du Silence',icon:'🔕',diff:'Difficile',color:'#8b5cf6',lore:'Aucune musique, aucun YouTube, aucun podcast. 7 jours de silence total.',steps:['Aucune musique lundi','Aucune musique mardi','Aucune musique mercredi','Aucune musique jeudi','Aucune musique vendredi','Aucune vidéo (YT/Netflix) toute la semaine','Aucun podcast toute la semaine'],reward:600},
+  {name:'Le Réveil du Guerrier',icon:'🌅',diff:'Extrême',color:'#f97316',lore:'5h du matin, 7 jours de suite. Ton corps va résister. Ta volonté doit être plus forte.',steps:['Réveil 5h00 lundi','Réveil 5h00 mardi','Réveil 5h00 mercredi','Réveil 5h00 jeudi','Réveil 5h00 vendredi','Réveil 5h00 samedi','Réveil 5h00 dimanche'],reward:800},
+  {name:'Le Marcheur de l\'Infini',icon:'🦶',diff:'Extrême',color:'#22c55e',lore:'150 000 pas en 7 jours. 21 000 pas par jour.',steps:['21k pas lundi','21k pas mardi','21k pas mercredi','21k pas jeudi','21k pas vendredi','21k pas samedi','21k pas dimanche'],reward:900},
+  {name:'Le Bain de Glace',icon:'🧊',diff:'Difficile',color:'#06b6d4',lore:'Douche froide chaque matin. 7 jours, sans exception.',steps:['Douche froide lundi','Douche froide mardi','Douche froide mercredi','Douche froide jeudi','Douche froide vendredi','Douche froide samedi','Douche froide dimanche'],reward:500},
+  {name:'Le Conquérant des Échecs',icon:'♟️',diff:'Légendaire',color:'#fbbf24',lore:'+100 Elo en une semaine. Analyse chaque partie.',steps:['Analyser 1 partie/jour','5 parties minimum/jour','Gagner 3 parties consécutives','+100 Elo net sur la semaine'],reward:1000},
+  {name:'L\'Ermite Numérique',icon:'📵',diff:'Légendaire',color:'#ef4444',lore:'Téléphone éteint à 20h chaque soir. 7 jours.',steps:['Téléphone éteint 20h lundi','Téléphone éteint 20h mardi','Téléphone éteint 20h mercredi','Téléphone éteint 20h jeudi','Téléphone éteint 20h vendredi','Téléphone éteint 20h samedi','Téléphone éteint 20h dimanche'],reward:700},
+  {name:'Le Double Effort',icon:'💥',diff:'Extrême',color:'#f43f5e',lore:'2 séances de sport par jour, 5 jours. Matin et soir.',steps:['2 séances lundi','2 séances mardi','2 séances mercredi','2 séances jeudi','2 séances vendredi'],reward:850},
+  {name:'La Récitation Totale',icon:'📖',diff:'Légendaire',color:'#a78bfa',lore:'3 nouvelles sourates mémorisées et récitées.',steps:['Mémoriser sourate 1 (jours 1-2)','Réciter sourate 1 sans regarder','Mémoriser sourate 2 (jours 3-4)','Réciter sourate 2 sans regarder','Mémoriser sourate 3 (jours 5-6)','Réciter les 3 d\'affilée dimanche'],reward:1000},
+  {name:'Le Centurion',icon:'💪',diff:'Extrême',color:'#3b82f6',lore:'100 pompes d\'affilée. Entraîne-toi toute la semaine.',steps:['Séance pompes lundi — noter max','Séance pompes mercredi — battre record','Séance pompes vendredi — s\'approcher de 100','100 pompes consécutives dimanche'],reward:750},
+  {name:'Le Journal du Sage',icon:'✍️',diff:'Normale',color:'#14b8a6',lore:'1 page de journal chaque soir. 7 jours, 7 pages.',steps:['Page journal lundi soir','Page journal mardi soir','Page journal mercredi soir','Page journal jeudi soir','Page journal vendredi soir','Page journal samedi soir','Page journal dimanche soir'],reward:400},
+  {name:'L\'Abstinent Total',icon:'🚫',diff:'Difficile',color:'#f97316',lore:'Zéro sucre ajouté, zéro junk food. 7 jours.',steps:['Zéro sucre lundi','Zéro sucre mardi','Zéro sucre mercredi','Zéro sucre jeudi','Zéro sucre vendredi','Zéro sucre samedi','Zéro sucre dimanche'],reward:600},
+  {name:'L\'Invisible Social',icon:'🗣️',diff:'Difficile',color:'#ec4899',lore:'1 vraie conversation avec un inconnu par jour. 7 jours.',steps:['Inconnu lundi','Inconnu mardi','Inconnu mercredi','Inconnu jeudi','Inconnu vendredi','Inconnu samedi','Inconnu dimanche'],reward:650},
+  {name:'Le Moine du Lever',icon:'🌙',diff:'Extrême',color:'#8b5cf6',lore:'Fajr + 20min dhikr chaque matin, avant tout écran.',steps:['Fajr + dhikr lundi','Fajr + dhikr mardi','Fajr + dhikr mercredi','Fajr + dhikr jeudi','Fajr + dhikr vendredi','Fajr + dhikr samedi','Fajr + dhikr dimanche'],reward:800},
+  {name:'Le Polyglotte',icon:'🌍',diff:'Difficile',color:'#eab308',lore:'15 mots arabes/jour notés et révisés. 105 mots en 7 jours.',steps:['15 mots lundi','15 mots mardi','15 mots mercredi','15 mots jeudi','15 mots vendredi','15 mots samedi','Test mémorisation dimanche (80%)'],reward:700},
+  {name:'La Diète Mentale',icon:'🧘',diff:'Difficile',color:'#06b6d4',lore:'10min méditation + 30min sans téléphone chaque matin.',steps:['Méditation + sans téléphone lundi','Idem mardi','Idem mercredi','Idem jeudi','Idem vendredi','Idem samedi','Idem dimanche'],reward:500},
+  {name:'Le Lève-Tôt Absolu',icon:'⚡',diff:'Légendaire',color:'#fbbf24',lore:'5h + douche froide + sport + Coran — tout avant 7h. 7 jours.',steps:['5h + douche froide lundi','Sport + Coran avant 7h lundi','Même protocole mardi','Même protocole mercredi','Même protocole jeudi','Même protocole vendredi','Même protocole samedi + dimanche'],reward:1200},
 ];
 
-// ══ 20 QUÊTES SECONDAIRES ══
 const ALL_QUESTS=[
-  {icon:'🧊',name:'Douche froide',desc:'Prends une douche entièrement froide, minimum 2 minutes. Pas tiède — froide.',difficulty:'medium',reward:150,penalty:75},
-  {icon:'💌',name:'Message de gratitude',desc:'Envoie un message sincère à quelqu\'un qui compte pour toi. Dis-lui pourquoi.',difficulty:'easy',reward:100,penalty:0},
-  {icon:'🚶',name:'Marche 5km sans téléphone',desc:'Marche 5km d\'affilée en laissant ton téléphone à la maison.',difficulty:'medium',reward:200,penalty:100},
-  {icon:'✍️',name:'Lettre à ton futur toi',desc:'Écris une lettre à toi-même dans 1 an. Tes objectifs, tes peurs, tes rêves.',difficulty:'easy',reward:120,penalty:0},
-  {icon:'🥗',name:'Journée nutrition parfaite',desc:'Zéro sucre ajouté, zéro grignotage, 3 vrais repas conscients. Une journée.',difficulty:'medium',reward:180,penalty:90},
-  {icon:'📚',name:'Lire 30 pages',desc:'30 pages d\'un vrai livre en une seule session continue. Pas de téléphone.',difficulty:'easy',reward:130,penalty:0},
-  {icon:'🤝',name:'Parler à un inconnu',desc:'Initie une vraie conversation avec quelqu\'un que tu ne connais pas du tout.',difficulty:'medium',reward:200,penalty:100},
-  {icon:'🏋️',name:'50 pompes d\'affilée',desc:'50 pompes consécutives sans pause. Entraîne-toi si besoin, mais fais-le.',difficulty:'hard',reward:250,penalty:125},
-  {icon:'🌅',name:'Lever avant 6h',desc:'Réveil avant 6h, pas de téléphone pendant la première heure. Commence ta journée.',difficulty:'medium',reward:200,penalty:100},
-  {icon:'🧠',name:'Fiche Islam complète',desc:'Apprends et rédige une fiche complète sur un sujet islamique (héritage, Sira, piliers).',difficulty:'easy',reward:150,penalty:0},
-  {icon:'🎯',name:'3 objectifs du mois prochain',desc:'Écris 3 objectifs précis et mesurables pour le mois prochain. Pas vagues.',difficulty:'easy',reward:120,penalty:0},
-  {icon:'🔇',name:'3h sans téléphone',desc:'Pose ton téléphone 3 heures d\'affilée en dehors du sommeil. Fais quelque chose de productif.',difficulty:'medium',reward:180,penalty:90},
-  {icon:'🤲',name:'Acte de générosité',desc:'Fais quelque chose pour quelqu\'un sans rien attendre en retour. Un vrai acte concret.',difficulty:'easy',reward:150,penalty:0},
-  {icon:'📖',name:'Mémoriser une sourate',desc:'Mémorise une nouvelle sourate en entier, même courte. Récite-la de mémoire.',difficulty:'hard',reward:350,penalty:175},
-  {icon:'🧹',name:'Désencombrement 10 objets',desc:'Trie et donne ou jette 10 objets que tu n\'utilises plus. Fais de la place.',difficulty:'easy',reward:100,penalty:0},
-  {icon:'🎨',name:'Créer quelque chose',desc:'Crée quelque chose : dessin, texte, code, plan, musique. N\'importe quoi de créatif.',difficulty:'medium',reward:180,penalty:0},
-  {icon:'📞',name:'Appel d\'un ami perdu de vue',desc:'Appelle quelqu\'un que tu n\'as pas contacté depuis plus d\'un mois.',difficulty:'easy',reward:100,penalty:0},
-  {icon:'🌿',name:'Journée sans réseaux sociaux',desc:'Aucun réseau social pendant 24h. Instagram, Twitter, TikTok — tout éteint.',difficulty:'hard',reward:280,penalty:140},
-  {icon:'🏃',name:'Courir 5km',desc:'Court 5km sans s\'arrêter. Peu importe le temps, l\'important c\'est de finir.',difficulty:'hard',reward:300,penalty:150},
-  {icon:'🙏',name:'5 prières à l\'heure',desc:'Accomplir les 5 prières du jour exactement à l\'heure indiquée, sans retard.',difficulty:'medium',reward:200,penalty:100},
+  {icon:'🧊',name:'Douche froide',desc:'2 min eau froide. Pas tiède — froide.',difficulty:'medium',reward:150},
+  {icon:'💌',name:'Message de gratitude',desc:'Message sincère à quelqu\'un qui compte pour toi.',difficulty:'easy',reward:100},
+  {icon:'🚶',name:'Marche 5km sans téléphone',desc:'5km d\'affilée, téléphone à la maison.',difficulty:'medium',reward:200},
+  {icon:'✍️',name:'Lettre à ton futur toi',desc:'Écris à toi-même dans 1 an. Objectifs, peurs, rêves.',difficulty:'easy',reward:120},
+  {icon:'🥗',name:'Journée nutrition parfaite',desc:'Zéro sucre, zéro grignotage, 3 vrais repas.',difficulty:'medium',reward:180},
+  {icon:'📚',name:'Lire 30 pages',desc:'30 pages en une session continue. Pas de téléphone.',difficulty:'easy',reward:130},
+  {icon:'🤝',name:'Parler à un inconnu',desc:'Vraie conversation avec quelqu\'un que tu ne connais pas.',difficulty:'medium',reward:200},
+  {icon:'🏋️',name:'50 pompes d\'affilée',desc:'50 pompes consécutives sans pause.',difficulty:'hard',reward:250},
+  {icon:'🌅',name:'Lever avant 6h',desc:'Réveil avant 6h, pas de téléphone pendant 1h.',difficulty:'medium',reward:200},
+  {icon:'🧠',name:'Fiche Islam complète',desc:'Rédige une fiche sur un sujet islamique complet.',difficulty:'easy',reward:150},
+  {icon:'🎯',name:'3 objectifs du mois',desc:'3 objectifs précis et mesurables pour le mois prochain.',difficulty:'easy',reward:120},
+  {icon:'🔇',name:'3h sans téléphone',desc:'3 heures d\'affilée sans téléphone, activité productive.',difficulty:'medium',reward:180},
+  {icon:'🤲',name:'Acte de générosité',desc:'Fais quelque chose pour quelqu\'un sans rien attendre.',difficulty:'easy',reward:150},
+  {icon:'📖',name:'Mémoriser une sourate',desc:'Nouvelle sourate mémorisée et récitée de mémoire.',difficulty:'hard',reward:350},
+  {icon:'🧹',name:'Désencombrement',desc:'Donne ou jette 10 objets que tu n\'utilises plus.',difficulty:'easy',reward:100},
+  {icon:'🎨',name:'Créer quelque chose',desc:'Dessine, écris, code, compose. Quelque chose de créatif.',difficulty:'medium',reward:180},
+  {icon:'📞',name:'Appel d\'un ami perdu de vue',desc:'Appelle quelqu\'un non contacté depuis plus d\'1 mois.',difficulty:'easy',reward:100},
+  {icon:'🌿',name:'Journée sans réseaux sociaux',desc:'Instagram, Twitter, TikTok — tout éteint 24h.',difficulty:'hard',reward:280},
+  {icon:'🏃',name:'Courir 5km',desc:'5km sans s\'arrêter. Peu importe le temps.',difficulty:'hard',reward:300},
+  {icon:'🙏',name:'5 prières à l\'heure',desc:'Les 5 prières exactement à l\'heure. Zéro retard.',difficulty:'medium',reward:200},
 ];
 
 const STREAK_THRESHOLD=0.7,DAY_SUCCESS_MIN=7,QUESTS_PER_WEEK=5;
-let allData={},donutChart=null,weekdayChart=null,ringChart=null;
+let allData={},donutChart=null,ringChart=null;
 let currentFilter='Tout',currentDbId='',weekOffset=0;
 
-// ══ STORAGE ══
 const S={
-  db:()=>localStorage.getItem('ht_db'),
-  saveDb:v=>localStorage.setItem('ht_db',v),
-  boss:()=>JSON.parse(localStorage.getItem('ht_boss')||'{}'),
-  saveBoss:v=>localStorage.setItem('ht_boss',JSON.stringify(v)),
-  quests:()=>JSON.parse(localStorage.getItem('ht_quests2')||'{}'),
-  saveQuests:v=>localStorage.setItem('ht_quests2',JSON.stringify(v)),
-  malus:()=>JSON.parse(localStorage.getItem('ht_malus2')||'[]'),
-  saveMalus:v=>localStorage.setItem('ht_malus2',JSON.stringify(v)),
-  rewards:()=>JSON.parse(localStorage.getItem('ht_rewards')||'[]'),
-  saveRewards:v=>localStorage.setItem('ht_rewards',JSON.stringify(v)),
+  db:()=>localStorage.getItem('ht_db'),saveDb:v=>localStorage.setItem('ht_db',v),
+  boss:()=>JSON.parse(localStorage.getItem('ht_boss')||'{}'),saveBoss:v=>localStorage.setItem('ht_boss',JSON.stringify(v)),
+  quests:()=>JSON.parse(localStorage.getItem('ht_quests2')||'{}'),saveQuests:v=>localStorage.setItem('ht_quests2',JSON.stringify(v)),
+  malus:()=>JSON.parse(localStorage.getItem('ht_malus2')||'[]'),saveMalus:v=>localStorage.setItem('ht_malus2',JSON.stringify(v)),
 };
 
-// ══ HELPERS ══
 function todayStr(){return new Date().toISOString().substring(0,10);}
 function scoreDay(d){const x=allData[d]||{};return HABITS.filter(h=>x[h]).length;}
 function isPerfect(d){return scoreDay(d)===HABITS.length;}
@@ -569,42 +536,130 @@ function hasStreak(d){return scoreDay(d)/HABITS.length>=STREAK_THRESHOLD;}
 function getWeekNum(date){const d=new Date(date+'T12:00:00'),j=new Date(d.getFullYear(),0,1);return Math.ceil(((d-j)/86400000+j.getDay()+1)/7);}
 function getWeekStart(today,offset=0){const d=new Date(today+'T12:00:00'),dow=d.getDay();d.setDate(d.getDate()-(dow===0?6:dow-1)+offset*7);return d.toISOString().substring(0,10);}
 
-// ══ XP CALCULATION — intègre habitudes + boss + quêtes ══
+// ══ MODALS ══
+function openModal(id){
+  document.getElementById(id).classList.add('open');
+  if(id==='modal-ranks')renderModalRanks();
+  if(id==='modal-bosses')renderModalBosses();
+  if(id==='modal-badges')renderModalBadgesAll();
+  if(id==='modal-quests')renderModalQuestsAll();
+}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+document.querySelectorAll('.modal-overlay').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');}));
+
+function renderModalRanks(){
+  const xp=computeXP();
+  document.getElementById('modal-ranks-content').innerHTML=`<div class="info-list">${RANKS.map(r=>{
+    const isCurrent=xp>=r.min&&xp<r.max;
+    const prog=r.max===Infinity?100:Math.min(100,Math.round((xp-r.min)/(r.max-r.min)*100));
+    const reached=xp>=r.min;
+    return`<div class="info-item" style="border-color:${isCurrent?r.color+'55':'var(--border)'};background:${isCurrent?r.color+'11':''};">
+      <div class="info-item-header">
+        <span style="font-size:1.3rem;">${r.emoji}</span>
+        <div style="flex:1;">
+          <div style="font-size:.85rem;font-weight:700;color:${r.color};">${r.name}${isCurrent?' ← TU ES ICI':''}</div>
+          <div style="font-size:.7rem;color:var(--text2);">${r.desc}</div>
+        </div>
+        <span class="info-badge" style="background:${r.color}22;color:${r.color};border:1px solid ${r.color}44;">${r.min===0?'0':r.min.toLocaleString()} PD</span>
+      </div>
+      ${isCurrent?`<div style="background:var(--surface2);border-radius:4px;height:5px;overflow:hidden;margin-top:6px;"><div style="width:${prog}%;height:100%;background:${r.color};border-radius:4px;"></div></div>`:reached?`<div style="font-size:.68rem;color:#22c55e;margin-top:4px;">✅ Rang atteint</div>`:`<div style="font-size:.68rem;color:var(--muted);margin-top:4px;">🔒 ${(r.min-xp).toLocaleString()} PD manquants</div>`}
+    </div>`;
+  }).join('')}</div>`;
+}
+
+function renderModalBosses(){
+  const diffColors={'Normale':'#22c55e','Difficile':'#f97316','Extrême':'#ef4444','Légendaire':'#fbbf24'};
+  document.getElementById('modal-bosses-content').innerHTML=`<div class="info-list">${BOSSES.map((b,i)=>{
+    const col=diffColors[b.diff]||'#8b5cf6';
+    return`<div class="info-item">
+      <div class="info-item-header">
+        <span style="font-size:1.4rem;">${b.icon}</span>
+        <div style="flex:1;">
+          <div style="font-size:.82rem;font-weight:700;">Semaine ${i+1} · ${b.name}</div>
+          <div style="font-size:.72rem;color:var(--text2);margin-top:2px;">${b.lore}</div>
+        </div>
+        <span class="info-badge" style="background:${col}22;color:${col};border:1px solid ${col}44;">${b.diff}</span>
+      </div>
+      <div style="margin-top:6px;font-size:.7rem;color:#fbbf24;">🏆 +${b.reward} PD</div>
+    </div>`;
+  }).join('')}</div>`;
+}
+
+function renderModalBadgesAll(){
+  const today=todayStr(),all=getBadgeDefs(today);
+  document.getElementById('modal-badges-content').innerHTML=`<div class="info-list">${all.map(b=>`
+    <div class="info-item" style="border-color:${b.earned?(b.type==='b'?'rgba(139,92,246,.4)':'rgba(251,191,36,.4)'):'var(--border)'};">
+      <div class="info-item-header">
+        <span style="font-size:1.3rem;">${b.emoji}</span>
+        <div style="flex:1;"><div style="font-size:.82rem;font-weight:700;">${b.name}</div><div style="font-size:.72rem;color:var(--text2);">${b.how}</div></div>
+        <span style="font-size:.8rem;">${b.earned?'✅':'🔒'}</span>
+      </div>
+    </div>`).join('')}</div>`;
+}
+
+function renderModalQuestsAll(){
+  const diffColors={easy:'#22c55e',medium:'#ca8a04',hard:'#ef4444'};
+  document.getElementById('modal-quests-content').innerHTML=`<div class="info-list">${ALL_QUESTS.map((q,i)=>`
+    <div class="info-item">
+      <div class="info-item-header">
+        <span style="font-size:1.2rem;">${q.icon}</span>
+        <div style="flex:1;"><div style="font-size:.82rem;font-weight:700;">${q.name}</div><div style="font-size:.72rem;color:var(--text2);">${q.desc}</div></div>
+        <div style="text-align:right;">
+          <div style="font-size:.68rem;color:#fbbf24;font-weight:600;">+${q.reward} PD</div>
+          <span class="info-badge" style="background:${diffColors[q.difficulty]}22;color:${diffColors[q.difficulty]};">${q.difficulty==='easy'?'Facile':q.difficulty==='medium'?'Moyen':'Difficile'}</span>
+        </div>
+      </div>
+    </div>`).join('')}</div>`;
+}
+
+// ══ RESET MENU ══
+function showResetMenu(){
+  const opts=[
+    {label:'Reset boss de cette semaine',action:()=>{if(confirm('Reset le boss ?'))resetBoss();}},
+    {label:'Reset quêtes de cette semaine',action:()=>{if(confirm('Reset les quêtes ?'))resetQuests();}},
+    {label:'Reset rang (malus + récompenses)',action:()=>{if(confirm('Reset tout le rang (malus + boss/quêtes PD) ?'))resetRank();}},
+    {label:'Reset TOUT',action:()=>{if(confirm('Reset boss + quêtes + rang ? Irréversible.'))resetAll();}},
+  ];
+  const menu=document.createElement('div');
+  menu.style.cssText='position:fixed;top:60px;right:10px;background:var(--surface3);border:1px solid var(--border2);border-radius:12px;padding:.6rem;z-index:300;min-width:220px;box-shadow:0 4px 20px rgba(0,0,0,.4);';
+  menu.innerHTML=opts.map((o,i)=>`<div onclick="window._resetOpts[${i}]()" style="padding:.5rem .8rem;border-radius:8px;font-size:.78rem;cursor:pointer;color:${i===3?'#f87171':'var(--text)'};transition:background .15s;" onmouseover="this.style.background='var(--surface2)'" onmouseout="this.style.background=''">${o.label}</div>`).join('');
+  window._resetOpts=opts.map(o=>()=>{o.action();menu.remove();});
+  document.body.appendChild(menu);
+  setTimeout(()=>document.addEventListener('click',()=>menu.remove(),{once:true}),100);
+}
+
+function resetBoss(){
+  const wn=getWeekNum(todayStr()),yr=new Date().getFullYear(),key=`w${wn}_${yr}`;
+  const saved=S.boss();delete saved[key];S.saveBoss(saved);renderBoss(todayStr());renderGamification();
+}
+function resetQuests(){
+  const today=todayStr(),wn=getWeekNum(today),yr=new Date().getFullYear(),key=`qw${wn}_${yr}`;
+  const saved=S.quests();delete saved[key];S.saveQuests(saved);renderQuests(today);renderGamification();
+}
+function resetRank(){
+  localStorage.removeItem('ht_malus2');
+  const boss=S.boss();Object.values(boss).forEach(b=>{b.declared=null;});S.saveBoss(boss);
+  const q=S.quests();Object.values(q).forEach(w=>{Object.keys(w).forEach(k=>{if(k!=='_indices'&&w[k])w[k].state='pending';});});S.saveQuests(q);
+  renderAll();
+}
+function resetAll(){
+  localStorage.removeItem('ht_boss');localStorage.removeItem('ht_quests2');localStorage.removeItem('ht_malus2');renderAll();
+}
+
+// ══ XP ══
 function computeXP(){
   const dates=Object.keys(allData).sort();
   let xp=0,run=0;
-
-  // Base habitudes
   for(const d of dates){
-    const s=scoreDay(d);
-    xp+=s*10;
-    if(s>=DAY_SUCCESS_MIN)xp+=50;
-    if(isPerfect(d))xp+=150;
+    const s=scoreDay(d);xp+=s*10;
+    if(s>=DAY_SUCCESS_MIN)xp+=50;if(isPerfect(d))xp+=150;
     if(hasStreak(d)){run++;}else{run=0;}
-    if(run===7)xp+=300;
-    if(run===30)xp+=1000;
-    if(run===100)xp+=5000;
+    if(run===7)xp+=300;if(run===30)xp+=1000;if(run===100)xp+=5000;
     if(isPerfect(d)&&run>=3)xp+=400;
   }
-
-  // Boss gagnés
-  const boss=S.boss();
-  for(const[,b]of Object.entries(boss)){
-    if(b.declared==='won'&&b.reward)xp+=b.reward;
-  }
-
-  // Quêtes validées
-  const quests=S.quests();
-  for(const[,week]of Object.entries(quests)){
-    for(const[,q]of Object.entries(week)){
-      if(q.state==='done'&&q.reward)xp+=q.reward;
-    }
-  }
-
-  // Malus
-  const malus=S.malus();
-  for(const m of malus)xp-=m.amount;
-
+  Object.values(S.boss()).forEach(b=>{if(b.declared==='won'&&b.reward)xp+=b.reward;});
+  Object.values(S.quests()).forEach(w=>Object.values(w).forEach(q=>{if(q&&q.state==='done'&&q.reward)xp+=q.reward;}));
+  S.malus().forEach(m=>{xp-=m.amount;});
   return Math.max(0,xp);
 }
 
@@ -621,7 +676,7 @@ async function fetchAll(dbId){
   let results=[],cursor;
   for(let i=0;i<20;i++){
     const res=await fetch('/api/notion',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({dbId,cursor})});
-    if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error||`Erreur ${res.status} — Vérifie ton Database ID.`);}
+    if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error||`Erreur ${res.status}`);}
     const data=await res.json();results=results.concat(data.results);
     if(!data.has_more)break;cursor=data.next_cursor;
   }
@@ -631,9 +686,8 @@ async function fetchAll(dbId){
 function parsePages(pages){
   const out={};
   for(const page of pages){
-    const props=page.properties,dateVal=props['Date']?.date?.start;
-    if(!dateVal)continue;
-    const date=dateVal.substring(0,10);
+    const props=page.properties,dv=props['Date']?.date?.start;
+    if(!dv)continue;const date=dv.substring(0,10);
     if(!out[date]){out[date]={};for(const h of HABITS)out[date][h]=false;}
     for(const nk of NOTION_KEYS){const dn=NOTION_NAMES[nk];if(props[nk]?.checkbox===true)out[date][dn]=true;}
   }
@@ -644,69 +698,54 @@ async function connect(){
   const dbId=document.getElementById('db-input').value.trim().replace(/-/g,'').substring(0,32);
   const errEl=document.getElementById('error-msg');errEl.style.display='none';
   if(!dbId){errEl.textContent='Entre ton Database ID.';errEl.style.display='block';return;}
-  document.getElementById('config-panel').style.display='none';
-  document.getElementById('loading').style.display='flex';
-  try{
-    const pages=await fetchAll(dbId);allData=parsePages(pages);currentDbId=dbId;S.saveDb(dbId);showDashboard();
-  }catch(e){
-    document.getElementById('config-panel').style.display='block';document.getElementById('loading').style.display='none';
-    errEl.textContent='❌ '+e.message;errEl.style.display='block';
-  }
+  document.getElementById('config-panel').style.display='none';document.getElementById('loading').style.display='flex';
+  try{const pages=await fetchAll(dbId);allData=parsePages(pages);currentDbId=dbId;S.saveDb(dbId);showDashboard();}
+  catch(e){document.getElementById('config-panel').style.display='block';document.getElementById('loading').style.display='none';errEl.textContent='❌ '+e.message;errEl.style.display='block';}
 }
 
 async function refresh(){
   const btn=document.getElementById('refresh-btn');btn.classList.add('spinning');btn.disabled=true;
   try{const pages=await fetchAll(currentDbId);allData=parsePages(pages);renderAll();}
-  catch(e){alert('Impossible de recharger : '+e.message);}
+  catch(e){alert('Impossible : '+e.message);}
   finally{btn.classList.remove('spinning');btn.disabled=false;}
 }
-
 function logout(){localStorage.removeItem('ht_db');location.reload();}
-function toggleTheme(){
-  const html=document.documentElement,next=html.getAttribute('data-theme')==='dark'?'light':'dark';
-  html.setAttribute('data-theme',next);localStorage.setItem('ht_theme',next);renderAll();
-}
-
+function toggleTheme(){const h=document.documentElement,n=h.getAttribute('data-theme')==='dark'?'light':'dark';h.setAttribute('data-theme',n);localStorage.setItem('ht_theme',n);renderAll();}
 function showDashboard(){document.getElementById('loading').style.display='none';document.getElementById('dashboard').style.display='block';renderAll();}
 
 function renderAll(){
-  const today=todayStr();
-  document.getElementById('today-date-sub').textContent=new Date(today+'T12:00:00').toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-  renderAutoMsg(today);renderRing(today);renderTodayChips(today);renderThresholdBanner(today);
-  renderBoss(today);renderGamification();renderRPG();renderQuests(today);renderBadges(today);
-  renderStats(today);renderConsistency(today);renderBestWorst();
-  renderWeekScores(today);renderComparison(today);
-  renderYearSelector();renderHeatmap();renderFilters();renderBars(currentFilter);renderDonut();renderWeekday();
+  const t=todayStr();
+  document.getElementById('today-date-sub').textContent=new Date(t+'T12:00:00').toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  renderAutoMsg(t);renderRing(t);renderTodayChips(t);renderThresholdBanner(t);
+  renderBoss(t);renderGamification();renderRPG();renderQuests(t);renderBadges(t);
+  renderStats(t);renderConsistency(t);renderBestWorst();renderWeekScores(t);renderComparison(t);
+  renderYearSelector();renderHeatmap();renderFilters();renderBars(currentFilter);renderDonut();
 }
 
-function renderAutoMsg(today){
-  const score=scoreDay(today),pct=Math.round(score/HABITS.length*100);
+function renderAutoMsg(t){
+  const s=scoreDay(t),p=Math.round(s/HABITS.length*100);
   const last7=Object.keys(allData).sort().slice(-7);
   const weak=HABITS.filter(h=>last7.filter(d=>allData[d]&&allData[d][h]).length/Math.max(last7.length,1)<0.4);
-  let msg=pct===100?`<strong>Journée parfaite 🔥</strong> — 10/10. Tu transcendes ta routine.`
-    :pct>=70?`<strong>Solide.</strong> ${score}/10. Continue.`
-    :pct>=40?`<strong>Bonne base.</strong> Encore ${HABITS.length-score} à compléter.`
-    :score===0?`<strong>La journée t'attend.</strong> Commence maintenant.`
-    :`<strong>${score}/10 pour l'instant.</strong> Tu peux encore tout renverser.`;
-  if(weak.length>0&&pct<100)msg+=` ⚠️ <em>${weak[0]}</em> est ton point faible cette semaine.`;
+  let msg=p===100?`<strong>Journée parfaite 🔥</strong> — 10/10.`:p>=70?`<strong>Solide.</strong> ${s}/10. Continue.`:p>=40?`<strong>Bonne base.</strong> Encore ${HABITS.length-s} à compléter.`:s===0?`<strong>La journée t'attend.</strong>`:` <strong>${s}/10.</strong> Tu peux encore tout renverser.`;
+  if(weak.length>0&&p<100)msg+=` ⚠️ <em>${weak[0]}</em> est ton point faible cette semaine.`;
   document.getElementById('auto-msg').innerHTML=msg;
 }
 
-function renderRing(today){
-  const count=scoreDay(today),pct=Math.round(count/HABITS.length*100);
-  const color=pct===100?'#22c55e':pct>=70?'#eab308':pct>=40?'#f97316':'#ef4444';
-  document.getElementById('ring-pct').textContent=pct+'%';document.getElementById('ring-pct').style.color=color;
-  document.getElementById('ring-detail').textContent=`${count} / ${HABITS.length} habitudes`;
-  document.getElementById('goal-msg').textContent=count<HABITS.length?`Encore ${HABITS.length-count} à faire`:`Journée complète ! 🎉`;
+function renderRing(t){
+  const c=scoreDay(t),p=Math.round(c/HABITS.length*100);
+  const col=p===100?'#22c55e':p>=70?'#eab308':p>=40?'#f97316':'#ef4444';
+  document.getElementById('ring-pct').textContent=p+'%';document.getElementById('ring-pct').style.color=col;
+  document.getElementById('ring-detail').textContent=`${c} / ${HABITS.length} habitudes`;
+  document.getElementById('goal-msg').textContent=c<HABITS.length?`Encore ${HABITS.length-c} à faire`:`Journée complète ! 🎉`;
   if(ringChart)ringChart.destroy();
   ringChart=new Chart(document.getElementById('ring-chart').getContext('2d'),{
-    type:'doughnut',data:{datasets:[{data:[count,HABITS.length-count],backgroundColor:[color,'rgba(128,128,128,0.1)'],borderWidth:0,hoverOffset:0}]},
+    type:'doughnut',data:{datasets:[{data:[c,HABITS.length-c],backgroundColor:[col,'rgba(128,128,128,0.1)'],borderWidth:0,hoverOffset:0}]},
     options:{cutout:'80%',plugins:{legend:{display:false},tooltip:{enabled:false}},animation:{duration:900,easing:'easeOutQuart'}}
   });
 }
 
-function renderTodayChips(today){
-  const d=allData[today]||{};
+function renderTodayChips(t){
+  const d=allData[t]||{};
   document.getElementById('today-chips').innerHTML=HABITS.map((h,i)=>{
     const done=d[h]===true;
     return`<div class="habit-chip${done?' done':''}" style="${done?`border-color:${COLORS[i]}35;background:${COLORS[i]}0a;`:''}">
@@ -715,25 +754,23 @@ function renderTodayChips(today){
   }).join('');
 }
 
-function renderThresholdBanner(today){
-  const score=scoreDay(today),banner=document.getElementById('threshold-banner');
-  let cls,txt;
-  if(score>=HABITS.length){cls='success';txt=`🏆 Journée parfaite — ${score}/${HABITS.length} !`;}
-  else if(score>=DAY_SUCCESS_MIN){cls='success';txt=`✅ Journée réussie — ${score}/${HABITS.length} (seuil : ${DAY_SUCCESS_MIN}/10)`;}
-  else{cls=score>=4?'warn':'fail';txt=`${score>=4?'⚡':'❌'} ${score}/${HABITS.length} — Journée réussie = au moins ${DAY_SUCCESS_MIN}/10`;}
-  banner.className='threshold-banner '+cls;banner.textContent=txt;
+function renderThresholdBanner(t){
+  const s=scoreDay(t),b=document.getElementById('threshold-banner');
+  let c,tx;
+  if(s>=HABITS.length){c='success';tx=`🏆 Journée parfaite — ${s}/${HABITS.length} !`;}
+  else if(s>=DAY_SUCCESS_MIN){c='success';tx=`✅ Journée réussie — ${s}/${HABITS.length}`;}
+  else{c=s>=4?'warn':'fail';tx=`${s>=4?'⚡':'❌'} ${s}/${HABITS.length} — Seuil de réussite : ${DAY_SUCCESS_MIN}/10`;}
+  b.className='threshold-banner '+c;b.textContent=tx;
 }
 
 // ══ BOSS ══
 function renderBoss(today){
   const wn=getWeekNum(today),yr=new Date().getFullYear();
-  const boss=BOSSES[(wn-1)%BOSSES.length];
-  const bossKey=`w${wn}_${yr}`;
-  const saved=S.boss();if(!saved[bossKey])saved[bossKey]={checks:[],declared:null,reward:boss.reward};
-  const bd=saved[bossKey];
-  const diffColors={'Normale':'#22c55e','Difficile':'#f97316','Extrême':'#ef4444','Légendaire':'#fbbf24'};
-  const col=diffColors[boss.diff]||'#8b5cf6';
-
+  const boss=BOSSES[(wn-1)%BOSSES.length],key=`w${wn}_${yr}`;
+  const saved=S.boss();if(!saved[key])saved[key]={checks:[],declared:null,reward:boss.reward};
+  const bd=saved[key];
+  const dc={'Normale':'#22c55e','Difficile':'#f97316','Extrême':'#ef4444','Légendaire':'#fbbf24'};
+  const col=dc[boss.diff]||'#8b5cf6';
   document.getElementById('boss-icon').textContent=boss.icon;
   document.getElementById('boss-week-label').textContent=`Semaine ${wn} · Boss de la semaine`;
   document.getElementById('boss-name').textContent=boss.name;
@@ -741,33 +778,26 @@ function renderBoss(today){
   document.getElementById('boss-diff').style.cssText=`background:${col}22;color:${col};border:1px solid ${col}44;padding:3px 10px;border-radius:20px;font-size:.68rem;font-weight:700;`;
   document.getElementById('boss-lore').textContent=boss.lore;
   document.getElementById('boss-reward-info').textContent=`🏆 Victoire : +${boss.reward} PD ajoutés à ta progression`;
-  document.getElementById('boss-penalty-info').textContent=`💀 Défaite : -${boss.penalty} PD retirés`;
 
   const cl=document.getElementById('boss-checklist');
   cl.innerHTML=boss.steps.map((step,i)=>{
     const checked=bd.checks.includes(i);
     return`<div class="boss-check-item${checked?' checked':''}">
-      <input type="checkbox" id="bchk${i}" ${checked?'checked':''} ${bd.declared?'disabled':''} onchange="toggleBossCheck(${i},'${bossKey}')">
+      <input type="checkbox" id="bchk${i}" ${checked?'checked':''} ${bd.declared==='won'?'disabled':''} onchange="toggleBossCheck(${i},'${key}')">
       <label for="bchk${i}">${step}</label></div>`;
   }).join('');
 
-  const done=bd.checks.length,total=boss.steps.length;
-  const hp=Math.max(0,100-Math.round(done/total*100));
+  const done=bd.checks.length,total=boss.steps.length,hp=Math.max(0,100-Math.round(done/total*100));
   document.getElementById('boss-hp-pct').textContent=hp+'%';
   setTimeout(()=>{document.getElementById('boss-hp-fill').style.width=hp+'%';},200);
 
   const res=document.getElementById('boss-result');
   if(bd.declared==='won'){
     res.innerHTML=`<div class="boss-defeated">⚔️ BOSS VAINCU — +${boss.reward} PD intégrés à ta progression !</div>`;
-  }else if(bd.declared==='lost'){
-    res.innerHTML=`<div class="boss-failed">💀 Boss raté — -${boss.penalty} PD. Relève-toi la semaine prochaine.</div>`;
   }else if(hp===0){
-    res.innerHTML=`<div style="display:flex;gap:8px;margin-top:10px;">
-      <button onclick="declareBoss('won','${bossKey}',${boss.reward},${boss.penalty})" style="flex:1;background:#22c55e22;border:1px solid #22c55e44;color:#22c55e;border-radius:8px;padding:.5rem;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;font-size:.8rem;">✅ Boss vaincu</button>
-      <button onclick="declareBoss('lost','${bossKey}',${boss.reward},${boss.penalty})" style="flex:1;background:#f8717122;border:1px solid #f8717144;color:#f87171;border-radius:8px;padding:.5rem;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;font-size:.8rem;">❌ Raté</button>
-    </div>`;
+    res.innerHTML=`<div style="margin-top:10px;"><button onclick="declareBoss('won','${key}',${boss.reward})" style="width:100%;background:#22c55e22;border:1px solid #22c55e44;color:#22c55e;border-radius:8px;padding:.55rem;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;font-size:.82rem;">✅ Je valide — Boss vaincu !</button></div>`;
   }else{
-    res.innerHTML=`<div class="boss-status-text">${done}/${total} étapes — Boss à ${hp}% HP</div>`;
+    res.innerHTML=`<div style="font-size:.7rem;color:#a78bfa;margin-top:5px;text-align:center;">${done}/${total} étapes — Boss à ${hp}% HP</div>`;
   }
 }
 
@@ -778,12 +808,9 @@ function toggleBossCheck(idx,key){
   S.saveBoss(saved);renderBoss(todayStr());
 }
 
-function declareBoss(result,key,reward,penalty){
+function declareBoss(result,key,reward){
   const saved=S.boss();if(!saved[key])saved[key]={checks:[],declared:null};
   saved[key].declared=result;saved[key].reward=reward;S.saveBoss(saved);
-  if(result==='lost'){
-    const m=S.malus();m.push({key,amount:penalty,reason:'Boss raté',date:todayStr()});S.saveMalus(m);
-  }
   renderBoss(todayStr());renderGamification();
 }
 
@@ -793,34 +820,22 @@ function renderGamification(){
   const rank=RANKS.find(r=>xp>=r.min&&xp<r.max)||RANKS[RANKS.length-1];
   const next=RANKS[RANKS.indexOf(rank)+1];
   const prog=next?Math.round((xp-rank.min)/(next.min-rank.min)*100):100;
-
   document.getElementById('xp-level').textContent=`${rank.emoji} ${rank.name}`;
   document.getElementById('xp-info').textContent=next?`Prochain rang : ${next.emoji} ${next.name}`:`Rang maximum !`;
   document.getElementById('xp-current').textContent=`${xp.toLocaleString()} PD`;
   document.getElementById('xp-next').textContent=next?`Objectif : ${next.min.toLocaleString()} PD`:'';
   document.getElementById('rank-badge').textContent=`${rank.emoji} ${rank.name}`;
   document.getElementById('rank-badge').style.cssText=`background:${rank.color}22;color:${rank.color};border:1px solid ${rank.color}44;padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:700;`;
-  setTimeout(()=>{
-    document.getElementById('xp-bar').style.width=prog+'%';
-    document.getElementById('xp-bar').style.background=`linear-gradient(90deg,${rank.color},${next?next.color:rank.color})`;
-  },100);
+  setTimeout(()=>{document.getElementById('xp-bar').style.width=prog+'%';document.getElementById('xp-bar').style.background=`linear-gradient(90deg,${rank.color},${next?next.color:rank.color})`;},100);
 
-  // Breakdown
   const dates=Object.keys(allData);
-  const baseXP=dates.reduce((a,d)=>{
-    const s=scoreDay(d);let x=s*10;
-    if(s>=DAY_SUCCESS_MIN)x+=50;if(isPerfect(d))x+=150;return a+x;
-  },0);
-  const bossWon=Object.values(S.boss()).filter(b=>b.declared==='won');
-  const bossXP=bossWon.reduce((a,b)=>a+(b.reward||0),0);
-  const questsAll=S.quests();
-  const questXP=Object.values(questsAll).reduce((a,w)=>a+Object.values(w).reduce((b,q)=>b+(q.state==='done'?q.reward||0:0),0),0);
+  const baseXP=dates.reduce((a,d)=>{const s=scoreDay(d);let x=s*10;if(s>=DAY_SUCCESS_MIN)x+=50;if(isPerfect(d))x+=150;return a+x;},0);
+  const bossXP=Object.values(S.boss()).filter(b=>b.declared==='won').reduce((a,b)=>a+(b.reward||0),0);
+  const questXP=Object.values(S.quests()).reduce((a,w)=>a+Object.values(w).reduce((b,q)=>b+(q&&q.state==='done'?q.reward||0:0),0),0);
   const malusXP=S.malus().reduce((a,m)=>a+m.amount,0);
-  document.getElementById('xp-breakdown').innerHTML=
-    `<strong>Détail PD :</strong> Habitudes <strong>+${baseXP.toLocaleString()}</strong> · Boss <strong>+${bossXP.toLocaleString()}</strong> · Quêtes <strong>+${questXP.toLocaleString()}</strong>${malusXP>0?` · Malus <strong style="color:#f87171">-${malusXP.toLocaleString()}</strong>`:''}`;
-
-  const malusEl=document.getElementById('malus-log');
-  if(malusXP>0){malusEl.textContent=`⚠️ Malus actifs : -${malusXP.toLocaleString()} PD`;malusEl.style.display='block';}
+  document.getElementById('xp-breakdown').innerHTML=`<strong>Détail PD :</strong> Habitudes <strong>+${baseXP.toLocaleString()}</strong> · Boss <strong>+${bossXP.toLocaleString()}</strong> · Quêtes <strong>+${questXP.toLocaleString()}</strong>${malusXP>0?` · Malus <strong style="color:#f87171">-${malusXP.toLocaleString()}</strong>`:''}`;
+  const ml=document.getElementById('malus-log');
+  if(malusXP>0){ml.textContent=`⚠️ Malus actifs : -${malusXP.toLocaleString()} PD`;ml.style.display='block';}else{ml.style.display='none';}
 }
 
 // ══ RPG ══
@@ -838,37 +853,25 @@ function renderRPG(){
   }).join('');
 }
 
-// ══ QUESTS — 5 par semaine, swappables ══
-function getQuestWeekKey(today){
-  const wn=getWeekNum(today),yr=new Date().getFullYear();
-  return`qw${wn}_${yr}`;
-}
+// ══ QUESTS ══
+function getQuestWeekKey(today){const wn=getWeekNum(today),yr=new Date().getFullYear();return`qw${wn}_${yr}`;}
 
 function getActiveQuestIndices(key){
   const saved=S.quests();
   if(saved[key]&&saved[key]._indices)return saved[key]._indices;
-  // Génère 5 quêtes pseudo-aléatoires pour cette semaine
   const wn=parseInt(key.replace(/[^0-9]/g,''));
   const indices=[];let i=(wn*3)%ALL_QUESTS.length;
-  while(indices.length<QUESTS_PER_WEEK){
-    if(!indices.includes(i))indices.push(i);
-    i=(i+4)%ALL_QUESTS.length;
-  }
-  if(!saved[key])saved[key]={};
-  saved[key]._indices=indices;S.saveQuests(saved);
-  return indices;
+  while(indices.length<QUESTS_PER_WEEK){if(!indices.includes(i))indices.push(i);i=(i+4)%ALL_QUESTS.length;}
+  if(!saved[key])saved[key]={};saved[key]._indices=indices;S.saveQuests(saved);return indices;
 }
 
 function renderQuests(today){
-  const key=getQuestWeekKey(today);
-  const saved=S.quests();if(!saved[key])saved[key]={};
+  const key=getQuestWeekKey(today),saved=S.quests();if(!saved[key])saved[key]={};
   const indices=getActiveQuestIndices(key);
-
   document.getElementById('quest-list').innerHTML=indices.map((qIdx,slot)=>{
-    const q=ALL_QUESTS[qIdx];
-    const qd=saved[key][slot]||{state:'pending'};
-    const isDone=qd.state==='done',isFail=qd.state==='failed';
-    return`<div class="quest-item${isDone?' quest-done':isFail?' quest-failed':''}">
+    const q=ALL_QUESTS[qIdx],qd=saved[key][slot]||{state:'pending'};
+    const isDone=qd.state==='done';
+    return`<div class="quest-item${isDone?' quest-done':''}">
       <div class="quest-header">
         <div class="quest-icon">${q.icon}</div>
         <div class="quest-name">${q.name}</div>
@@ -876,98 +879,88 @@ function renderQuests(today){
       </div>
       <div class="quest-desc">${q.desc}</div>
       <div class="quest-footer">
-        <div>
-          <div class="quest-rewards">🏆 +${q.reward} PD${isDone?' ✅':''}</div>
-          ${q.penalty>0?`<div class="quest-malus">💀 Malus si raté : -${q.penalty} PD</div>`:''}
-        </div>
+        <div class="quest-rewards">🏆 +${q.reward} PD${isDone?' ✅':''}</div>
         <div class="quest-actions">
-          ${!isDone&&!isFail?`
-            <button class="q-btn success" onclick="validateQuest('${key}',${slot},true,${q.reward},${q.penalty})">✅ Accompli</button>
-            ${q.penalty>0?`<button class="q-btn fail" onclick="validateQuest('${key}',${slot},false,${q.reward},${q.penalty})">❌ Raté</button>`:''}
-            <button class="q-btn swap" onclick="swapQuest('${key}',${slot},${qIdx},this)" title="Changer cette quête">🔄</button>`
-          :isDone?`<span class="q-btn success disabled">✅ Validé</span>`
-          :`<span class="q-btn fail disabled">❌ Raté</span>`}
+          ${!isDone?`<button class="q-btn success" onclick="validateQuest('${key}',${slot},${q.reward})">✅ Accompli</button>
+            <button class="q-btn swap" onclick="swapQuest('${key}',${slot},${qIdx})">🔄 Changer</button>
+            <button class="q-btn reset-q" onclick="resetOneQuest('${key}',${slot})">↺</button>`
+          :`<button class="q-btn reset-q" onclick="resetOneQuest('${key}',${slot})">↺ Annuler</button>`}
         </div>
       </div>
     </div>`;
   }).join('');
 }
 
-function validateQuest(key,slot,success,reward,penalty){
+function validateQuest(key,slot,reward){
   const saved=S.quests();if(!saved[key])saved[key]={};
-  saved[key][slot]={state:success?'done':'failed',reward:success?reward:0};S.saveQuests(saved);
-  if(!success&&penalty>0){
-    const m=S.malus();m.push({key:`q_${key}_${slot}`,amount:penalty,reason:'Quête ratée',date:todayStr()});S.saveMalus(m);
-  }
+  saved[key][slot]={state:'done',reward};S.saveQuests(saved);
   renderQuests(todayStr());renderGamification();
 }
 
-function swapQuest(key,slot,currentIdx,btn){
+function resetOneQuest(key,slot){
   const saved=S.quests();if(!saved[key])saved[key]={};
-  const indices=saved[key]._indices||[];
-  const used=new Set(indices);
-  // Trouver la prochaine quête non utilisée
-  let next=(currentIdx+1)%ALL_QUESTS.length;
-  let tries=0;
+  delete saved[key][slot];S.saveQuests(saved);renderQuests(todayStr());renderGamification();
+}
+
+function swapQuest(key,slot,currentIdx){
+  const saved=S.quests();if(!saved[key])saved[key]={};
+  const indices=saved[key]._indices||[];const used=new Set(indices);
+  let next=(currentIdx+1)%ALL_QUESTS.length,tries=0;
   while(used.has(next)&&tries<ALL_QUESTS.length){next=(next+1)%ALL_QUESTS.length;tries++;}
   if(tries>=ALL_QUESTS.length)return;
-  indices[slot]=next;saved[key]._indices=indices;
-  // Reset état de ce slot
-  if(saved[key][slot])delete saved[key][slot];
-  S.saveQuests(saved);
-  renderQuests(todayStr());
+  indices[slot]=next;saved[key]._indices=indices;delete saved[key][slot];
+  S.saveQuests(saved);renderQuests(todayStr());
 }
 
 // ══ BADGES ══
-function renderBadges(today){
+function getBadgeDefs(today){
   const dates=Object.keys(allData).sort();
   const total=Object.values(allData).reduce((a,d)=>a+HABITS.filter(h=>d[h]).length,0);
   const perfect=dates.filter(d=>isPerfect(d)).length;
-  const{streak,best}=computeStreak(today);
-  const coranCount=dates.filter(d=>allData[d]&&allData[d]['Coran']).length;
-  const prayerCount=dates.filter(d=>allData[d]&&allData[d]['Prière']).length;
-  const nsStreak=(()=>{let r=0,b=0;for(const d of dates){r=allData[d]&&allData[d]['No Scroll']?r+1:0;if(r>b)b=r;}return b;})();
-  const spStreak=(()=>{let r=0,b=0;for(const d of dates){r=allData[d]&&allData[d]['Sport']?r+1:0;if(r>b)b=r;}return b;})();
-  const bossWins=Object.values(S.boss()).filter(b=>b.declared==='won').length;
-  const bossLosses=Object.values(S.boss()).filter(b=>b.declared==='lost').length;
-  const questWins=Object.values(S.quests()).reduce((a,w)=>a+Object.values(w).filter(q=>q&&q.state==='done').length,0);
-
-  const BADGES=[
+  const{best}=computeStreak(today);
+  const cc=h=>dates.filter(d=>allData[d]&&allData[d][h]).length;
+  const cs=h=>{let r=0,b=0;for(const d of dates){r=allData[d]&&allData[d][h]?r+1:0;if(r>b)b=r;}return b;};
+  const bw=Object.values(S.boss()).filter(b=>b.declared==='won').length;
+  const bl=Object.values(S.boss()).filter(b=>b.declared==='lost').length;
+  const qw=Object.values(S.quests()).reduce((a,w)=>a+Object.values(w).filter(q=>q&&q.state==='done').length,0);
+  return[
     {emoji:'🔥',name:'Premier Feu',how:'Streak de 7 jours',type:'n',earned:best>=7},
-    {emoji:'💯',name:'Perfection',how:'Première journée 10/10',type:'n',earned:perfect>=1},
+    {emoji:'💯',name:'Perfection',how:'1ère journée 10/10',type:'n',earned:perfect>=1},
     {emoji:'⭐',name:'10 Étoiles',how:'10 journées parfaites',type:'n',earned:perfect>=10},
     {emoji:'🌟',name:'30 Étoiles',how:'30 journées parfaites',type:'n',earned:perfect>=30},
-    {emoji:'⚡',name:'14 Jours',how:'14 jours consécutifs ≥70%',type:'n',earned:best>=14},
-    {emoji:'🔱',name:'30 Jours',how:'30 jours consécutifs ≥70%',type:'n',earned:best>=30},
-    {emoji:'👑',name:'Centurion',how:'100 jours consécutifs ≥70%',type:'n',earned:best>=100},
-    {emoji:'📖',name:'Dévotion',how:'Coran coché 30 fois',type:'n',earned:coranCount>=30},
-    {emoji:'🌙',name:'Récitant',how:'Coran coché 100 fois',type:'n',earned:coranCount>=100},
-    {emoji:'🤲',name:'Prière Constante',how:'Prière cochée 60 fois',type:'n',earned:prayerCount>=60},
-    {emoji:'📵',name:'Focus 14j',how:'No Scroll 14 jours de suite',type:'n',earned:nsStreak>=14},
-    {emoji:'🏃',name:'Athlète',how:'Sport 30 jours de suite',type:'n',earned:spStreak>=30},
+    {emoji:'⚡',name:'14 Jours',how:'14j consécutifs ≥70%',type:'n',earned:best>=14},
+    {emoji:'🔱',name:'30 Jours',how:'30j consécutifs ≥70%',type:'n',earned:best>=30},
+    {emoji:'👑',name:'Centurion',how:'100j consécutifs ≥70%',type:'n',earned:best>=100},
+    {emoji:'📖',name:'Dévotion',how:'Coran coché 30 fois',type:'n',earned:cc('Coran')>=30},
+    {emoji:'🌙',name:'Récitant',how:'Coran coché 100 fois',type:'n',earned:cc('Coran')>=100},
+    {emoji:'🤲',name:'Prière Constante',how:'Prière cochée 60 fois',type:'n',earned:cc('Prière')>=60},
+    {emoji:'📵',name:'Focus 14j',how:'No Scroll 14j de suite',type:'n',earned:cs('No Scroll')>=14},
+    {emoji:'🏃',name:'Athlète',how:'Sport 30j de suite',type:'n',earned:cs('Sport')>=30},
     {emoji:'🏅',name:'50 Jours',how:'50 jours trackés',type:'n',earned:dates.length>=50},
     {emoji:'🎖️',name:'100 Jours',how:'100 jours trackés',type:'n',earned:dates.length>=100},
     {emoji:'💎',name:'200 Jours',how:'200 jours trackés',type:'n',earned:dates.length>=200},
     {emoji:'🏆',name:'Légendaire',how:'365 jours trackés',type:'n',earned:dates.length>=365},
     {emoji:'💪',name:'500 Complétions',how:'500 habitudes cochées',type:'n',earned:total>=500},
     {emoji:'🦾',name:'1000 Complétions',how:'1000 habitudes cochées',type:'n',earned:total>=1000},
-    {emoji:'⚔️',name:'Premier Boss',how:'Vaincre 1 boss hebdomadaire',type:'b',earned:bossWins>=1},
-    {emoji:'🗡️',name:'5 Boss',how:'Vaincre 5 boss hebdomadaires',type:'b',earned:bossWins>=5},
-    {emoji:'🔱',name:'10 Boss',how:'Vaincre 10 boss',type:'b',earned:bossWins>=10},
-    {emoji:'🛡️',name:'Invaincu',how:'3 boss sans aucune défaite',type:'b',earned:bossWins>=3&&bossLosses===0},
-    {emoji:'📜',name:'5 Quêtes',how:'Valider 5 quêtes secondaires',type:'b',earned:questWins>=5},
-    {emoji:'📋',name:'15 Quêtes',how:'Valider 15 quêtes secondaires',type:'b',earned:questWins>=15},
+    {emoji:'⚔️',name:'Premier Boss',how:'Vaincre 1 boss',type:'b',earned:bw>=1},
+    {emoji:'🗡️',name:'5 Boss',how:'Vaincre 5 boss',type:'b',earned:bw>=5},
+    {emoji:'🔱',name:'10 Boss',how:'Vaincre 10 boss',type:'b',earned:bw>=10},
+    {emoji:'🛡️',name:'Invaincu',how:'3 boss sans défaite',type:'b',earned:bw>=3&&bl===0},
+    {emoji:'📜',name:'5 Quêtes',how:'Valider 5 quêtes',type:'b',earned:qw>=5},
+    {emoji:'📋',name:'15 Quêtes',how:'Valider 15 quêtes',type:'b',earned:qw>=15},
   ];
+}
 
-  document.getElementById('badges-grid').innerHTML=BADGES.map(b=>`
+function renderBadges(today){
+  const all=getBadgeDefs(today);
+  document.getElementById('badges-grid').innerHTML=all.map(b=>`
     <div class="badge${b.earned?(b.type==='b'?' boss-badge':' earned'):' locked'}">
       <span>${b.emoji}</span>
       <span style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.71rem;">${b.name}</span>
-      <div class="badge-tooltip"><strong>${b.name}</strong><br>${b.earned?'✅ Badge obtenu !':'🔒 '+b.how}</div>
+      <div class="badge-tooltip"><strong>${b.name}</strong><br>${b.earned?'✅ Obtenu !':'🔒 '+b.how}</div>
     </div>`).join('');
 }
 
-// ══ STATS ══
 function renderStats(today){
   const{streak,best}=computeStreak(today);
   const total=Object.values(allData).reduce((a,d)=>a+HABITS.filter(h=>d[h]).length,0);
@@ -980,18 +973,12 @@ function renderStats(today){
 
 function renderConsistency(today){
   const now=new Date(today+'T12:00:00');
-  const wStart=new Date(now);const dow=wStart.getDay();wStart.setDate(wStart.getDate()-(dow===0?6:dow-1));
+  const ws=new Date(now),dow=ws.getDay();ws.setDate(ws.getDate()-(dow===0?6:dow-1));
   let wD=0,wT=0;
-  for(let d=new Date(wStart);d<=now;d.setDate(d.getDate()+1)){
-    const s=d.toISOString().substring(0,10);
-    if(allData[s]){wD+=HABITS.filter(h=>allData[s][h]).length;wT+=HABITS.length;}
-  }
+  for(let d=new Date(ws);d<=now;d.setDate(d.getDate()+1)){const s=d.toISOString().substring(0,10);if(allData[s]){wD+=HABITS.filter(h=>allData[s][h]).length;wT+=HABITS.length;}}
   document.getElementById('con-week').textContent=(wT>0?Math.round(wD/wT*100):0)+'%';
-  const mStart=new Date(now.getFullYear(),now.getMonth(),1);let mD=0,mT=0;
-  for(let d=new Date(mStart);d<=now;d.setDate(d.getDate()+1)){
-    const s=d.toISOString().substring(0,10);
-    if(allData[s]){mD+=HABITS.filter(h=>allData[s][h]).length;mT+=HABITS.length;}
-  }
+  const ms=new Date(now.getFullYear(),now.getMonth(),1);let mD=0,mT=0;
+  for(let d=new Date(ms);d<=now;d.setDate(d.getDate()+1)){const s=d.toISOString().substring(0,10);if(allData[s]){mD+=HABITS.filter(h=>allData[s][h]).length;mT+=HABITS.length;}}
   document.getElementById('con-month').textContent=(mT>0?Math.round(mD/mT*100):0)+'%';
   const aD=Object.values(allData).reduce((a,d)=>a+HABITS.filter(h=>d[h]).length,0);
   const aT=Object.keys(allData).length*HABITS.length;
@@ -1012,41 +999,26 @@ function changeWeek(dir){weekOffset+=dir;renderWeekScores(todayStr());}
 
 function renderWeekScores(today){
   const days=['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
-  const now=new Date(today+'T12:00:00');
-  const wStart=new Date(getWeekStart(today,weekOffset)+'T12:00:00');
+  const now=new Date(today+'T12:00:00'),ws=new Date(getWeekStart(today,weekOffset)+'T12:00:00');
   const label=weekOffset===0?'Cette semaine':weekOffset===-1?'Semaine dernière':`Il y a ${Math.abs(weekOffset)} semaines`;
   document.getElementById('week-nav-label').textContent=label;
   document.getElementById('week-next').disabled=weekOffset>=0;
   document.getElementById('week-prev').disabled=weekOffset<=-20;
   const el=document.getElementById('week-scores');el.innerHTML='';
   for(let i=0;i<7;i++){
-    const d=new Date(wStart);d.setDate(d.getDate()+i);
-    const s=d.toISOString().substring(0,10);
-    const score=allData[s]?scoreDay(s):null,pct=score!==null?Math.round(score/HABITS.length*100):0;
-    const isFuture=d>now;
-    const color=pct>=100?'#22c55e':pct>=70?'#eab308':pct>=40?'#f97316':'#ef4444';
-    el.innerHTML+=`<div class="week-row">
-      <span class="week-day">${days[i]}</span>
+    const d=new Date(ws);d.setDate(d.getDate()+i);
+    const s=d.toISOString().substring(0,10),score=allData[s]?scoreDay(s):null,pct=score!==null?Math.round(score/HABITS.length*100):0;
+    const isFuture=d>now,color=pct>=100?'#22c55e':pct>=70?'#eab308':pct>=40?'#f97316':'#ef4444';
+    el.innerHTML+=`<div class="week-row"><span class="week-day">${days[i]}</span>
       <div class="week-bar-track"><div class="week-bar-fill" style="width:${isFuture?0:pct}%;background:${color};opacity:${isFuture?.2:score===null?.3:1};"></div></div>
-      <span class="week-score">${isFuture?'—':score!==null?score+'/10':'—'}</span>
-    </div>`;
+      <span class="week-score">${isFuture?'—':score!==null?score+'/10':'—'}</span></div>`;
   }
 }
 
 function renderComparison(today){
   const now=new Date(today+'T12:00:00');
-  function wAvg(off){
-    const ws=new Date(getWeekStart(today,off)+'T12:00:00'),we=new Date(ws);we.setDate(we.getDate()+6);
-    const end=off===0?now:we;let done=0,total=0;
-    for(let d=new Date(ws);d<=end;d.setDate(d.getDate()+1)){const s=d.toISOString().substring(0,10);if(allData[s]){done+=scoreDay(s);total+=HABITS.length;}}
-    return total>0?Math.round(done/total*100):null;
-  }
-  function mAvg(off){
-    const ref=new Date(now.getFullYear(),now.getMonth()-off,1),end=off===0?now:new Date(ref.getFullYear(),ref.getMonth()+1,0);
-    let done=0,total=0;
-    for(let d=new Date(ref);d<=end;d.setDate(d.getDate()+1)){const s=d.toISOString().substring(0,10);if(allData[s]){done+=scoreDay(s);total+=HABITS.length;}}
-    return total>0?Math.round(done/total*100):null;
-  }
+  function wAvg(off){const ws=new Date(getWeekStart(today,off)+'T12:00:00'),we=new Date(ws);we.setDate(we.getDate()+6);const end=off===0?now:we;let done=0,total=0;for(let d=new Date(ws);d<=end;d.setDate(d.getDate()+1)){const s=d.toISOString().substring(0,10);if(allData[s]){done+=scoreDay(s);total+=HABITS.length;}}return total>0?Math.round(done/total*100):null;}
+  function mAvg(off){const ref=new Date(now.getFullYear(),now.getMonth()-off,1),end=off===0?now:new Date(ref.getFullYear(),ref.getMonth()+1,0);let done=0,total=0;for(let d=new Date(ref);d<=end;d.setDate(d.getDate()+1)){const s=d.toISOString().substring(0,10);if(allData[s]){done+=scoreDay(s);total+=HABITS.length;}}return total>0?Math.round(done/total*100):null;}
   const tw=wAvg(0),lw=wAvg(-1),tm=mAvg(0),lm=mAvg(1);
   function delta(a,b){if(a===null||b===null)return`<span class="comp-delta flat">—</span>`;const d=a-b;return`<span class="comp-delta ${d>0?'up':d<0?'down':'flat'}">${d>0?'+':''}${d}%</span>`;}
   document.getElementById('comp-grid').innerHTML=`
@@ -1065,54 +1037,39 @@ function renderYearSelector(){
 
 function getHeatColor(count){
   const dk=document.documentElement.getAttribute('data-theme')==='dark';
-  if(count===0)return dk?'#18181b':'#e5e7eb';
-  if(count<=2)return dk?'#14532d':'#bbf7d0';
-  if(count<=4)return dk?'#15803d':'#86efac';
-  if(count<=6)return dk?'#16a34a':'#4ade80';
-  if(count<=8)return dk?'#22c55e':'#22c55e';
-  return dk?'#4ade80':'#16a34a';
+  if(count===0)return dk?'#18181b':'#e5e7eb';if(count<=2)return dk?'#14532d':'#bbf7d0';
+  if(count<=4)return dk?'#15803d':'#86efac';if(count<=6)return dk?'#16a34a':'#4ade80';
+  if(count<=8)return dk?'#22c55e':'#22c55e';return dk?'#4ade80':'#16a34a';
 }
 
 function renderHeatmap(){
   const year=parseInt(document.getElementById('year-sel').value);
-  const colsEl=document.getElementById('heatmap-cols'),monthsEl=document.getElementById('heatmap-months');
-  colsEl.innerHTML='';monthsEl.innerHTML='';
+  const ce=document.getElementById('heatmap-cols'),me=document.getElementById('heatmap-months');
+  ce.innerHTML='';me.innerHTML='';
   const start=new Date(year,0,1),dow=start.getDay();start.setDate(start.getDate()-(dow===0?6:dow-1));
-  const end=new Date(year,11,31),tooltip=document.getElementById('tooltip');
+  const end=new Date(year,11,31),tt=document.getElementById('tooltip');
   let col=null,wc=0,mp={},d=new Date(start);
   while(true){
     const id=d.getDay()===0?6:d.getDay()-1;
-    if(id===0){col=document.createElement('div');col.className='heatmap-col';colsEl.appendChild(col);const m=d.getMonth();if(d.getFullYear()===year&&!mp[m])mp[m]=wc;wc++;}
+    if(id===0){col=document.createElement('div');col.className='heatmap-col';ce.appendChild(col);const m=d.getMonth();if(d.getFullYear()===year&&!mp[m])mp[m]=wc;wc++;}
     const cell=document.createElement('div');cell.className='heatmap-cell';
     const ds=d.toISOString().substring(0,10);
     if(d.getFullYear()===year){
-      const dd=allData[ds]||{},count=HABITS.filter(h=>dd[h]).length;
-      cell.style.background=getHeatColor(count);
-      if(isPerfect(ds))cell.style.outline='1.5px solid #4ade80';
-      cell.addEventListener('mouseenter',()=>{
-        const dn=HABITS.filter(h=>dd[h]);
-        tooltip.innerHTML=`<strong>${ds}</strong> · ${count}/10${isPerfect(ds)?' ⭐':''}<br><span style="color:var(--muted);font-size:.68rem;">${dn.length?dn.join(', '):'Aucune'}</span>`;
-        tooltip.style.display='block';
-      });
-      cell.addEventListener('mousemove',e=>{tooltip.style.left=(e.clientX+12)+'px';tooltip.style.top=(e.clientY-44)+'px';});
-      cell.addEventListener('mouseleave',()=>{tooltip.style.display='none';});
+      const dd=allData[ds]||{},cnt=HABITS.filter(h=>dd[h]).length;
+      cell.style.background=getHeatColor(cnt);if(isPerfect(ds))cell.style.outline='1.5px solid #4ade80';
+      cell.addEventListener('mouseenter',()=>{const dn=HABITS.filter(h=>dd[h]);tt.innerHTML=`<strong>${ds}</strong> · ${cnt}/10${isPerfect(ds)?' ⭐':''}<br><span style="color:var(--muted);font-size:.68rem;">${dn.length?dn.join(', '):'Aucune'}</span>`;tt.style.display='block';});
+      cell.addEventListener('mousemove',e=>{tt.style.left=(e.clientX+12)+'px';tt.style.top=(e.clientY-44)+'px';});
+      cell.addEventListener('mouseleave',()=>{tt.style.display='none';});
     }else{cell.style.opacity='0';}
-    if(col)col.appendChild(cell);
-    d.setDate(d.getDate()+1);if(d>end&&d.getDay()===1)break;
+    if(col)col.appendChild(cell);d.setDate(d.getDate()+1);if(d>end&&d.getDay()===1)break;
   }
   const months=['Jan','Fév','Mar','Avr','Mai','Juin','Juil','Aoû','Sep','Oct','Nov','Déc'];
-  for(let m=0;m<12;m++){
-    const pos=mp[m]||0,next=mp[m+1]||wc,span=document.createElement('div');
-    span.className='month-label';span.style.width=((next-pos)*14)+'px';span.textContent=months[m];monthsEl.appendChild(span);
-  }
-  const leg=document.getElementById('heatmap-legend-cells');leg.innerHTML='';
-  [0,2,4,6,8,10].forEach(n=>{const c=document.createElement('div');c.className='legend-cell';c.style.background=getHeatColor(n);leg.appendChild(c);});
+  for(let m=0;m<12;m++){const pos=mp[m]||0,nx=mp[m+1]||wc,sp=document.createElement('div');sp.className='month-label';sp.style.width=((nx-pos)*14)+'px';sp.textContent=months[m];me.appendChild(sp);}
+  const lg=document.getElementById('heatmap-legend-cells');lg.innerHTML='';
+  [0,2,4,6,8,10].forEach(n=>{const c=document.createElement('div');c.className='legend-cell';c.style.background=getHeatColor(n);lg.appendChild(c);});
 }
 
-function renderFilters(){
-  document.getElementById('filter-row').innerHTML=Object.keys(CATEGORIES).map(cat=>
-    `<button class="filter-btn${cat===currentFilter?' active':''}" onclick="setFilter('${cat}')">${cat}</button>`).join('');
-}
+function renderFilters(){document.getElementById('filter-row').innerHTML=Object.keys(CATEGORIES).map(cat=>`<button class="filter-btn${cat===currentFilter?' active':''}" onclick="setFilter('${cat}')">${cat}</button>`).join('');}
 function setFilter(cat){currentFilter=cat;renderFilters();renderBars(cat);}
 
 function renderBars(filter){
@@ -1120,11 +1077,7 @@ function renderBars(filter){
   const filtered=filter==='Tout'||!CATEGORIES[filter]?HABITS:HABITS.filter(h=>CATEGORIES[filter].includes(h));
   document.getElementById('bar-list').innerHTML=filtered.map(h=>{
     const i=HABITS.indexOf(h),count=dates.filter(d=>allData[d][h]).length,pct=Math.round(count/total*100);
-    return`<div class="bar-row">
-      <div class="bar-meta"><div class="bar-name-wrap"><div class="bar-color-dot" style="background:${COLORS[i]}"></div><span>${h}</span></div>
-      <div class="bar-right"><span class="bar-count">${count}j</span><span class="bar-pct">${pct}%</span></div></div>
-      <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${COLORS[i]}"></div></div>
-    </div>`;
+    return`<div class="bar-row"><div class="bar-meta"><div class="bar-name-wrap"><div class="bar-color-dot" style="background:${COLORS[i]}"></div><span>${h}</span></div><div class="bar-right"><span class="bar-count">${count}j</span><span class="bar-pct">${pct}%</span></div></div><div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${COLORS[i]}"></div></div></div>`;
   }).join('');
 }
 
@@ -1137,22 +1090,7 @@ function renderDonut(){
     type:'doughnut',data:{labels:HABITS,datasets:[{data:counts,backgroundColor:COLORS,borderWidth:0,hoverOffset:5}]},
     options:{cutout:'65%',plugins:{legend:{display:false}},animation:{duration:700}}
   });
-  document.getElementById('donut-legend').innerHTML=HABITS.map((h,i)=>
-    `<div class="legend-item"><div class="legend-dot" style="background:${COLORS[i]}"></div><span>${h}</span><span class="legend-count">${counts[i]}</span></div>`).join('');
-}
-
-function renderWeekday(){
-  const dk=document.documentElement.getAttribute('data-theme')==='dark';
-  const counts=Array(7).fill(0),totals=Array(7).fill(0);
-  for(const[ds,d]of Object.entries(allData)){const dow=new Date(ds+'T12:00:00').getDay(),idx=dow===0?6:dow-1;counts[idx]+=HABITS.filter(h=>d[h]).length;totals[idx]++;}
-  const avgs=counts.map((c,i)=>totals[i]>0?Math.round(c/totals[i]*10)/10:0);
-  if(weekdayChart)weekdayChart.destroy();
-  weekdayChart=new Chart(document.getElementById('weekday-chart').getContext('2d'),{
-    type:'bar',data:{labels:['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'],datasets:[{data:avgs,backgroundColor:dk?'#4ade80':'#16a34a',borderRadius:7,borderSkipped:false}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>` ${ctx.raw} hab. en moy.`}}},
-      scales:{x:{grid:{color:dk?'rgba(255,255,255,0.04)':'rgba(0,0,0,0.05)'},ticks:{color:dk?'#5a5a63':'#9090a0',font:{size:11}}},
-              y:{grid:{color:dk?'rgba(255,255,255,0.04)':'rgba(0,0,0,0.05)'},ticks:{color:dk?'#5a5a63':'#9090a0',font:{size:11}},max:HABITS.length,beginAtZero:true}}}
-  });
+  document.getElementById('donut-legend').innerHTML=HABITS.map((h,i)=>`<div class="legend-item"><div class="legend-dot" style="background:${COLORS[i]}"></div><span>${h}</span><span class="legend-count">${counts[i]}</span></div>`).join('');
 }
 
 window.addEventListener('DOMContentLoaded',()=>{
