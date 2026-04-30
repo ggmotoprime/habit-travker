@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Solo Leveling — Habit Tracker</title>
+<title>Solo Leveling</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -12,7 +12,6 @@
 [data-theme="light"]{--bg:#f2f2f5;--surface:#ffffff;--surface2:#f0f0f3;--surface3:#e4e4ea;--border:rgba(0,0,0,0.07);--border2:rgba(0,0,0,0.13);--text:#1a1a1f;--text2:#55555e;--muted:#9090a0;--accent:#16a34a;}
 body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;transition:background .35s,color .35s;}
 
-/* CONFIG */
 #config-panel{max-width:440px;margin:0 auto;padding:3.5rem 1.5rem;}
 #config-panel h1{font-size:1.7rem;font-weight:700;letter-spacing:-.03em;margin-bottom:.3rem;}
 .sub{color:var(--text2);font-size:.85rem;margin-bottom:2rem;}
@@ -23,342 +22,356 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 .btn-primary{width:100%;background:var(--accent);color:#000;border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:700;padding:.85rem;cursor:pointer;margin-top:.5rem;}
 #error-msg{color:#ef4444;font-size:.8rem;margin-top:.75rem;display:none;line-height:1.6;padding:.6rem .8rem;background:rgba(239,68,68,.08);border-radius:8px;border:1px solid rgba(239,68,68,.2);}
 
-/* LOADING */
 #loading{display:none;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;gap:1rem;}
 .spinner{width:32px;height:32px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
 
-/* TABS */
 #dashboard{display:none;}
-.tab-bar{display:flex;gap:4px;background:var(--surface2);border-bottom:1px solid var(--border);padding:.5rem 1rem 0;position:sticky;top:0;z-index:50;overflow-x:auto;}
-.tab-btn{background:none;border:none;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:500;padding:.5rem .9rem;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all .2s;}
-.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
-.tab-content{display:none;padding:1.2rem 1rem 5rem;max-width:900px;margin:0 auto;}
+.tab-bar{display:flex;gap:2px;background:var(--surface);border-bottom:1px solid var(--border);padding:.5rem .8rem 0;position:sticky;top:0;z-index:50;overflow-x:auto;}
+.tab-btn{background:none;border:none;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:.75rem;font-weight:500;padding:.45rem .7rem;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all .2s;border-radius:6px 6px 0 0;}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);background:var(--surface2);}
+.tab-content{display:none;padding:1rem 1rem 5rem;max-width:900px;margin:0 auto;}
 .tab-content.active{display:block;}
 
-/* SHARED */
-.top-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:8px;}
-.top-bar-left h2{font-size:1.2rem;font-weight:700;letter-spacing:-.02em;}
-.top-bar-left .date-sub{font-size:.75rem;color:var(--text2);margin-top:2px;}
-.top-bar-right{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
-.icon-btn{background:var(--surface2);border:1px solid var(--border2);color:var(--text2);border-radius:8px;font-size:.78rem;padding:.4rem .7rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.top-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem;flex-wrap:wrap;gap:8px;}
+.top-bar h2{font-size:1.1rem;font-weight:700;letter-spacing:-.02em;}
+.date-sub{font-size:.73rem;color:var(--text2);}
+.top-right{display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
+.icon-btn{background:var(--surface2);border:1px solid var(--border2);color:var(--text2);border-radius:8px;font-size:.75rem;padding:.38rem .65rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
 .icon-btn:hover{background:var(--surface3);color:var(--text);}
 .spinning{animation:spin .7s linear infinite;}
 
-.section{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.1rem;margin-bottom:12px;}
-.section-title{font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.9rem;font-weight:500;}
+.section{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1rem;margin-bottom:10px;}
+.section-title{font-size:.66rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.8rem;font-weight:500;}
 
 /* HERO */
-.hero-row{display:grid;grid-template-columns:165px 1fr;gap:12px;margin-bottom:12px;}
-.ring-box{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.2rem;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;}
-.ring-wrap{position:relative;width:128px;height:128px;}
+.hero-row{display:grid;grid-template-columns:155px 1fr;gap:10px;margin-bottom:10px;}
+.ring-box{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1rem;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;}
+.ring-wrap{position:relative;width:120px;height:120px;}
 .ring-wrap canvas{position:absolute;top:0;left:0;}
 .ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;}
-.ring-pct{font-size:1.8rem;font-weight:700;font-family:'DM Mono',monospace;letter-spacing:-.04em;}
-.ring-label{font-size:.58rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:2px;}
-.ring-detail{font-size:.72rem;color:var(--text2);text-align:center;}
-.goal-msg{font-size:.7rem;color:var(--accent);font-weight:600;text-align:center;}
-.today-box{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.1rem;}
-.habits-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:5px;}
-.habit-chip{display:flex;align-items:center;gap:7px;background:var(--surface2);border:1px solid var(--border);border-radius:9px;padding:.42rem .65rem;font-size:.78rem;}
+.ring-pct{font-size:1.7rem;font-weight:700;font-family:'DM Mono',monospace;letter-spacing:-.04em;}
+.ring-label{font-size:.56rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;}
+.ring-detail{font-size:.7rem;color:var(--text2);text-align:center;}
+.goal-msg{font-size:.68rem;color:var(--accent);font-weight:600;text-align:center;}
+.today-box{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1rem;}
+.habits-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:4px;}
+.habit-chip{display:flex;align-items:center;gap:6px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:.38rem .6rem;font-size:.76rem;}
 .habit-chip.done{background:rgba(255,255,255,.02);}
-.habit-dot{width:7px;height:7px;border-radius:50%;border:1.5px solid var(--muted);flex-shrink:0;}
+.habit-dot{width:6px;height:6px;border-radius:50%;border:1.5px solid var(--muted);flex-shrink:0;}
 
-.threshold-banner{border-radius:10px;padding:.6rem .9rem;font-size:.78rem;font-weight:500;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.threshold-banner{border-radius:9px;padding:.55rem .85rem;font-size:.76rem;font-weight:500;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
 .threshold-banner.success{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);color:#22c55e;}
 .threshold-banner.warn{background:rgba(234,179,8,.1);border:1px solid rgba(234,179,8,.25);color:#ca8a04;}
 .threshold-banner.fail{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);color:#ef4444;}
 
-/* AUTO MSG */
-.auto-msg{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:.9rem 1rem;margin-bottom:12px;font-size:.82rem;color:var(--text2);font-style:italic;line-height:1.6;}
+.auto-msg{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:.8rem .9rem;margin-bottom:10px;font-size:.8rem;color:var(--text2);font-style:italic;line-height:1.6;}
 .auto-msg strong{color:var(--text);font-style:normal;}
 
 /* XP */
-.xp-section{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.1rem;margin-bottom:12px;}
-.rank-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
-.rank-badge-el{display:inline-flex;align-items:center;gap:5px;font-size:.75rem;font-weight:700;padding:4px 12px;border-radius:20px;}
-.xp-bar-wrap{background:var(--surface2);border-radius:6px;height:10px;overflow:hidden;margin-bottom:6px;}
-.xp-bar-fill{height:100%;border-radius:6px;transition:width 1.2s ease;}
-.xp-details{display:flex;justify-content:space-between;font-size:.68rem;color:var(--muted);}
-.xp-breakdown{margin-top:10px;padding:.7rem .9rem;background:var(--surface2);border-radius:10px;font-size:.72rem;line-height:1.9;color:var(--text2);}
+.xp-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1rem;margin-bottom:10px;}
+.xp-rank-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
+.rank-el{font-size:.75rem;font-weight:700;padding:3px 10px;border-radius:16px;}
+.xp-bar-wrap{background:var(--surface2);border-radius:5px;height:8px;overflow:hidden;margin-bottom:5px;}
+.xp-bar-fill{height:100%;border-radius:5px;transition:width 1.2s ease;}
+.xp-meta{display:flex;justify-content:space-between;font-size:.65rem;color:var(--muted);}
+.xp-breakdown{margin-top:8px;padding:.6rem .8rem;background:var(--surface2);border-radius:8px;font-size:.7rem;line-height:1.8;color:var(--text2);}
 .xp-breakdown strong{color:var(--text);}
-.malus-log{margin-top:8px;padding:.6rem .8rem;background:rgba(248,113,113,.06);border:1px solid rgba(248,113,113,.15);border-radius:8px;font-size:.72rem;color:#f87171;display:none;}
 
-/* ══ RPG ATTRIBUTES ══ */
-.attr-grid{display:grid;grid-template-columns:1fr;gap:10px;}
-.attr-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1rem;}
-.attr-header{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
-.attr-emoji{font-size:1.6rem;flex-shrink:0;}
-.attr-title-wrap{flex:1;}
-.attr-name{font-size:.9rem;font-weight:700;}
-.attr-desc{font-size:.7rem;color:var(--text2);margin-top:1px;}
-.attr-level-badge{font-family:'DM Mono',monospace;font-size:1.1rem;font-weight:700;padding:4px 12px;border-radius:10px;flex-shrink:0;}
-.attr-bar-wrap{background:var(--surface2);border-radius:6px;height:8px;overflow:hidden;margin-bottom:8px;}
-.attr-bar-fill{height:100%;border-radius:6px;transition:width 1s ease;}
-.attr-bar-label{display:flex;justify-content:space-between;font-size:.65rem;color:var(--muted);margin-bottom:4px;}
-.attr-sub-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-top:8px;}
-.attr-sub{background:var(--surface2);border-radius:8px;padding:.5rem .7rem;}
-.attr-sub-name{font-size:.68rem;color:var(--text2);margin-bottom:3px;}
-.attr-sub-bar{background:var(--surface3);border-radius:3px;height:4px;overflow:hidden;}
-.attr-sub-fill{height:100%;border-radius:3px;transition:width .8s ease;}
-.attr-sub-val{font-size:.65rem;font-family:'DM Mono',monospace;color:var(--muted);margin-top:2px;}
-.attr-how{margin-top:8px;padding:.5rem .7rem;background:var(--surface2);border-radius:8px;font-size:.68rem;color:var(--text2);line-height:1.6;}
-.attr-how strong{color:var(--text);}
-
-/* ══ BONUS/MALUS VIE RÉELLE ══ */
-.pd-balance{background:linear-gradient(135deg,#0a1628,#0d1f0d);border:1px solid rgba(74,222,128,.2);border-radius:16px;padding:1.2rem;margin-bottom:12px;text-align:center;}
-[data-theme="light"] .pd-balance{background:linear-gradient(135deg,#f0fdf4,#eff6ff);border-color:rgba(22,163,74,.3);}
-.pd-balance-val{font-size:2.2rem;font-weight:700;font-family:'DM Mono',monospace;color:#4ade80;letter-spacing:-.04em;}
-[data-theme="light"] .pd-balance-val{color:#16a34a;}
-.pd-balance-label{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:4px;}
-.pd-balance-sub{font-size:.75rem;color:var(--text2);margin-top:4px;}
-
-.bonus-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:12px;}
-.bonus-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:.9rem;cursor:pointer;transition:all .2s;position:relative;}
-.bonus-card:hover{border-color:var(--border2);transform:translateY(-1px);}
-.bonus-card.locked{opacity:.5;cursor:not-allowed;}
-.bonus-card.locked:hover{transform:none;}
-.bonus-emoji{font-size:1.5rem;margin-bottom:6px;}
-.bonus-name{font-size:.82rem;font-weight:600;margin-bottom:3px;}
-.bonus-cost{font-size:.75rem;font-family:'DM Mono',monospace;color:#fbbf24;font-weight:600;}
-.bonus-cond{font-size:.65rem;color:var(--muted);margin-top:2px;}
-.bonus-lock-msg{font-size:.62rem;color:#f87171;margin-top:3px;}
-
-.malus-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:12px;}
-.malus-card{background:var(--surface);border:1px solid rgba(248,113,113,.15);border-radius:14px;padding:.9rem;cursor:pointer;transition:all .2s;}
-.malus-card:hover{border-color:rgba(248,113,113,.35);transform:translateY(-1px);}
-.malus-emoji{font-size:1.5rem;margin-bottom:6px;}
-.malus-name{font-size:.82rem;font-weight:600;margin-bottom:3px;}
-.malus-cost{font-size:.75rem;font-family:'DM Mono',monospace;color:#f87171;font-weight:600;}
-.malus-desc{font-size:.65rem;color:var(--muted);margin-top:2px;}
-
-.transaction-log{display:flex;flex-direction:column;gap:6px;max-height:300px;overflow-y:auto;}
-.tx-item{display:flex;align-items:center;gap:8px;background:var(--surface2);border-radius:8px;padding:.5rem .7rem;font-size:.75rem;}
-.tx-amount{font-family:'DM Mono',monospace;font-weight:600;flex-shrink:0;}
-.tx-amount.pos{color:#4ade80;}.tx-amount.neg{color:#f87171;}
-.tx-desc{flex:1;color:var(--text2);}
-.tx-date{font-size:.65rem;color:var(--muted);flex-shrink:0;}
-.tx-delete{background:none;border:none;color:var(--muted);cursor:pointer;font-size:.8rem;padding:0 2px;flex-shrink:0;}
-.tx-delete:hover{color:#f87171;}
+/* RANKS DROPDOWN */
+.ranks-panel{display:none;margin-top:8px;border-radius:10px;overflow:hidden;border:1px solid var(--border2);}
+.ranks-panel.open{display:block;}
+.rank-row{display:flex;align-items:center;gap:10px;padding:.6rem .9rem;border-bottom:1px solid var(--border);}
+.rank-row:last-child{border-bottom:none;}
+.rank-row.current{background:var(--surface3);}
+.rank-row-emoji{font-size:1.1rem;flex-shrink:0;}
+.rank-row-name{font-size:.8rem;font-weight:600;flex:1;}
+.rank-row-pd{font-size:.68rem;font-family:'DM Mono',monospace;color:var(--muted);}
+.rank-row-status{font-size:.65rem;}
+.rank-prog-bar{height:3px;border-radius:2px;margin-top:4px;background:var(--surface2);overflow:hidden;}
+.rank-prog-fill{height:100%;border-radius:2px;}
 
 /* BOSS */
-.boss-card{background:linear-gradient(135deg,#0d0a1a 0%,#0a1020 100%);border:1px solid rgba(139,92,246,.35);border-radius:18px;padding:1.3rem;margin-bottom:12px;position:relative;overflow:hidden;}
-[data-theme="light"] .boss-card{background:linear-gradient(135deg,#f5f0ff 0%,#eff6ff 100%);border-color:rgba(109,40,217,.3);}
-.boss-glow{position:absolute;top:-60px;right:-60px;width:180px;height:180px;background:radial-gradient(circle,rgba(139,92,246,.15) 0%,transparent 70%);pointer-events:none;}
-.boss-header{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px;}
-.boss-icon{font-size:2.2rem;filter:drop-shadow(0 0 10px rgba(139,92,246,.7));flex-shrink:0;margin-top:2px;}
+.boss-card{background:linear-gradient(135deg,#0d0a1a,#0a1020);border:1px solid rgba(139,92,246,.35);border-radius:16px;padding:1.2rem;margin-bottom:10px;position:relative;overflow:hidden;}
+[data-theme="light"] .boss-card{background:linear-gradient(135deg,#f5f0ff,#eff6ff);border-color:rgba(109,40,217,.3);}
+.boss-glow{position:absolute;top:-50px;right:-50px;width:150px;height:150px;background:radial-gradient(circle,rgba(139,92,246,.15),transparent 70%);pointer-events:none;}
+.boss-header{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;}
+.boss-icon-el{font-size:2rem;filter:drop-shadow(0 0 8px rgba(139,92,246,.6));flex-shrink:0;}
 .boss-meta{flex:1;}
-.boss-week-label{font-size:.6rem;color:#a78bfa;text-transform:uppercase;letter-spacing:.1em;margin-bottom:3px;}
-.boss-name{font-size:1.1rem;font-weight:700;color:#e9d5ff;line-height:1.2;margin-bottom:4px;}
-[data-theme="light"] .boss-name{color:#4c1d95;}
-.boss-diff-badge{display:inline-flex;align-items:center;font-size:.68rem;font-weight:700;padding:3px 10px;border-radius:20px;}
-.boss-lore{font-size:.8rem;color:#c4b5fd;line-height:1.6;margin-bottom:12px;font-style:italic;}
+.boss-wk{font-size:.58rem;color:#a78bfa;text-transform:uppercase;letter-spacing:.1em;margin-bottom:2px;}
+.boss-nm{font-size:1rem;font-weight:700;color:#e9d5ff;margin-bottom:3px;}
+[data-theme="light"] .boss-nm{color:#4c1d95;}
+.boss-diff{display:inline-flex;align-items:center;font-size:.65rem;font-weight:700;padding:2px 9px;border-radius:16px;}
+.boss-lore{font-size:.77rem;color:#c4b5fd;line-height:1.6;margin-bottom:10px;font-style:italic;}
 [data-theme="light"] .boss-lore{color:#6d28d9;}
-.boss-objective{background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.2);border-radius:10px;padding:.8rem;margin-bottom:10px;}
-.boss-obj-title{font-size:.6rem;color:#a78bfa;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;}
-.boss-checklist{display:flex;flex-direction:column;gap:6px;}
-.boss-check-item{display:flex;align-items:center;gap:8px;font-size:.8rem;color:#e9d5ff;padding:3px 0;}
-[data-theme="light"] .boss-check-item{color:#4c1d95;}
-.boss-check-item input[type=checkbox]{width:15px;height:15px;accent-color:#8b5cf6;cursor:pointer;flex-shrink:0;}
-.boss-check-item label{cursor:pointer;line-height:1.4;}
-.boss-check-item.checked label{text-decoration:line-through;opacity:.5;}
-.boss-hp-section{margin-top:10px;}
-.boss-hp-label{display:flex;justify-content:space-between;font-size:.65rem;color:#a78bfa;margin-bottom:4px;}
-.boss-hp-track{background:rgba(0,0,0,.4);border-radius:6px;height:10px;overflow:hidden;}
+.boss-checklist-wrap{background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.2);border-radius:9px;padding:.75rem;margin-bottom:8px;}
+.boss-cl-title{font-size:.58rem;color:#a78bfa;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;}
+.boss-checklist{display:flex;flex-direction:column;gap:5px;}
+.boss-ci{display:flex;align-items:center;gap:7px;font-size:.77rem;color:#e9d5ff;padding:2px 0;}
+[data-theme="light"] .boss-ci{color:#4c1d95;}
+.boss-ci input[type=checkbox]{width:14px;height:14px;accent-color:#8b5cf6;cursor:pointer;flex-shrink:0;}
+.boss-ci label{cursor:pointer;line-height:1.4;}
+.boss-ci.checked label{text-decoration:line-through;opacity:.5;}
+.boss-hp-section{margin-top:8px;}
+.boss-hp-lbl{display:flex;justify-content:space-between;font-size:.62rem;color:#a78bfa;margin-bottom:3px;}
+.boss-hp-track{background:rgba(0,0,0,.4);border-radius:5px;height:9px;overflow:hidden;}
 [data-theme="light"] .boss-hp-track{background:rgba(109,40,217,.1);}
-.boss-hp-fill{height:100%;border-radius:6px;background:linear-gradient(90deg,#8b5cf6,#ec4899);transition:width 1s ease;}
-.boss-defeated{font-size:.8rem;font-weight:700;color:#4ade80;text-align:center;margin-top:8px;padding:.5rem;background:rgba(74,222,128,.1);border-radius:8px;border:1px solid rgba(74,222,128,.2);}
+.boss-hp-fill{height:100%;border-radius:5px;background:linear-gradient(90deg,#8b5cf6,#ec4899);transition:width 1s ease;}
+.boss-footer{display:flex;align-items:center;justify-content:space-between;margin-top:7px;flex-wrap:wrap;gap:5px;}
+.boss-reward-txt{font-size:.72rem;color:#fbbf24;font-weight:600;}
+.boss-status-txt{font-size:.67rem;color:#a78bfa;text-align:center;margin-top:4px;}
+.boss-won{font-size:.77rem;font-weight:700;color:#4ade80;text-align:center;margin-top:7px;padding:.45rem;background:rgba(74,222,128,.1);border-radius:7px;border:1px solid rgba(74,222,128,.2);}
+.boss-failed-msg{font-size:.77rem;font-weight:700;color:#f87171;text-align:center;margin-top:7px;padding:.45rem;background:rgba(248,113,113,.1);border-radius:7px;border:1px solid rgba(248,113,113,.2);}
 
-/* QUEST */
-.quest-list{display:flex;flex-direction:column;gap:8px;}
-.quest-item{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:.85rem;}
-.quest-item.quest-done{border-color:rgba(74,222,128,.3);background:rgba(74,222,128,.04);}
-.quest-header{display:flex;align-items:center;gap:8px;margin-bottom:5px;}
-.quest-icon{font-size:1.1rem;flex-shrink:0;}
-.quest-name{font-size:.82rem;font-weight:600;flex:1;}
-.quest-badge{font-size:.63rem;font-weight:700;padding:2px 8px;border-radius:12px;flex-shrink:0;}
+/* QUESTS */
+.quest-list{display:flex;flex-direction:column;gap:7px;}
+.quest-item{background:var(--surface2);border:1px solid var(--border);border-radius:11px;padding:.8rem;}
+.quest-item.q-done{border-color:rgba(74,222,128,.3);background:rgba(74,222,128,.04);}
+.quest-item.q-failed{border-color:rgba(248,113,113,.3);background:rgba(248,113,113,.04);}
+.quest-hdr{display:flex;align-items:center;gap:7px;margin-bottom:4px;}
+.quest-ico{font-size:1rem;flex-shrink:0;}
+.quest-nm{font-size:.8rem;font-weight:600;flex:1;}
+.quest-badge{font-size:.6rem;font-weight:700;padding:2px 7px;border-radius:10px;flex-shrink:0;}
 .quest-badge.easy{background:rgba(34,197,94,.15);color:#22c55e;}
 .quest-badge.medium{background:rgba(234,179,8,.15);color:#ca8a04;}
 .quest-badge.hard{background:rgba(239,68,68,.15);color:#ef4444;}
-.quest-desc{font-size:.75rem;color:var(--text2);line-height:1.5;margin-bottom:8px;}
-.quest-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;}
-.quest-rewards{font-size:.72rem;color:#fbbf24;font-weight:600;}
-.quest-actions{display:flex;gap:5px;flex-wrap:wrap;}
-.q-btn{border:1px solid var(--border2);color:var(--text);border-radius:7px;font-size:.7rem;padding:.28rem .6rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;background:var(--surface3);}
-.q-btn.success{background:rgba(74,222,128,.1);color:#4ade80;border-color:rgba(74,222,128,.3);}
-.q-btn.swap{background:rgba(139,92,246,.1);color:#a78bfa;border-color:rgba(139,92,246,.3);}
-.q-btn.reset-q{background:rgba(248,113,113,.08);color:#f87171;border-color:rgba(248,113,113,.2);}
+.quest-desc{font-size:.73rem;color:var(--text2);line-height:1.5;margin-bottom:7px;}
+.quest-ftr{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:5px;}
+.quest-rew{font-size:.7rem;color:#fbbf24;font-weight:600;}
+.quest-acts{display:flex;gap:4px;flex-wrap:wrap;}
+.qb{border:1px solid var(--border2);color:var(--text);border-radius:6px;font-size:.68rem;padding:.25rem .55rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;background:var(--surface3);}
+.qb.ok{background:rgba(74,222,128,.1);color:#4ade80;border-color:rgba(74,222,128,.3);}
+.qb.ko{background:rgba(248,113,113,.08);color:#f87171;border-color:rgba(248,113,113,.2);}
+.qb.rst{background:rgba(139,92,246,.08);color:#a78bfa;border-color:rgba(139,92,246,.2);}
+.qb.dis{opacity:.4;cursor:default;pointer-events:none;}
 
-/* STATS */
-.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px;}
-.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:.85rem .9rem;}
-.stat-label{font-size:.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.25rem;}
-.stat-val{font-size:1.4rem;font-weight:700;font-family:'DM Mono',monospace;letter-spacing:-.03em;color:var(--text);}
-.con-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;}
-.con-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:.9rem;text-align:center;}
-.con-val{font-size:1.15rem;font-weight:700;font-family:'DM Mono',monospace;}
-.con-label{font-size:.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-top:3px;}
-.bw-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;}
-.bw-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:.9rem;}
-.bw-label{font-size:.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px;}
-.bw-name{font-size:.95rem;font-weight:600;}
-.bw-pct{font-size:.75rem;color:var(--text2);font-family:'DM Mono',monospace;}
+/* ATTRIBUTES */
+.attr-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1rem;margin-bottom:10px;}
+.attr-hdr{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.attr-emoji{font-size:1.5rem;flex-shrink:0;}
+.attr-title{flex:1;}
+.attr-name{font-size:.88rem;font-weight:700;}
+.attr-desc{font-size:.68rem;color:var(--text2);margin-top:1px;}
+.attr-lvl{font-family:'DM Mono',monospace;font-size:1rem;font-weight:700;padding:3px 10px;border-radius:9px;flex-shrink:0;}
+.attr-bar-meta{display:flex;justify-content:space-between;font-size:.62rem;color:var(--muted);margin-bottom:3px;}
+.attr-bar-wrap{background:var(--surface2);border-radius:5px;height:7px;overflow:hidden;margin-bottom:10px;}
+.attr-bar-fill{height:100%;border-radius:5px;transition:width 1s ease;}
+.attr-subs{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-bottom:8px;}
+.attr-sub{background:var(--surface2);border-radius:8px;padding:.5rem .65rem;}
+.attr-sub-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;}
+.attr-sub-name{font-size:.65rem;color:var(--text2);}
+.attr-sub-val{font-size:.65rem;font-family:'DM Mono',monospace;color:var(--muted);}
+.attr-sub-bar{background:var(--surface3);border-radius:3px;height:4px;overflow:hidden;}
+.attr-sub-fill{height:100%;border-radius:3px;transition:width .8s ease;}
+.attr-sub-lvl{font-size:.6rem;color:var(--muted);margin-top:2px;}
+.attr-how{background:var(--surface2);border-radius:8px;padding:.55rem .7rem;font-size:.67rem;color:var(--text2);line-height:1.7;}
+.attr-how strong{color:var(--text);}
+.attr-goal{background:rgba(74,222,128,.06);border:1px solid rgba(74,222,128,.15);border-radius:8px;padding:.5rem .7rem;font-size:.67rem;color:#4ade80;margin-top:6px;line-height:1.6;}
+[data-theme="light"] .attr-goal{background:rgba(22,163,74,.06);border-color:rgba(22,163,74,.15);color:#16a34a;}
 
-/* WEEK NAV */
-.week-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
-.week-nav-btn{background:var(--surface2);border:1px solid var(--border2);color:var(--text2);border-radius:8px;font-size:.78rem;padding:.32rem .65rem;cursor:pointer;font-family:'DM Sans',sans-serif;}
-.week-nav-btn:disabled{opacity:.3;cursor:default;}
-.week-nav-label{font-size:.8rem;color:var(--text2);font-weight:500;}
-.week-scores{display:flex;flex-direction:column;gap:6px;}
-.week-row{display:flex;align-items:center;gap:10px;font-size:.75rem;}
-.week-day{width:28px;color:var(--muted);flex-shrink:0;}
-.week-bar-track{flex:1;background:var(--surface2);border-radius:4px;height:6px;overflow:hidden;}
-.week-bar-fill{height:100%;border-radius:4px;transition:width .8s ease;}
-.week-score{width:36px;text-align:right;font-family:'DM Mono',monospace;color:var(--text2);}
-
-/* COMP */
-.comp-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
-.comp-card{background:var(--surface2);border-radius:10px;padding:.8rem;}
-.comp-label{font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px;}
-.comp-val{font-size:1.1rem;font-weight:700;font-family:'DM Mono',monospace;}
-.comp-delta{font-size:.72rem;margin-top:2px;}
-.comp-delta.up{color:#22c55e;}.comp-delta.down{color:#ef4444;}.comp-delta.flat{color:var(--muted);}
-
-/* FILTER */
-.filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;}
-.filter-btn{background:var(--surface2);border:1px solid var(--border2);color:var(--text2);border-radius:20px;font-size:.73rem;padding:.3rem .75rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .18s;}
-.filter-btn.active{background:var(--accent);border-color:var(--accent);color:#000;font-weight:600;}
-
-/* HEATMAP */
-.heatmap-wrap{overflow-x:auto;padding-bottom:4px;}
-.heatmap-header{display:flex;gap:3px;margin-bottom:4px;padding-left:26px;}
-.month-label{font-size:.6rem;color:var(--muted);flex-shrink:0;}
-.heatmap-body{display:flex;gap:2px;}
-.day-labels{display:flex;flex-direction:column;gap:2px;margin-right:4px;}
-.day-label{font-size:.58rem;color:var(--muted);height:12px;line-height:12px;width:18px;text-align:right;}
-.heatmap-cols{display:flex;gap:2px;}
-.heatmap-col{display:flex;flex-direction:column;gap:2px;}
-.heatmap-cell{width:12px;height:12px;border-radius:2.5px;cursor:pointer;transition:transform .1s;}
-.heatmap-cell:hover{transform:scale(1.5);z-index:5;}
-.heatmap-legend{display:flex;align-items:center;gap:5px;margin-top:8px;justify-content:flex-end;}
-.heatmap-legend span{font-size:.6rem;color:var(--muted);}
-.legend-cells{display:flex;gap:2px;}
-.legend-cell{width:10px;height:10px;border-radius:2px;}
-
-/* CHARTS */
-.charts-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
-.donut-wrap{position:relative;max-width:140px;margin:0 auto;}
-.donut-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;}
-.donut-center .big{font-size:1.3rem;font-weight:700;font-family:'DM Mono',monospace;}
-.donut-center .small{font-size:.6rem;color:var(--muted);}
-.legend{display:flex;flex-direction:column;gap:5px;}
-.legend-item{display:flex;align-items:center;gap:7px;font-size:.72rem;}
-.legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
-.legend-count{margin-left:auto;font-family:'DM Mono',monospace;font-size:.68rem;color:var(--muted);}
-.bar-list{display:flex;flex-direction:column;gap:9px;}
-.bar-row{display:flex;flex-direction:column;gap:3px;}
-.bar-meta{display:flex;justify-content:space-between;align-items:center;font-size:.73rem;}
-.bar-name-wrap{display:flex;align-items:center;gap:6px;}
-.bar-color-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
-.bar-right{display:flex;gap:8px;align-items:center;}
-.bar-pct{color:var(--muted);font-family:'DM Mono',monospace;font-size:.7rem;}
-.bar-count{color:var(--muted);font-family:'DM Mono',monospace;font-size:.65rem;}
-.bar-track{background:var(--surface2);border-radius:4px;height:6px;overflow:hidden;}
-.bar-fill{height:100%;border-radius:4px;transition:width .9s ease;}
+/* HISTORY */
+.hist-item{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;margin-bottom:7px;display:flex;align-items:center;gap:10px;}
+.hist-icon{font-size:1.1rem;flex-shrink:0;}
+.hist-info{flex:1;}
+.hist-name{font-size:.8rem;font-weight:600;}
+.hist-sub{font-size:.68rem;color:var(--text2);margin-top:1px;}
+.hist-status{font-size:.72rem;font-weight:600;flex-shrink:0;}
+.hist-status.won{color:#4ade80;}
+.hist-status.failed{color:#f87171;}
+.hist-status.pending{color:var(--muted);}
+.hist-date{font-size:.62rem;color:var(--muted);flex-shrink:0;}
+.hist-filter{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;}
+.hf-btn{background:var(--surface2);border:1px solid var(--border2);color:var(--text2);border-radius:16px;font-size:.7rem;padding:.27rem .65rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;}
+.hf-btn.active{background:var(--accent);border-color:var(--accent);color:#000;font-weight:600;}
 
 /* BADGES */
-.badges-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
-.badge{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:.6rem .7rem;font-size:.73rem;display:flex;align-items:center;gap:6px;cursor:help;position:relative;}
-.badge.earned{border-color:rgba(251,191,36,.4);background:rgba(251,191,36,.07);color:#fbbf24;}
-.badge.boss-badge{border-color:rgba(139,92,246,.4);background:rgba(139,92,246,.07);color:#a78bfa;}
-.badge.locked{opacity:.3;filter:grayscale(1);}
-.badge-tooltip{display:none;position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--surface3);border:1px solid var(--border2);border-radius:8px;padding:6px 10px;font-size:.68rem;color:var(--text);white-space:nowrap;z-index:100;line-height:1.5;box-shadow:0 4px 16px rgba(0,0,0,.3);}
-.badge:hover .badge-tooltip,.badge:active .badge-tooltip{display:block;}
+.badges-page-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
+.badge-card{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:.8rem;}
+.badge-card.earned{border-color:rgba(251,191,36,.4);background:rgba(251,191,36,.06);}
+.badge-card.boss-b{border-color:rgba(139,92,246,.35);background:rgba(139,92,246,.06);}
+.badge-card.locked{opacity:.45;}
+.badge-card-hdr{display:flex;align-items:center;gap:8px;margin-bottom:5px;}
+.badge-card-emoji{font-size:1.4rem;flex-shrink:0;}
+.badge-card-name{font-size:.8rem;font-weight:600;}
+.badge-card-status{margin-left:auto;font-size:.75rem;}
+.badge-card-how{font-size:.68rem;color:var(--text2);line-height:1.5;}
+.badge-card-how.how-done{color:#4ade80;}
+.badge-cat-title{font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin:12px 0 6px;}
 
-.year-sel{background:var(--surface2);border:1px solid var(--border2);color:var(--text);font-family:'DM Sans',sans-serif;font-size:.75rem;border-radius:7px;padding:.25rem .5rem;cursor:pointer;}
-#tooltip{position:fixed;background:var(--surface3);border:1px solid var(--border2);border-radius:9px;padding:7px 11px;font-size:.72rem;pointer-events:none;z-index:999;display:none;color:var(--text);white-space:nowrap;line-height:1.7;box-shadow:0 4px 20px rgba(0,0,0,.3);}
+/* SHOP */
+.pd-balance-card{background:linear-gradient(135deg,#0a1628,#0d1f0d);border:1px solid rgba(74,222,128,.2);border-radius:14px;padding:1.1rem;margin-bottom:10px;text-align:center;}
+[data-theme="light"] .pd-balance-card{background:linear-gradient(135deg,#f0fdf4,#eff6ff);border-color:rgba(22,163,74,.3);}
+.pd-val{font-size:2rem;font-weight:700;font-family:'DM Mono',monospace;color:#4ade80;}
+[data-theme="light"] .pd-val{color:#16a34a;}
+.pd-label{font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:3px;}
+.pd-rank{font-size:.73rem;color:var(--text2);margin-top:4px;}
+.shop-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:10px;}
+.shop-card{background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:.85rem;cursor:pointer;transition:all .18s;position:relative;}
+.shop-card:hover:not(.locked){border-color:var(--border2);transform:translateY(-1px);}
+.shop-card.locked{opacity:.5;cursor:not-allowed;}
+.shop-emoji{font-size:1.4rem;margin-bottom:5px;}
+.shop-name{font-size:.8rem;font-weight:600;margin-bottom:2px;}
+.shop-cost{font-size:.72rem;font-family:'DM Mono',monospace;color:#fbbf24;font-weight:600;}
+.shop-cond{font-size:.62rem;color:var(--muted);margin-top:2px;}
+.shop-lock{font-size:.6rem;color:#f87171;margin-top:2px;}
+.malus-card{background:var(--surface);border:1px solid rgba(248,113,113,.15);border-radius:13px;padding:.85rem;cursor:pointer;transition:all .18s;}
+.malus-card:hover{border-color:rgba(248,113,113,.35);transform:translateY(-1px);}
+.malus-emoji{font-size:1.4rem;margin-bottom:5px;}
+.malus-name{font-size:.8rem;font-weight:600;margin-bottom:2px;}
+.malus-cost{font-size:.72rem;font-family:'DM Mono',monospace;color:#f87171;font-weight:600;}
+.malus-desc{font-size:.62rem;color:var(--muted);margin-top:2px;}
+.tx-log{display:flex;flex-direction:column;gap:5px;max-height:280px;overflow-y:auto;}
+.tx-item{display:flex;align-items:center;gap:7px;background:var(--surface2);border-radius:7px;padding:.45rem .65rem;font-size:.73rem;}
+.tx-amt{font-family:'DM Mono',monospace;font-weight:600;flex-shrink:0;}
+.tx-amt.pos{color:#4ade80;}.tx-amt.neg{color:#f87171;}
+.tx-desc{flex:1;color:var(--text2);}
+.tx-date{font-size:.62rem;color:var(--muted);flex-shrink:0;}
+.tx-del{background:none;border:none;color:var(--muted);cursor:pointer;font-size:.78rem;flex-shrink:0;}
+.tx-del:hover{color:#f87171;}
 
-/* CONFIRM DIALOG */
-.confirm-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:600;align-items:center;justify-content:center;padding:1rem;}
-.confirm-overlay.open{display:flex;}
-.confirm-box{background:var(--surface);border:1px solid var(--border2);border-radius:16px;padding:1.4rem;max-width:340px;width:100%;text-align:center;}
-.confirm-title{font-size:1rem;font-weight:700;margin-bottom:.5rem;}
-.confirm-desc{font-size:.82rem;color:var(--text2);margin-bottom:1rem;line-height:1.5;}
-.confirm-actions{display:flex;gap:8px;}
-.confirm-yes{flex:1;background:#22c55e22;border:1px solid #22c55e44;color:#22c55e;border-radius:8px;padding:.6rem;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;font-size:.82rem;}
-.confirm-no{flex:1;background:var(--surface2);border:1px solid var(--border2);color:var(--text2);border-radius:8px;padding:.6rem;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.82rem;}
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:10px;}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:.8rem .85rem;}
+.stat-label{font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.2rem;}
+.stat-val{font-size:1.35rem;font-weight:700;font-family:'DM Mono',monospace;letter-spacing:-.03em;color:var(--text);}
+.con-row{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:10px;}
+.con-card{background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:.85rem;text-align:center;}
+.con-val{font-size:1.1rem;font-weight:700;font-family:'DM Mono',monospace;}
+.con-label{font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-top:3px;}
+.bw-row{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:10px;}
+.bw-card{background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:.85rem;}
+.bw-label{font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:3px;}
+.bw-name{font-size:.92rem;font-weight:600;}
+.bw-pct{font-size:.72rem;color:var(--text2);font-family:'DM Mono',monospace;}
+.week-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;}
+.wn-btn{background:var(--surface2);border:1px solid var(--border2);color:var(--text2);border-radius:7px;font-size:.75rem;padding:.3rem .62rem;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.wn-btn:disabled{opacity:.3;cursor:default;}
+.wn-label{font-size:.78rem;color:var(--text2);font-weight:500;}
+.week-scores{display:flex;flex-direction:column;gap:5px;}
+.week-row{display:flex;align-items:center;gap:9px;font-size:.73rem;}
+.week-day{width:26px;color:var(--muted);flex-shrink:0;}
+.week-bar-track{flex:1;background:var(--surface2);border-radius:4px;height:5px;overflow:hidden;}
+.week-bar-fill{height:100%;border-radius:4px;transition:width .8s ease;}
+.week-score{width:34px;text-align:right;font-family:'DM Mono',monospace;color:var(--text2);}
+.comp-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
+.comp-card{background:var(--surface2);border-radius:9px;padding:.75rem;}
+.comp-label{font-size:.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:3px;}
+.comp-val{font-size:1.05rem;font-weight:700;font-family:'DM Mono',monospace;}
+.comp-delta{font-size:.7rem;margin-top:2px;}
+.comp-delta.up{color:#22c55e;}.comp-delta.down{color:#ef4444;}.comp-delta.flat{color:var(--muted);}
+.filter-row{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:9px;}
+.filter-btn{background:var(--surface2);border:1px solid var(--border2);color:var(--text2);border-radius:16px;font-size:.7rem;padding:.27rem .65rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;}
+.filter-btn.active{background:var(--accent);border-color:var(--accent);color:#000;font-weight:600;}
+.heatmap-wrap{overflow-x:auto;padding-bottom:4px;}
+.heatmap-header{display:flex;gap:3px;margin-bottom:3px;padding-left:24px;}
+.month-label{font-size:.58rem;color:var(--muted);flex-shrink:0;}
+.heatmap-body{display:flex;gap:2px;}
+.day-labels{display:flex;flex-direction:column;gap:2px;margin-right:3px;}
+.day-label{font-size:.56rem;color:var(--muted);height:11px;line-height:11px;width:16px;text-align:right;}
+.heatmap-cols{display:flex;gap:2px;}
+.heatmap-col{display:flex;flex-direction:column;gap:2px;}
+.heatmap-cell{width:11px;height:11px;border-radius:2px;cursor:pointer;transition:transform .1s;}
+.heatmap-cell:hover{transform:scale(1.5);z-index:5;}
+.heatmap-legend{display:flex;align-items:center;gap:4px;margin-top:7px;justify-content:flex-end;}
+.heatmap-legend span{font-size:.58rem;color:var(--muted);}
+.legend-cells{display:flex;gap:2px;}
+.legend-cell{width:9px;height:9px;border-radius:2px;}
+.charts-row{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:10px;}
+.donut-wrap{position:relative;max-width:130px;margin:0 auto;}
+.donut-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;}
+.donut-center .big{font-size:1.2rem;font-weight:700;font-family:'DM Mono',monospace;}
+.donut-center .small{font-size:.58rem;color:var(--muted);}
+.legend{display:flex;flex-direction:column;gap:4px;}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:.7rem;}
+.legend-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.legend-count{margin-left:auto;font-family:'DM Mono',monospace;font-size:.65rem;color:var(--muted);}
+.bar-list{display:flex;flex-direction:column;gap:8px;}
+.bar-row{display:flex;flex-direction:column;gap:2px;}
+.bar-meta{display:flex;justify-content:space-between;align-items:center;font-size:.7rem;}
+.bar-name-wrap{display:flex;align-items:center;gap:5px;}
+.bar-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.bar-right{display:flex;gap:7px;}
+.bar-pct{color:var(--muted);font-family:'DM Mono',monospace;font-size:.68rem;}
+.bar-count{color:var(--muted);font-family:'DM Mono',monospace;font-size:.63rem;}
+.bar-track{background:var(--surface2);border-radius:3px;height:5px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:3px;transition:width .9s ease;}
+.year-sel{background:var(--surface2);border:1px solid var(--border2);color:var(--text);font-family:'DM Sans',sans-serif;font-size:.72rem;border-radius:6px;padding:.22rem .45rem;cursor:pointer;}
 
-@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
-.anim{animation:fadeUp .4s ease both;}
-.a1{animation-delay:.05s;}.a2{animation-delay:.1s;}.a3{animation-delay:.15s;}.a4{animation-delay:.2s;}.a5{animation-delay:.25s;}
+/* CONFIRM */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:600;align-items:center;justify-content:center;padding:1rem;}
+.overlay.open{display:flex;}
+.confirm-box{background:var(--surface);border:1px solid var(--border2);border-radius:15px;padding:1.3rem;max-width:320px;width:100%;text-align:center;}
+.confirm-title{font-size:.95rem;font-weight:700;margin-bottom:.45rem;}
+.confirm-desc{font-size:.8rem;color:var(--text2);margin-bottom:1rem;line-height:1.5;}
+.confirm-acts{display:flex;gap:7px;}
+.confirm-yes{flex:1;background:#22c55e22;border:1px solid #22c55e44;color:#22c55e;border-radius:8px;padding:.55rem;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;font-size:.8rem;}
+.confirm-no{flex:1;background:var(--surface2);border:1px solid var(--border2);color:var(--text2);border-radius:8px;padding:.55rem;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.8rem;}
 
-@media(max-width:520px){
+#tooltip{position:fixed;background:var(--surface3);border:1px solid var(--border2);border-radius:8px;padding:6px 10px;font-size:.7rem;pointer-events:none;z-index:999;display:none;color:var(--text);white-space:nowrap;line-height:1.7;box-shadow:0 4px 20px rgba(0,0,0,.3);}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.anim{animation:fadeUp .35s ease both;}
+
+@media(max-width:480px){
   .stats-grid{grid-template-columns:repeat(2,1fr);}
   .charts-row{grid-template-columns:1fr;}
   .hero-row{grid-template-columns:1fr;}
   .bw-row{grid-template-columns:1fr;}
-  .bonus-grid,.malus-grid{grid-template-columns:1fr;}
-  .badges-grid{grid-template-columns:repeat(2,1fr);}
+  .shop-grid{grid-template-columns:1fr;}
+  .badges-page-grid{grid-template-columns:1fr;}
+  .attr-subs{grid-template-columns:1fr;}
 }
 </style>
 </head>
 <body>
 <div id="tooltip"></div>
-
-<!-- CONFIRM DIALOG -->
-<div class="confirm-overlay" id="confirm-overlay">
+<div class="overlay" id="confirm-overlay">
   <div class="confirm-box">
     <div class="confirm-title" id="confirm-title"></div>
     <div class="confirm-desc" id="confirm-desc"></div>
-    <div class="confirm-actions">
+    <div class="confirm-acts">
       <button class="confirm-yes" id="confirm-yes">Confirmer</button>
       <button class="confirm-no" onclick="closeConfirm()">Annuler</button>
     </div>
   </div>
 </div>
 
-<!-- CONFIG -->
 <div id="config-panel">
   <h1>⚡ Solo Leveling</h1>
   <p class="sub">Entre ton Database ID Notion. Token sécurisé côté serveur.</p>
-  <div class="field"><label>Database ID Notion</label><input type="text" id="db-input" placeholder="34d0614c879780b38b64dc3312a5f63c"></div>
+  <div class="field"><label>Database ID Notion</label><input type="text" id="db-input" placeholder="34d0614c..."></div>
   <button class="btn-primary" onclick="connect()">Connecter →</button>
   <div id="error-msg"></div>
 </div>
 
-<!-- LOADING -->
-<div id="loading"><div class="spinner"></div><p style="color:var(--muted);font-size:.85rem;">Chargement…</p></div>
+<div id="loading"><div class="spinner"></div><p style="color:var(--muted);font-size:.82rem;">Chargement…</p></div>
 
-<!-- DASHBOARD -->
 <div id="dashboard">
-  <!-- TAB BAR -->
   <div class="tab-bar">
     <button class="tab-btn active" onclick="switchTab('today')">🌅 Aujourd'hui</button>
-    <button class="tab-btn" onclick="switchTab('attributes')">⚔️ Attributs</button>
-    <button class="tab-btn" onclick="switchTab('boss')">👹 Boss</button>
-    <button class="tab-btn" onclick="switchTab('life')">🎁 Vie Réelle</button>
+    <button class="tab-btn" onclick="switchTab('attr')">⚔️ Attributs</button>
+    <button class="tab-btn" onclick="switchTab('history')">📋 Historique</button>
+    <button class="tab-btn" onclick="switchTab('badges')">🎖️ Badges</button>
+    <button class="tab-btn" onclick="switchTab('shop')">🛍️ Boutique</button>
     <button class="tab-btn" onclick="switchTab('stats')">📊 Stats</button>
   </div>
 
-  <!-- ══ TAB TODAY ══ -->
+  <!-- TODAY -->
   <div class="tab-content active" id="tab-today">
-    <div class="top-bar" style="margin-top:1rem;">
-      <div class="top-bar-left">
-        <h2>🌿 Mes Habitudes</h2>
-        <div class="date-sub" id="today-date-sub"></div>
-      </div>
-      <div class="top-bar-right">
+    <div class="top-bar" style="margin-top:.8rem;">
+      <div><h2>🌿 Solo Leveling</h2><div class="date-sub" id="today-date-sub"></div></div>
+      <div class="top-right">
         <button class="icon-btn" id="refresh-btn" onclick="refresh()">↻</button>
         <button class="icon-btn" onclick="toggleTheme()">☀️/🌙</button>
-        <button class="icon-btn" onclick="showResetMenu()" style="color:#f87171;">↺ Reset</button>
+        <button class="icon-btn" onclick="showResetMenu()" style="color:#f87171;">↺</button>
         <button class="icon-btn" onclick="logout()">Déco.</button>
       </div>
     </div>
-    <div class="auto-msg anim a1" id="auto-msg"></div>
-    <div class="hero-row anim a1">
+    <div class="auto-msg anim" id="auto-msg"></div>
+    <div class="hero-row anim">
       <div class="ring-box">
         <div class="ring-wrap">
-          <canvas id="ring-chart" width="128" height="128"></canvas>
+          <canvas id="ring-chart" width="120" height="120"></canvas>
           <div class="ring-center"><div class="ring-pct" id="ring-pct">0%</div><div class="ring-label">Aujourd'hui</div></div>
         </div>
         <div class="ring-detail" id="ring-detail"></div>
@@ -369,149 +382,159 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
         <div class="habits-grid" id="today-chips"></div>
       </div>
     </div>
-    <div class="threshold-banner anim a2" id="threshold-banner"></div>
-    <div class="xp-section anim a2">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+    <div class="threshold-banner anim" id="threshold-banner"></div>
+
+    <!-- XP + RANKS -->
+    <div class="xp-card anim">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">
         <div class="section-title" style="margin:0;">Progression annuelle</div>
-        <span class="rank-badge-el" id="rank-badge-small"></span>
+        <button onclick="toggleRanks()" id="ranks-toggle-btn" class="icon-btn" style="font-size:.68rem;">Voir les rangs ▾</button>
       </div>
-      <div class="rank-header">
-        <div style="font-size:.9rem;font-weight:700;" id="xp-level"></div>
-        <div style="font-size:.72rem;color:var(--text2);" id="xp-info"></div>
+      <div class="xp-rank-row">
+        <div style="font-size:.88rem;font-weight:700;" id="xp-level"></div>
+        <span class="rank-el" id="rank-el"></span>
       </div>
       <div class="xp-bar-wrap"><div class="xp-bar-fill" id="xp-bar" style="width:0%"></div></div>
-      <div class="xp-details"><span id="xp-current"></span><span id="xp-next"></span></div>
+      <div class="xp-meta"><span id="xp-current"></span><span id="xp-next"></span></div>
       <div class="xp-breakdown" id="xp-breakdown"></div>
-      <div class="malus-log" id="malus-log"></div>
+      <div class="ranks-panel" id="ranks-panel"></div>
     </div>
-    <div class="section anim a3">
-      <div class="section-title">Solde PD disponible</div>
-      <div style="font-size:1.6rem;font-weight:700;font-family:'DM Mono',monospace;color:#4ade80;" id="pd-solde-today">—</div>
-      <div style="font-size:.72rem;color:var(--text2);margin-top:4px;">PD non dépensés — utilisables pour les bonus vie réelle</div>
-    </div>
-  </div>
 
-  <!-- ══ TAB ATTRIBUTES ══ -->
-  <div class="tab-content" id="tab-attributes">
-    <div style="padding-top:1rem;">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
-        <div>
-          <div style="font-size:1.1rem;font-weight:700;">⚔️ Attributs RPG</div>
-          <div style="font-size:.75rem;color:var(--text2);">Niveau 1 à 100 — progressent avec tes habitudes, boss et quêtes</div>
-        </div>
-        <button class="icon-btn" onclick="confirmReset('attributes')" style="color:#f87171;font-size:.72rem;">↺ Reset</button>
-      </div>
-      <div class="attr-grid" id="attr-grid"></div>
-    </div>
-  </div>
-
-  <!-- ══ TAB BOSS ══ -->
-  <div class="tab-content" id="tab-boss">
-    <div style="padding-top:1rem;">
-      <div class="boss-card anim a1" id="boss-card">
-        <div class="boss-glow"></div>
-        <div class="boss-header">
-          <div class="boss-icon" id="boss-icon"></div>
-          <div class="boss-meta">
-            <div class="boss-week-label" id="boss-week-label"></div>
-            <div class="boss-name" id="boss-name"></div>
-            <div style="margin-top:5px;display:flex;align-items:center;gap:8px;">
-              <span class="boss-diff-badge" id="boss-diff"></span>
-              <button class="q-btn reset-q" onclick="confirmReset('boss')" style="font-size:.65rem;padding:2px 8px;">↺ Reset</button>
-            </div>
+    <!-- BOSS -->
+    <div class="boss-card anim" id="boss-card">
+      <div class="boss-glow"></div>
+      <div class="boss-header">
+        <div class="boss-icon-el" id="boss-icon"></div>
+        <div class="boss-meta">
+          <div class="boss-wk" id="boss-wk"></div>
+          <div class="boss-nm" id="boss-nm"></div>
+          <div style="margin-top:4px;display:flex;align-items:center;gap:6px;">
+            <span class="boss-diff" id="boss-diff"></span>
+            <button class="qb rst" onclick="confirmReset('boss')" style="font-size:.62rem;padding:2px 7px;">↺ Reset</button>
           </div>
         </div>
-        <div class="boss-lore" id="boss-lore"></div>
-        <div class="boss-objective">
-          <div class="boss-obj-title">⚔️ Checklist — coche chaque étape accomplie</div>
-          <div class="boss-checklist" id="boss-checklist"></div>
-        </div>
-        <div style="margin-top:8px;font-size:.75rem;color:#fbbf24;font-weight:600;" id="boss-reward-info"></div>
-        <div class="boss-hp-section">
-          <div class="boss-hp-label"><span>⚔️ HP du Boss</span><span id="boss-hp-pct">100%</span></div>
-          <div class="boss-hp-track"><div class="boss-hp-fill" id="boss-hp-fill" style="width:100%"></div></div>
-        </div>
-        <div id="boss-result"></div>
       </div>
-      <!-- QUESTS -->
-      <div class="section anim a2">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.9rem;">
-          <div class="section-title" style="margin:0;">⚔️ Quêtes secondaires — <span style="color:var(--accent);">5 actives</span></div>
-          <button class="icon-btn" onclick="confirmReset('quests')" style="color:#f87171;font-size:.72rem;">↺ Reset</button>
-        </div>
-        <div class="quest-list" id="quest-list"></div>
+      <div class="boss-lore" id="boss-lore"></div>
+      <div class="boss-checklist-wrap">
+        <div class="boss-cl-title">⚔️ Checklist</div>
+        <div class="boss-checklist" id="boss-checklist"></div>
       </div>
-      <!-- BADGES -->
-      <div class="section anim a3">
-        <div class="section-title">🎖️ Badges</div>
-        <div class="badges-grid" id="badges-grid"></div>
+      <div class="boss-footer">
+        <div class="boss-reward-txt" id="boss-reward-txt"></div>
       </div>
+      <div class="boss-hp-section">
+        <div class="boss-hp-lbl"><span>HP du Boss</span><span id="boss-hp-pct">100%</span></div>
+        <div class="boss-hp-track"><div class="boss-hp-fill" id="boss-hp-fill" style="width:100%"></div></div>
+      </div>
+      <div id="boss-result"></div>
+    </div>
+
+    <!-- QUESTS -->
+    <div class="section anim">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem;">
+        <div class="section-title" style="margin:0;">⚔️ Quêtes secondaires</div>
+        <button class="qb rst" onclick="confirmReset('quests')" style="font-size:.62rem;">↺ Reset</button>
+      </div>
+      <div class="quest-list" id="quest-list"></div>
     </div>
   </div>
 
-  <!-- ══ TAB LIFE ══ -->
-  <div class="tab-content" id="tab-life">
-    <div style="padding-top:1rem;">
-      <div class="pd-balance anim a1">
-        <div class="pd-balance-val" id="pd-solde-life">—</div>
-        <div class="pd-balance-label">Points de Discipline disponibles</div>
-        <div class="pd-balance-sub" id="pd-rank-cond">Dépense tes PD pour mériter tes récompenses</div>
+  <!-- ATTRIBUTES -->
+  <div class="tab-content" id="tab-attr">
+    <div style="padding-top:.8rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem;">
+        <div><div style="font-size:1rem;font-weight:700;">⚔️ Attributs RPG</div><div style="font-size:.72rem;color:var(--text2);">Niveaux 1–100 — progressent avec tes actions réelles</div></div>
+        <button class="icon-btn" onclick="confirmReset('attributes')" style="color:#f87171;font-size:.7rem;">↺ Reset PA</button>
       </div>
+      <div id="attr-grid"></div>
+    </div>
+  </div>
 
-      <div class="section anim a2">
+  <!-- HISTORY -->
+  <div class="tab-content" id="tab-history">
+    <div style="padding-top:.8rem;">
+      <div style="font-size:1rem;font-weight:700;margin-bottom:.8rem;">📋 Historique Boss & Quêtes</div>
+      <div class="hist-filter">
+        <button class="hf-btn active" onclick="setHistFilter('all',this)">Tout</button>
+        <button class="hf-btn" onclick="setHistFilter('boss',this)">Boss</button>
+        <button class="hf-btn" onclick="setHistFilter('quest',this)">Quêtes</button>
+        <button class="hf-btn" onclick="setHistFilter('won',this)">✅ Validé</button>
+        <button class="hf-btn" onclick="setHistFilter('failed',this)">❌ Échoué</button>
+        <button class="hf-btn" onclick="setHistFilter('pending',this)">⏳ En cours</button>
+      </div>
+      <div id="hist-list"></div>
+    </div>
+  </div>
+
+  <!-- BADGES -->
+  <div class="tab-content" id="tab-badges">
+    <div style="padding-top:.8rem;">
+      <div style="font-size:1rem;font-weight:700;margin-bottom:.3rem;">🎖️ Tous les badges</div>
+      <div style="font-size:.73rem;color:var(--text2);margin-bottom:1rem;">Survole ou clique pour voir comment débloquer</div>
+      <div id="badges-page"></div>
+    </div>
+  </div>
+
+  <!-- SHOP -->
+  <div class="tab-content" id="tab-shop">
+    <div style="padding-top:.8rem;">
+      <div class="pd-balance-card">
+        <div class="pd-val" id="pd-val">—</div>
+        <div class="pd-label">PD disponibles</div>
+        <div class="pd-rank" id="pd-rank-txt"></div>
+      </div>
+      <div class="section">
         <div class="section-title">🎁 Bonus — Récompenses méritées</div>
-        <div style="font-size:.72rem;color:var(--muted);margin-bottom:10px;">Clique pour dépenser tes PD et te récompenser</div>
-        <div class="bonus-grid" id="bonus-grid"></div>
+        <div style="font-size:.7rem;color:var(--muted);margin-bottom:9px;">Clique pour dépenser tes PD</div>
+        <div class="shop-grid" id="shop-grid"></div>
       </div>
-
-      <div class="section anim a3">
-        <div class="section-title">💀 Malus — Tu t'es accordé sans mériter</div>
-        <div style="font-size:.72rem;color:var(--muted);margin-bottom:10px;">Enregistre tes écarts pour garder le système honnête</div>
-        <div class="malus-grid" id="malus-grid"></div>
+      <div class="section">
+        <div class="section-title">💀 Malus — Enregistre tes écarts</div>
+        <div style="font-size:.7rem;color:var(--muted);margin-bottom:9px;">Sois honnête avec toi-même</div>
+        <div class="shop-grid" id="malus-shop-grid"></div>
       </div>
-
-      <div class="section anim a4">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.9rem;">
-          <div class="section-title" style="margin:0;">📋 Historique des transactions</div>
-          <button class="icon-btn" onclick="confirmReset('transactions')" style="color:#f87171;font-size:.72rem;">Tout effacer</button>
+      <div class="section">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem;">
+          <div class="section-title" style="margin:0;">📋 Historique</div>
+          <button class="icon-btn" onclick="confirmReset('transactions')" style="color:#f87171;font-size:.7rem;">Effacer</button>
         </div>
-        <div class="transaction-log" id="transaction-log"></div>
+        <div class="tx-log" id="tx-log"></div>
       </div>
     </div>
   </div>
 
-  <!-- ══ TAB STATS ══ -->
+  <!-- STATS -->
   <div class="tab-content" id="tab-stats">
-    <div style="padding-top:1rem;">
-      <div class="stats-grid anim a1">
+    <div style="padding-top:.8rem;">
+      <div class="stats-grid anim">
         <div class="stat-card"><div class="stat-label">🔥 Streak</div><div class="stat-val" id="stat-streak">—</div></div>
         <div class="stat-card"><div class="stat-label">🏆 Best</div><div class="stat-val" id="stat-best">—</div></div>
         <div class="stat-card"><div class="stat-label">✅ Total</div><div class="stat-val" id="stat-total">—</div></div>
         <div class="stat-card"><div class="stat-label">⭐ Parfaits</div><div class="stat-val" id="stat-perfect">—</div></div>
       </div>
-      <div class="con-row anim a2">
+      <div class="con-row">
         <div class="con-card"><div class="con-val" id="con-week">—</div><div class="con-label">Cette semaine</div></div>
         <div class="con-card"><div class="con-val" id="con-month">—</div><div class="con-label">Ce mois</div></div>
         <div class="con-card"><div class="con-val" id="con-rate">—</div><div class="con-label">Taux global</div></div>
       </div>
-      <div class="bw-row anim a2">
+      <div class="bw-row">
         <div class="bw-card"><div class="bw-label">🌟 Meilleure</div><div class="bw-name" id="best-habit">—</div><div class="bw-pct" id="best-pct"></div></div>
         <div class="bw-card"><div class="bw-label">⚠️ À travailler</div><div class="bw-name" id="worst-habit">—</div><div class="bw-pct" id="worst-pct"></div></div>
       </div>
-      <div class="section anim a3">
+      <div class="section">
         <div class="week-nav">
-          <button class="week-nav-btn" id="week-prev" onclick="changeWeek(-1)">← Préc.</button>
-          <span class="week-nav-label" id="week-nav-label">Cette semaine</span>
-          <button class="week-nav-btn" id="week-next" onclick="changeWeek(1)" disabled>Suiv. →</button>
+          <button class="wn-btn" id="week-prev" onclick="changeWeek(-1)">← Préc.</button>
+          <span class="wn-label" id="week-nav-label">Cette semaine</span>
+          <button class="wn-btn" id="week-next" onclick="changeWeek(1)" disabled>Suiv. →</button>
         </div>
         <div class="week-scores" id="week-scores"></div>
       </div>
-      <div class="section anim a3">
+      <div class="section">
         <div class="section-title">Comparaison</div>
         <div class="comp-grid" id="comp-grid"></div>
       </div>
-      <div class="section anim a4">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem;">
+      <div class="section">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.7rem;">
           <div class="section-title" style="margin:0;">Activité annuelle</div>
           <select class="year-sel" id="year-sel" onchange="renderHeatmap()"></select>
         </div>
@@ -527,16 +550,14 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
         </div>
         <div class="heatmap-legend"><span>0</span><div class="legend-cells" id="heatmap-legend-cells"></div><span>10</span></div>
       </div>
-      <div class="section anim a5">
+      <div class="section">
         <div class="section-title">Taux de complétion</div>
         <div class="filter-row" id="filter-row"></div>
         <div class="bar-list" id="bar-list"></div>
       </div>
-      <div class="charts-row anim a5">
-        <div class="section">
-          <div class="section-title">Répartition</div>
-          <div class="donut-wrap">
-            <canvas id="donut-chart" width="140" height="140"></canvas>
+      <div class="charts-row">
+        <div class="section"><div class="section-title">Répartition</div>
+          <div class="donut-wrap"><canvas id="donut-chart" width="130" height="130"></canvas>
             <div class="donut-center"><div class="big" id="donut-total">0</div><div class="small">complétions</div></div>
           </div>
         </div>
@@ -547,184 +568,233 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 </div>
 
 <script>
-// ══ CONSTANTS ══
+// ══ DATA ══
 const HABITS=['Sport','Nutrition','Coran','Islam','Arabe','Pushup','No Scroll','Prière','Skill','Chess'];
 const NOTION_NAMES={'Sport':'Sport','Nutrition':'Nutrition','Quran':'Coran','Islam':'Islam','Arabe':'Arabe','Pushup':'Pushup','No phone':'No Scroll','Prayer':'Prière','Skill':'Skill','Chess':'Chess'};
 const NOTION_KEYS=Object.keys(NOTION_NAMES);
 const COLORS=['#ef4444','#f97316','#eab308','#22c55e','#06b6d4','#3b82f6','#8b5cf6','#ec4899','#14b8a6','#f43f5e'];
 const CATEGORIES={'Tout':null,'Sport':['Sport','Pushup'],'Religion':['Coran','Islam','Prière'],'Apprentissage':['Arabe','Skill','Chess'],'Discipline':['No Scroll','Nutrition']};
-
-// ══ 9 RPG ATTRIBUTES ══
-const ATTRIBUTES=[
-  {id:'discipline',name:'Discipline',emoji:'⚔️',color:'#06b6d4',
-   desc:'La base absolue. Maîtrise de soi et respect des règles.',
-   subs:[{name:'No Scroll',habit:'No Scroll'},{name:'Exécution immédiate',habit:null},{name:'Respect des règles',habit:null},{name:'Routine',habit:null}],
-   // Points par action : [habitude cochée, boss validé categorie, quête validée categorie]
-   gains:{habit_no_scroll:3,habit_daily:0,boss_win:8,quest_win:4,perfect_day:3,streak7:6}},
-  {id:'physique',name:'Physique',emoji:'💪',color:'#ef4444',
-   desc:'Force, endurance, combat. Ton corps est ton temple.',
-   subs:[{name:'Force',habit:'Pushup'},{name:'Endurance',habit:'Sport'},{name:'Combat',habit:null},{name:'Récupération',habit:null}],
-   gains:{habit_sport:2,habit_pushup:2,boss_win:10,quest_win:5,perfect_day:1}},
-  {id:'nutrition',name:'Nutrition',emoji:'🥗',color:'#22c55e',
-   desc:'Santé et énergie. Tu es ce que tu manges.',
-   subs:[{name:'Qualité des repas',habit:'Nutrition'},{name:'Hydratation',habit:null},{name:'Timing',habit:null},{name:'Conscience alimentaire',habit:null}],
-   gains:{habit_nutrition:4,boss_win:8,quest_win:6,perfect_day:1}},
-  {id:'spiritualite',name:'Spiritualité',emoji:'🌙',color:'#a78bfa',
-   desc:'Direction intérieure et stabilité de l\'âme.',
-   subs:[{name:'Coran',habit:'Coran'},{name:'Prière',habit:'Prière'},{name:'Islam',habit:'Islam'},{name:'Dhikr',habit:null}],
-   gains:{habit_coran:3,habit_prayer:2,habit_islam:1,boss_win:10,quest_win:5,perfect_day:1}},
-  {id:'intelligence',name:'Intelligence',emoji:'🧠',color:'#f97316',
-   desc:'Capacité à apprendre, analyser et progresser.',
-   subs:[{name:'Arabe',habit:'Arabe'},{name:'Skill',habit:'Skill'},{name:'Concentration',habit:null},{name:'Mémoire',habit:null}],
-   gains:{habit_arabe:3,habit_skill:2,boss_win:8,quest_win:4,perfect_day:1}},
-  {id:'echecs',name:'Échecs',emoji:'♟️',color:'#fbbf24',
-   desc:'Stratégie pure. Calcul, tactique et patience.',
-   subs:[{name:'Calcul',habit:'Chess'},{name:'Tactique',habit:'Chess'},{name:'Stratégie',habit:null},{name:'Analyse',habit:null}],
-   gains:{habit_chess:4,boss_win:15,quest_win:6,perfect_day:0}},
-  {id:'mental',name:'Contrôle Mental',emoji:'🧘',color:'#8b5cf6',
-   desc:'Résistance à l\'inconfort. Niveau élite.',
-   subs:[{name:'Résistance',habit:null},{name:'Gestion ennui',habit:'No Scroll'},{name:'Impulsions',habit:'No Scroll'},{name:'Stabilité',habit:null}],
-   gains:{habit_no_scroll:2,boss_win:12,quest_win:6,streak7:8,perfect_day:2}},
-  {id:'social',name:'Social',emoji:'🗣️',color:'#ec4899',
-   desc:'Confiance, présence et communication.',
-   subs:[{name:'Inconnus',habit:null},{name:'Confiance',habit:null},{name:'Communication',habit:null},{name:'Présence',habit:null}],
-   gains:{habit_daily:0,boss_win:10,quest_win:8,perfect_day:0}},
-  {id:'execution',name:'Exécution',emoji:'⚡',color:'#14b8a6',
-   desc:'Transformer l\'intention en action. Constance absolue.',
-   subs:[{name:'Finir ce qu\'on commence',habit:null},{name:'Priorisation',habit:null},{name:'Vitesse',habit:null},{name:'Constance',habit:null}],
-   gains:{habit_daily:0,boss_win:5,quest_win:3,perfect_day:5,streak7:10,streak30:20}},
+const RANKS=[
+  {name:'E — Recrue',emoji:'🪨',min:0,max:2000,color:'#9ca3af',desc:'Le début. Chaque jour compte.'},
+  {name:'D — Apprenti',emoji:'🛡️',min:2000,max:6000,color:'#cd7f32',desc:'La routine s\'installe.'},
+  {name:'C — Chasseur',emoji:'⚔️',min:6000,max:14000,color:'#a0a0a0',desc:'Tu es constant. La discipline est là.'},
+  {name:'B — Guerrier',emoji:'🏹',min:14000,max:28000,color:'#f59e0b',desc:'Tu dépasses la moyenne.'},
+  {name:'A — Élite',emoji:'🔥',min:28000,max:50000,color:'#22c55e',desc:'Peu arrivent ici.'},
+  {name:'S — Maître',emoji:'💎',min:50000,max:80000,color:'#60a5fa',desc:'Ta discipline est un exemple.'},
+  {name:'SS — Légende',emoji:'👑',min:80000,max:120000,color:'#e879f9',desc:'Tu as transformé ta vie.'},
+  {name:'SSS — Transcendant',emoji:'⭐',min:120000,max:Infinity,color:'#fbbf24',desc:'365 jours de discipline absolue.'},
 ];
 
-// PA par niveau : 1→100, palier = 50 PA par niveau
-const PA_PER_LEVEL=50;
-function paToLevel(pa){return Math.min(100,Math.max(1,Math.floor(pa/PA_PER_LEVEL)+1));}
-function levelProgress(pa){const lvl=paToLevel(pa);if(lvl>=100)return 100;return Math.round((pa%(PA_PER_LEVEL))/PA_PER_LEVEL*100);}
-
-// ══ RANKS ══
-const RANKS=[
-  {name:'E — Recrue',emoji:'🪨',min:0,max:2000,color:'#9ca3af'},
-  {name:'D — Apprenti',emoji:'🛡️',min:2000,max:6000,color:'#cd7f32'},
-  {name:'C — Chasseur',emoji:'⚔️',min:6000,max:14000,color:'#a0a0a0'},
-  {name:'B — Guerrier',emoji:'🏹',min:14000,max:28000,color:'#f59e0b'},
-  {name:'A — Élite',emoji:'🔥',min:28000,max:50000,color:'#22c55e'},
-  {name:'S — Maître',emoji:'💎',min:50000,max:80000,color:'#60a5fa'},
-  {name:'SS — Légende',emoji:'👑',min:80000,max:120000,color:'#e879f9'},
-  {name:'SSS — Transcendant',emoji:'⭐',min:120000,max:Infinity,color:'#fbbf24'},
+// ══ 9 ATTRIBUTES — équilibrés ══
+// PA par niveau : 50 PA = 1 niveau. Max = niveau 100 = 5000 PA
+// Sources PA clairement définies par attribut
+const ATTRIBUTES=[
+  {id:'discipline',name:'Discipline',emoji:'⚔️',color:'#06b6d4',
+   desc:'La base absolue. Sans elle, rien n\'est possible.',
+   goal:'Maîtriser ses impulsions, respecter sa routine sans exception.',
+   subs:[
+     {name:'No Scroll',key:'no_scroll',desc:'Résistance au téléphone'},
+     {name:'Routine matinale',key:'routine',desc:'Réveil + protocole'},
+     {name:'Exécution immédiate',key:'exec',desc:'Agir sans reporter'},
+     {name:'Constance',key:'constance',desc:'Jours sans écarts'},
+   ],
+   gains_txt:'No Scroll +3/j · Journée parfaite +3 · Streak 7j +6 · Boss discipline +8'},
+  {id:'physique',name:'Physique',emoji:'💪',color:'#ef4444',
+   desc:'Corps, force, endurance. Ton temple.',
+   goal:'Développer force + endurance + compétences de combat. Corps fonctionnel et puissant.',
+   subs:[
+     {name:'Force / Musculation',key:'force',desc:'Sport + Pushup quotidien'},
+     {name:'Endurance / Athlétisme',key:'endurance',desc:'Course, marche, sport cardio'},
+     {name:'Combat / Grappling',key:'combat',desc:'Boss et quêtes combat'},
+     {name:'Récupération',key:'recup',desc:'Nutrition + sommeil'},
+   ],
+   gains_txt:'Sport +2/j · Pushup +2/j · Boss physiques +10-15 · Quêtes sport +5-8'},
+  {id:'nutrition',name:'Nutrition',emoji:'🥗',color:'#22c55e',
+   desc:'70-75kg / 1m75. Corps musclé, énergie stable.',
+   goal:'Atteindre 70-75kg de masse musculaire. Nutrition propre et consciente.',
+   subs:[
+     {name:'Qualité alimentaire',key:'qualite',desc:'Nutrition cochée chaque jour'},
+     {name:'Composition corporelle',key:'compo',desc:'Streaks nutrition + boss'},
+     {name:'Conscience',key:'conscience',desc:'Cuisiner ses repas, éviter le junk'},
+     {name:'Hydratation',key:'hydrat',desc:'Habitude quotidienne'},
+   ],
+   gains_txt:'Nutrition +4/j · Streaks nutrition +3 · Boss abstinent +10 · Quête cuisine +8'},
+  {id:'spiritualite',name:'Spiritualité',emoji:'🌙',color:'#a78bfa',
+   desc:'Se rapprocher d\'Allah. Prière, Coran, compréhension.',
+   goal:'5 prières à l\'heure, mémoriser sourates, comprendre Sira, Hadith, Dua.',
+   subs:[
+     {name:'Salat (Prière)',key:'salat',desc:'Prière cochée — 3 PA/j (valorisée)'},
+     {name:'Coran',key:'coran',desc:'Lecture + mémorisation — 3 PA/j'},
+     {name:'Islam / Connaissance',key:'ilm',desc:'Islam coché + quêtes — 1 PA/j + bonus'},
+     {name:'Dhikr / Dua',key:'dhikr',desc:'Boss Moine du lever + quêtes'},
+   ],
+   gains_txt:'Prière +3/j · Coran +3/j · Islam +1/j · Boss spirituels +10-15 · Quêtes +8-12'},
+  {id:'intelligence',name:'Intelligence',emoji:'🧠',color:'#f97316',
+   desc:'Apprendre, analyser, retenir. Esprit affûté.',
+   goal:'Maîtrise de l\'arabe, développer des compétences réelles, pensée stratégique.',
+   subs:[
+     {name:'Arabe',key:'arabe',desc:'Arabe coché — 3 PA/j'},
+     {name:'Skill / Compétences',key:'skill',desc:'Skill coché — 2 PA/j'},
+     {name:'Mémoire',key:'memoire',desc:'Boss polyglotte + quêtes fiches'},
+     {name:'Analyse',key:'analyse',desc:'Boss journal + quêtes intellectuelles'},
+   ],
+   gains_txt:'Arabe +3/j · Skill +2/j · Boss intellectuels +8-12 · Quêtes appr. +4-8'},
+  {id:'echecs',name:'Échecs',emoji:'♟️',color:'#fbbf24',
+   desc:'Objectif : 2000 Elo. Tu es à 1500.',
+   goal:'Atteindre 2000 Elo. Progression mesurable par la tactique, le calcul et l\'analyse.',
+   subs:[
+     {name:'Calcul tactique',key:'calcul',desc:'Chess coché — 4 PA/j'},
+     {name:'Stratégie',key:'strategie',desc:'Boss conquérant — +30 PA'},
+     {name:'Analyse de parties',key:'analyse_e',desc:'Quête analyser parties — +10 PA'},
+     {name:'Endurance mentale',key:'patience',desc:'Streaks Chess + boss'},
+   ],
+   gains_txt:'Chess +4/j · Boss +100 Elo +30 PA · Analyser 5 parties +10 · Streaks Chess +bonus'},
+  {id:'mental',name:'Contrôle Mental',emoji:'🧘',color:'#8b5cf6',
+   desc:'Résistance à l\'inconfort. Niveau élite.',
+   goal:'Gérer ses émotions, résister aux distractions, maintenir la stabilité sous pression.',
+   subs:[
+     {name:'Résistance inconfort',key:'resist',desc:'Boss bain de glace, silence'},
+     {name:'Gestion ennui',key:'ennui',desc:'No Scroll — 2 PA/j'},
+     {name:'Contrôle impulsions',key:'impulse',desc:'Journées parfaites + streaks'},
+     {name:'Stabilité émotionnelle',key:'stabilite',desc:'Boss stoïque + méditation'},
+   ],
+   gains_txt:'No Scroll +2/j · Journée parfaite +2 · Streak 7j +8 · Boss mental +12-15'},
+  {id:'social',name:'Social',emoji:'🗣️',color:'#ec4899',
+   desc:'Aisance, présence et communication naturelle.',
+   goal:'Être à l\'aise avec les gens, initier des conversations, créer des connexions authentiques.',
+   subs:[
+     {name:'Aisance avec inconnus',key:'aisance',desc:'Boss social + quêtes inconnus'},
+     {name:'Confiance en soi',key:'confiance',desc:'Boss stoïque + parfaites consécutives'},
+     {name:'Communication',key:'comm',desc:'Quêtes discussions + parler en public'},
+     {name:'Présence',key:'presence',desc:'Boss parler en public + quêtes'},
+   ],
+   gains_txt:'Boss social +12 · Quête inconnu +10 · Parler en public +15 · Discussion islamique +6'},
+  {id:'execution',name:'Exécution',emoji:'⚡',color:'#14b8a6',
+   desc:'Transformer l\'intention en action. Sans délai.',
+   goal:'Finir ce qu\'on commence. Priorisation. Vitesse d\'action et constance absolue.',
+   subs:[
+     {name:'Finir ce qu\'on commence',key:'finish',desc:'Boss tireur + quêtes tâches'},
+     {name:'Priorisation',key:'prio',desc:'Objectifs mensuels + boss'},
+     {name:'Vitesse d\'action',key:'vitesse',desc:'Journées parfaites'},
+     {name:'Constance',key:'const',desc:'Streaks + tous boss validés'},
+   ],
+   gains_txt:'Journée parfaite +5 · Streak 7j +10 · Streak 30j +20 · Tout boss +3 · Quêtes +3'},
 ];
 
 // ══ 30 BOSSES ══
 const BOSSES=[
-  {name:'L\'Ascète du Silence',icon:'🔕',diff:'Difficile',color:'#8b5cf6',lore:'Aucune musique, YouTube, podcast. 7 jours de silence total.',steps:['Aucune musique lundi','Aucune musique mardi','Aucune musique mercredi','Aucune musique jeudi','Aucune musique vendredi','Aucune vidéo (YT/Netflix) toute la semaine','Aucun podcast toute la semaine'],reward:600,attr:'mental'},
-  {name:'Le Réveil du Guerrier',icon:'🌅',diff:'Extrême',color:'#f97316',lore:'5h du matin, 7 jours de suite. Ton corps va résister.',steps:['Réveil 5h00 lundi','Réveil 5h00 mardi','Réveil 5h00 mercredi','Réveil 5h00 jeudi','Réveil 5h00 vendredi','Réveil 5h00 samedi','Réveil 5h00 dimanche'],reward:800,attr:'discipline'},
-  {name:'Le Marcheur de l\'Infini',icon:'🦶',diff:'Extrême',color:'#22c55e',lore:'150 000 pas en 7 jours. 21 000 pas par jour.',steps:['21k pas lundi','21k pas mardi','21k pas mercredi','21k pas jeudi','21k pas vendredi','21k pas samedi','21k pas dimanche'],reward:900,attr:'physique'},
+  {name:'L\'Ascète du Silence',icon:'🔕',diff:'Difficile',color:'#8b5cf6',lore:'Aucune musique, YouTube, podcast. 7 jours.',steps:['Aucune musique lundi','Aucune musique mardi','Aucune musique mercredi','Aucune musique jeudi','Aucune musique vendredi','Aucune vidéo (YT/Netflix) semaine','Aucun podcast semaine'],reward:600,attr:'mental'},
+  {name:'Le Réveil du Guerrier',icon:'🌅',diff:'Extrême',color:'#f97316',lore:'5h du matin, 7 jours de suite.',steps:['Réveil 5h00 lundi','Réveil 5h00 mardi','Réveil 5h00 mercredi','Réveil 5h00 jeudi','Réveil 5h00 vendredi','Réveil 5h00 samedi','Réveil 5h00 dimanche'],reward:800,attr:'discipline'},
+  {name:'Le Marcheur de l\'Infini',icon:'🦶',diff:'Extrême',color:'#22c55e',lore:'150 000 pas en 7 jours.',steps:['21k pas lundi','21k pas mardi','21k pas mercredi','21k pas jeudi','21k pas vendredi','21k pas samedi','21k pas dimanche'],reward:900,attr:'physique'},
   {name:'Le Bain de Glace',icon:'🧊',diff:'Difficile',color:'#06b6d4',lore:'Douche froide chaque matin. 7 jours.',steps:['Douche froide lundi','Douche froide mardi','Douche froide mercredi','Douche froide jeudi','Douche froide vendredi','Douche froide samedi','Douche froide dimanche'],reward:500,attr:'mental'},
   {name:'Le Conquérant des Échecs',icon:'♟️',diff:'Légendaire',color:'#fbbf24',lore:'+100 Elo en une semaine. Analyse chaque partie.',steps:['Analyser 1 partie perdue/jour','5 parties minimum/jour','Gagner 3 parties consécutives','+100 Elo net sur la semaine'],reward:1000,attr:'echecs'},
-  {name:'L\'Ermite Numérique',icon:'📵',diff:'Légendaire',color:'#ef4444',lore:'Téléphone éteint à 20h chaque soir.',steps:['Téléphone éteint 20h lundi','Téléphone éteint 20h mardi','Téléphone éteint 20h mercredi','Téléphone éteint 20h jeudi','Téléphone éteint 20h vendredi','Téléphone éteint 20h samedi','Téléphone éteint 20h dimanche'],reward:700,attr:'discipline'},
+  {name:'L\'Ermite Numérique',icon:'📵',diff:'Légendaire',color:'#ef4444',lore:'Téléphone éteint à 20h chaque soir.',steps:['Éteint 20h lundi','Éteint 20h mardi','Éteint 20h mercredi','Éteint 20h jeudi','Éteint 20h vendredi','Éteint 20h samedi','Éteint 20h dimanche'],reward:700,attr:'discipline'},
   {name:'Le Double Effort',icon:'💥',diff:'Extrême',color:'#f43f5e',lore:'2 séances de sport par jour, 5 jours.',steps:['2 séances lundi','2 séances mardi','2 séances mercredi','2 séances jeudi','2 séances vendredi'],reward:850,attr:'physique'},
-  {name:'La Récitation Totale',icon:'📖',diff:'Légendaire',color:'#a78bfa',lore:'3 nouvelles sourates mémorisées et récitées.',steps:['Mémoriser sourate 1 (j1-2)','Réciter sourate 1 sans regarder','Mémoriser sourate 2 (j3-4)','Réciter sourate 2 sans regarder','Mémoriser sourate 3 (j5-6)','Réciter les 3 d\'affilée dimanche'],reward:1000,attr:'spiritualite'},
-  {name:'Le Centurion',icon:'💪',diff:'Extrême',color:'#3b82f6',lore:'100 pompes d\'affilée. Entraîne-toi toute la semaine.',steps:['Max pompes lundi — noter','Max pompes mercredi — battre','Max pompes vendredi — s\'approcher de 100','100 pompes consécutives dimanche'],reward:750,attr:'physique'},
-  {name:'Le Journal du Sage',icon:'✍️',diff:'Normale',color:'#14b8a6',lore:'1 page de journal chaque soir. 7 jours.',steps:['Page lundi soir','Page mardi soir','Page mercredi soir','Page jeudi soir','Page vendredi soir','Page samedi soir','Page dimanche soir'],reward:400,attr:'intelligence'},
+  {name:'La Récitation Totale',icon:'📖',diff:'Légendaire',color:'#a78bfa',lore:'3 nouvelles sourates mémorisées et récitées.',steps:['Mémoriser sourate 1 (j1-2)','Réciter sourate 1 sans regarder','Mémoriser sourate 2 (j3-4)','Réciter sourate 2 sans regarder','Mémoriser sourate 3 (j5-6)','Réciter les 3 dimanche'],reward:1000,attr:'spiritualite'},
+  {name:'Le Centurion',icon:'💪',diff:'Extrême',color:'#3b82f6',lore:'100 pompes d\'affilée dimanche.',steps:['Max pompes lundi','Battre record mercredi','S\'approcher de 100 vendredi','100 pompes dimanche'],reward:750,attr:'physique'},
+  {name:'Le Journal du Sage',icon:'✍️',diff:'Normale',color:'#14b8a6',lore:'1 page de journal chaque soir. 7 jours.',steps:['Page lundi','Page mardi','Page mercredi','Page jeudi','Page vendredi','Page samedi','Page dimanche'],reward:400,attr:'intelligence'},
   {name:'L\'Abstinent Total',icon:'🚫',diff:'Difficile',color:'#f97316',lore:'Zéro sucre ajouté, zéro junk food. 7 jours.',steps:['Zéro sucre lundi','Zéro sucre mardi','Zéro sucre mercredi','Zéro sucre jeudi','Zéro sucre vendredi','Zéro sucre samedi','Zéro sucre dimanche'],reward:600,attr:'nutrition'},
-  {name:'L\'Invisible Social',icon:'🗣️',diff:'Difficile',color:'#ec4899',lore:'1 vraie conversation avec un inconnu par jour. 7 jours.',steps:['Inconnu lundi','Inconnu mardi','Inconnu mercredi','Inconnu jeudi','Inconnu vendredi','Inconnu samedi','Inconnu dimanche'],reward:650,attr:'social'},
-  {name:'Le Moine du Lever',icon:'🌙',diff:'Extrême',color:'#8b5cf6',lore:'Fajr + 20min dhikr chaque matin, avant tout écran.',steps:['Fajr + dhikr lundi','Fajr + dhikr mardi','Fajr + dhikr mercredi','Fajr + dhikr jeudi','Fajr + dhikr vendredi','Fajr + dhikr samedi','Fajr + dhikr dimanche'],reward:800,attr:'spiritualite'},
-  {name:'Le Polyglotte',icon:'🌍',diff:'Difficile',color:'#eab308',lore:'15 mots arabes/jour. 105 mots en 7 jours.',steps:['15 mots lundi','15 mots mardi','15 mots mercredi','15 mots jeudi','15 mots vendredi','15 mots samedi','Test mémorisation dimanche'],reward:700,attr:'intelligence'},
-  {name:'La Diète Mentale',icon:'🧘',diff:'Difficile',color:'#06b6d4',lore:'10min méditation + 30min sans téléphone chaque matin.',steps:['Méditation lundi','Idem mardi','Idem mercredi','Idem jeudi','Idem vendredi','Idem samedi','Idem dimanche'],reward:500,attr:'mental'},
-  {name:'Le Lève-Tôt Absolu',icon:'⚡',diff:'Légendaire',color:'#fbbf24',lore:'5h + douche froide + sport + Coran avant 7h. 7 jours.',steps:['5h + douche froide lundi','Sport + Coran avant 7h lundi','Même protocole mardi','Même protocole mercredi','Même protocole jeudi','Même protocole vendredi','Même protocole sam + dim'],reward:1200,attr:'discipline'},
-  {name:'Le Handstand',icon:'🤸',diff:'Légendaire',color:'#f43f5e',lore:'Tenir un handstand 10 secondes d\'affilée. Entraîne-toi chaque jour.',steps:['Entraînement mur lundi (3 séries)','Entraînement mur mardi','Entraînement équilibre mercredi','Entraînement équilibre jeudi','Raffinement vendredi','Raffinement samedi','Handstand 10 secondes dimanche'],reward:1100,attr:'physique'},
-  {name:'Le Marathon',icon:'🏃',diff:'Légendaire',color:'#22c55e',lore:'Courir 42km. Une semaine de préparation intense.',steps:['Sortie longue 10km lundi','Récupération + étirements mardi','Sortie 15km mercredi','Récupération jeudi','Sortie courte 5km vendredi','Repos actif samedi','Marathon dimanche (42km)'],reward:1500,attr:'physique'},
-  {name:'Le Nageur',icon:'🌊',diff:'Difficile',color:'#38bdf8',lore:'Nager 1km non-stop chaque jour pendant 5 jours.',steps:['1km nage lundi','1km nage mardi','1km nage mercredi','1km nage jeudi','1km nage vendredi'],reward:700,attr:'physique'},
-  {name:'Le Sparring',icon:'🥊',diff:'Difficile',color:'#ef4444',lore:'3 sessions de grappling ou sport de combat cette semaine.',steps:['Session combat 1','Session combat 2','Session combat 3','Analyse des points faibles'],reward:600,attr:'physique'},
-  {name:'L\'Immersion Totale',icon:'🧊',diff:'Extrême',color:'#60a5fa',lore:'Bain de glace 5 minutes chaque matin. 7 jours.',steps:['Bain glace 5min lundi','Bain glace 5min mardi','Bain glace 5min mercredi','Bain glace 5min jeudi','Bain glace 5min vendredi','Bain glace 5min samedi','Bain glace 5min dimanche'],reward:900,attr:'mental'},
-  {name:'Le Scripteur',icon:'📝',diff:'Normale',color:'#14b8a6',lore:'Écrire 500 mots par jour pendant 7 jours.',steps:['500 mots lundi','500 mots mardi','500 mots mercredi','500 mots jeudi','500 mots vendredi','500 mots samedi','500 mots dimanche'],reward:450,attr:'intelligence'},
-  {name:'Le Tireur',icon:'🎯',diff:'Difficile',color:'#f97316',lore:'Finir 3 tâches importantes que tu repousses depuis des semaines.',steps:['Identifier les 3 tâches lundi','Tâche 1 accomplie','Tâche 2 accomplie','Tâche 3 accomplie'],reward:700,attr:'execution'},
-  {name:'L\'Immersif Arabophone',icon:'🌍',diff:'Extrême',color:'#eab308',lore:'Parler, écrire, penser en arabe dans tous les moments possibles. 7 jours.',steps:['Penser en arabe lundi','Écrire en arabe mardi','Conversation arabe mercredi','Journal en arabe jeudi','Révision globale vendredi','Test oral samedi','Bilan écrit dimanche'],reward:1000,attr:'intelligence'},
-  {name:'Le 1000 Reps',icon:'🏋️',diff:'Extrême',color:'#ef4444',lore:'1000 répétitions de mouvements différents sur la semaine.',steps:['200 reps lundi','200 reps mardi','200 reps mercredi','200 reps jeudi','200 reps vendredi'],reward:800,attr:'physique'},
-  {name:'Le Stoïque',icon:'😶',diff:'Difficile',color:'#a78bfa',lore:'Aucune plainte, aucun commentaire négatif à voix haute. 7 jours.',steps:['Zéro plainte lundi','Zéro plainte mardi','Zéro plainte mercredi','Zéro plainte jeudi','Zéro plainte vendredi','Zéro plainte samedi','Zéro plainte dimanche'],reward:650,attr:'mental'},
-  {name:'Le Vide Total',icon:'📵',diff:'Légendaire',color:'#6366f1',lore:'Zéro divertissement + réveil 5h + douche froide. 7 jours complets.',steps:['Zéro divert + 5h + douche froide lundi','Idem mardi','Idem mercredi','Idem jeudi','Idem vendredi','Idem samedi','Idem dimanche'],reward:1300,attr:'discipline'},
-  {name:'La Retraite Spirituelle',icon:'🤲',diff:'Extrême',color:'#a78bfa',lore:'5 prières à l\'heure + Coran 1h/jour + dhikr matin et soir. 7 jours.',steps:['5 prières à l\'heure lundi','Coran 1h lundi','Dhikr matin + soir lundi','Même protocole mardi-mercredi','Même protocole jeudi-vendredi','Même protocole samedi','Même protocole dimanche'],reward:1100,attr:'spiritualite'},
-  {name:'Le Maître du Sommeil',icon:'💤',diff:'Difficile',color:'#60a5fa',lore:'Au lit avant 22h et levé avant 6h. 7 jours consécutifs.',steps:['Au lit 22h lundi','Levé avant 6h mardi','Au lit 22h mardi soir','Levé avant 6h mercredi','Répété jeudi-vendredi','Répété samedi','Levé avant 6h dimanche'],reward:600,attr:'discipline'},
-  {name:'Le Répétiteur',icon:'🔁',diff:'Normale',color:'#eab308',lore:'Réviser et tester 200 mots arabes appris précédemment.',steps:['Révision 50 mots lundi','Révision 50 mots mardi','Révision 50 mots mercredi','Révision 50 mots jeudi','Test global vendredi (80% requis)'],reward:500,attr:'intelligence'},
+  {name:'L\'Invisible Social',icon:'🗣️',diff:'Difficile',color:'#ec4899',lore:'1 vrai inconnu par jour. 7 jours.',steps:['Inconnu lundi','Inconnu mardi','Inconnu mercredi','Inconnu jeudi','Inconnu vendredi','Inconnu samedi','Inconnu dimanche'],reward:650,attr:'social'},
+  {name:'Le Moine du Lever',icon:'🌙',diff:'Extrême',color:'#8b5cf6',lore:'Fajr + 20min dhikr, avant tout écran. 7j.',steps:['Fajr + dhikr lundi','Fajr + dhikr mardi','Fajr + dhikr mercredi','Fajr + dhikr jeudi','Fajr + dhikr vendredi','Fajr + dhikr samedi','Fajr + dhikr dimanche'],reward:800,attr:'spiritualite'},
+  {name:'Le Polyglotte',icon:'🌍',diff:'Difficile',color:'#eab308',lore:'15 mots arabes/jour. Test dimanche.',steps:['15 mots lundi','15 mots mardi','15 mots mercredi','15 mots jeudi','15 mots vendredi','15 mots samedi','Test 80% dimanche'],reward:700,attr:'intelligence'},
+  {name:'La Diète Mentale',icon:'🧘',diff:'Difficile',color:'#06b6d4',lore:'10min méditation + 30min sans téléphone. 7j.',steps:['Méditation lundi','Méditation mardi','Méditation mercredi','Méditation jeudi','Méditation vendredi','Méditation samedi','Méditation dimanche'],reward:500,attr:'mental'},
+  {name:'Le Lève-Tôt Absolu',icon:'⚡',diff:'Légendaire',color:'#fbbf24',lore:'5h + douche froide + sport + Coran avant 7h. 7j.',steps:['Protocole complet lundi','Protocole complet mardi','Protocole complet mercredi','Protocole complet jeudi','Protocole complet vendredi','Protocole complet samedi','Protocole complet dimanche'],reward:1200,attr:'discipline'},
+  {name:'Le Handstand',icon:'🤸',diff:'Légendaire',color:'#f43f5e',lore:'Tenir 10 secondes. Entraînement quotidien.',steps:['Entraînement mur lundi (3 séries)','Entraînement mur mardi','Équilibre mercredi','Équilibre jeudi','Raffinement vendredi','Raffinement samedi','Handstand 10s dimanche'],reward:1100,attr:'physique'},
+  {name:'Le Marathon',icon:'🏃',diff:'Légendaire',color:'#22c55e',lore:'42km. Semaine de préparation.',steps:['10km lundi','Récupération mardi','15km mercredi','Récupération jeudi','5km vendredi','Repos samedi','Marathon dimanche'],reward:1500,attr:'physique'},
+  {name:'Le Nageur',icon:'🌊',diff:'Difficile',color:'#38bdf8',lore:'1km non-stop, 5 jours.',steps:['1km nage lundi','1km nage mardi','1km nage mercredi','1km nage jeudi','1km nage vendredi'],reward:700,attr:'physique'},
+  {name:'Le Sparring',icon:'🥊',diff:'Difficile',color:'#ef4444',lore:'3 sessions de grappling/combat.',steps:['Session 1','Session 2','Session 3','Analyse points faibles'],reward:600,attr:'physique'},
+  {name:'L\'Immersion Totale',icon:'🧊',diff:'Extrême',color:'#60a5fa',lore:'Bain de glace 5min chaque matin. 7j.',steps:['Bain glace 5min lundi','Bain glace 5min mardi','Bain glace 5min mercredi','Bain glace 5min jeudi','Bain glace 5min vendredi','Bain glace 5min samedi','Bain glace 5min dimanche'],reward:900,attr:'mental'},
+  {name:'Le Scripteur',icon:'📝',diff:'Normale',color:'#14b8a6',lore:'500 mots par jour. 7 jours.',steps:['500 mots lundi','500 mots mardi','500 mots mercredi','500 mots jeudi','500 mots vendredi','500 mots samedi','500 mots dimanche'],reward:450,attr:'intelligence'},
+  {name:'Le Tireur',icon:'🎯',diff:'Difficile',color:'#f97316',lore:'Finir 3 tâches repoussées depuis des semaines.',steps:['Identifier les 3 tâches','Tâche 1 accomplie','Tâche 2 accomplie','Tâche 3 accomplie'],reward:700,attr:'execution'},
+  {name:'L\'Immersif Arabophone',icon:'🌍',diff:'Extrême',color:'#eab308',lore:'Penser, parler, écrire en arabe. 7j.',steps:['Penser en arabe lundi','Écrire en arabe mardi','Conversation arabe mercredi','Journal en arabe jeudi','Révision vendredi','Test oral samedi','Bilan dimanche'],reward:1000,attr:'intelligence'},
+  {name:'Le 1000 Reps',icon:'🏋️',diff:'Extrême',color:'#ef4444',lore:'1000 répétitions sur la semaine.',steps:['200 reps lundi','200 reps mardi','200 reps mercredi','200 reps jeudi','200 reps vendredi'],reward:800,attr:'physique'},
+  {name:'Le Stoïque',icon:'😶',diff:'Difficile',color:'#a78bfa',lore:'Zéro plainte, zéro commentaire négatif. 7j.',steps:['Zéro plainte lundi','Zéro plainte mardi','Zéro plainte mercredi','Zéro plainte jeudi','Zéro plainte vendredi','Zéro plainte samedi','Zéro plainte dimanche'],reward:650,attr:'mental'},
+  {name:'Le Vide Total',icon:'📵',diff:'Légendaire',color:'#6366f1',lore:'Zéro divertissement + 5h + douche froide. 7j.',steps:['Protocole vide lundi','Protocole vide mardi','Protocole vide mercredi','Protocole vide jeudi','Protocole vide vendredi','Protocole vide samedi','Protocole vide dimanche'],reward:1300,attr:'discipline'},
+  {name:'La Retraite Spirituelle',icon:'🤲',diff:'Extrême',color:'#a78bfa',lore:'5 prières à l\'heure + Coran 1h + dhikr. 7j.',steps:['5 prières + Coran 1h lundi','Dhikr matin + soir lundi','Même lundi→mercredi','Même jeudi→vendredi','Réciter une sourate mémorisée samedi','Bilan spirituel dimanche'],reward:1100,attr:'spiritualite'},
+  {name:'Le Maître du Sommeil',icon:'💤',diff:'Difficile',color:'#60a5fa',lore:'Au lit avant 22h, levé avant 6h. 7j.',steps:['Au lit 22h lundi','Levé 6h mardi','Répété mar-mer','Répété jeu-ven','Répété sam-dim'],reward:600,attr:'discipline'},
+  {name:'Le Répétiteur',icon:'🔁',diff:'Normale',color:'#eab308',lore:'Réviser 200 mots arabes appris.',steps:['50 mots lundi','50 mots mardi','50 mots mercredi','50 mots jeudi','Test 80% vendredi'],reward:500,attr:'intelligence'},
 ];
 
-// ══ 35 QUÊTES SECONDAIRES ══
+// ══ 35 QUESTS ══
 const ALL_QUESTS=[
-  {icon:'🧊',name:'Douche froide',desc:'2 min eau froide. Pas tiède.',difficulty:'medium',reward:150,attr:'mental'},
-  {icon:'💌',name:'Message de gratitude',desc:'Message sincère à quelqu\'un qui compte.',difficulty:'easy',reward:100,attr:'social'},
+  {icon:'🧊',name:'Douche froide',desc:'2 min eau froide.',difficulty:'medium',reward:150,attr:'mental'},
+  {icon:'💌',name:'Message de gratitude',desc:'Message sincère à quelqu\'un.',difficulty:'easy',reward:100,attr:'social'},
   {icon:'🚶',name:'Marche 5km sans téléphone',desc:'5km, téléphone à la maison.',difficulty:'medium',reward:200,attr:'physique'},
   {icon:'✍️',name:'Lettre à ton futur toi',desc:'Écris à toi-même dans 1 an.',difficulty:'easy',reward:120,attr:'intelligence'},
   {icon:'🥗',name:'Journée nutrition parfaite',desc:'Zéro sucre, zéro grignotage, 3 repas.',difficulty:'medium',reward:180,attr:'nutrition'},
   {icon:'📚',name:'Lire 30 pages',desc:'30 pages en une session continue.',difficulty:'easy',reward:130,attr:'intelligence'},
-  {icon:'🤝',name:'Parler à un inconnu',desc:'Vraie conversation avec un inconnu.',difficulty:'medium',reward:200,attr:'social'},
-  {icon:'🏋️',name:'50 pompes d\'affilée',desc:'50 pompes consécutives sans pause.',difficulty:'hard',reward:250,attr:'physique'},
+  {icon:'🤝',name:'Parler à un inconnu',desc:'Vraie conversation.',difficulty:'medium',reward:200,attr:'social'},
+  {icon:'🏋️',name:'50 pompes d\'affilée',desc:'Consécutives, sans pause.',difficulty:'hard',reward:250,attr:'physique'},
   {icon:'🌅',name:'Lever avant 6h',desc:'Réveil avant 6h, sans téléphone 1h.',difficulty:'medium',reward:200,attr:'discipline'},
-  {icon:'🧠',name:'Fiche Islam complète',desc:'Rédige une fiche sur un sujet islamique.',difficulty:'easy',reward:150,attr:'spiritualite'},
+  {icon:'🧠',name:'Fiche Islam complète',desc:'Un sujet islamique complet rédigé.',difficulty:'easy',reward:150,attr:'spiritualite'},
   {icon:'🎯',name:'3 objectifs du mois',desc:'3 objectifs précis et mesurables.',difficulty:'easy',reward:120,attr:'execution'},
-  {icon:'🔇',name:'3h sans téléphone',desc:'3 heures productives sans téléphone.',difficulty:'medium',reward:180,attr:'discipline'},
-  {icon:'🤲',name:'Acte de générosité',desc:'Fais quelque chose pour quelqu\'un.',difficulty:'easy',reward:150,attr:'social'},
-  {icon:'📖',name:'Mémoriser une sourate',desc:'Nouvelle sourate récitée de mémoire.',difficulty:'hard',reward:350,attr:'spiritualite'},
-  {icon:'🧹',name:'Désencombrement',desc:'Donne ou jette 10 objets inutiles.',difficulty:'easy',reward:100,attr:'execution'},
+  {icon:'🔇',name:'3h sans téléphone',desc:'3 heures productives.',difficulty:'medium',reward:180,attr:'discipline'},
+  {icon:'🤲',name:'Acte de générosité',desc:'Pour quelqu\'un, sans rien attendre.',difficulty:'easy',reward:150,attr:'social'},
+  {icon:'📖',name:'Mémoriser une sourate',desc:'Récitée de mémoire.',difficulty:'hard',reward:350,attr:'spiritualite'},
+  {icon:'🧹',name:'Désencombrement',desc:'Donner ou jeter 10 objets.',difficulty:'easy',reward:100,attr:'execution'},
   {icon:'🎨',name:'Créer quelque chose',desc:'Dessine, écris, code, compose.',difficulty:'medium',reward:180,attr:'intelligence'},
-  {icon:'📞',name:'Appel d\'un ami perdu de vue',desc:'Appelle quelqu\'un non contacté depuis 1 mois.',difficulty:'easy',reward:100,attr:'social'},
-  {icon:'🌿',name:'Journée sans réseaux sociaux',desc:'Instagram, TikTok, Twitter — éteints 24h.',difficulty:'hard',reward:280,attr:'discipline'},
-  {icon:'🏃',name:'Courir 5km',desc:'5km sans s\'arrêter.',difficulty:'hard',reward:300,attr:'physique'},
-  {icon:'🙏',name:'5 prières à l\'heure',desc:'Les 5 prières exactement à l\'heure.',difficulty:'medium',reward:200,attr:'spiritualite'},
-  {icon:'🤸',name:'10 tractions d\'affilée',desc:'10 tractions consécutives, propres.',difficulty:'hard',reward:250,attr:'physique'},
-  {icon:'🏊',name:'Nager 500m non-stop',desc:'500m en nage continue sans s\'arrêter.',difficulty:'hard',reward:280,attr:'physique'},
-  {icon:'🧘',name:'20min méditation',desc:'20 minutes de méditation pleine conscience.',difficulty:'medium',reward:160,attr:'mental'},
-  {icon:'📸',name:'Documenter ta journée',desc:'Photos + notes de toute ta journée.',difficulty:'easy',reward:90,attr:'execution'},
-  {icon:'🗺️',name:'Explorer un endroit nouveau',desc:'Visite un lieu que tu n\'as jamais vu.',difficulty:'easy',reward:120,attr:'social'},
-  {icon:'🥊',name:'Session de combat',desc:'1 session de grappling ou sport de combat.',difficulty:'hard',reward:270,attr:'physique'},
-  {icon:'💬',name:'Discussion islamique approfondie',desc:'Débat ou échange sérieux sur un sujet islamique.',difficulty:'medium',reward:170,attr:'spiritualite'},
-  {icon:'🎯',name:'Tâche repoussée accomplie',desc:'Complète une tâche que tu repousses depuis +2 semaines.',difficulty:'hard',reward:300,attr:'execution'},
-  {icon:'🌙',name:'1h de Coran d\'un trait',desc:'Lire le Coran 1 heure sans interruption.',difficulty:'medium',reward:200,attr:'spiritualite'},
-  {icon:'🧹',name:'Réorganiser ton espace',desc:'Nettoie et réorganise entièrement ton espace de travail.',difficulty:'medium',reward:150,attr:'execution'},
-  {icon:'🥗',name:'Cuisiner tous ses repas',desc:'Prépare toi-même tous tes repas de la journée.',difficulty:'medium',reward:170,attr:'nutrition'},
-  {icon:'🏔️',name:'Marcher 10km en nature',desc:'10km dehors, en nature de préférence.',difficulty:'hard',reward:320,attr:'physique'},
-  {icon:'📊',name:'Analyser 5 parties d\'échecs',desc:'Analyse et note 5 parties perdues.',difficulty:'medium',reward:180,attr:'echecs'},
-  {icon:'✍️',name:'Fiche de révision complète',desc:'Rédige une fiche sur un sujet que tu as appris.',difficulty:'easy',reward:140,attr:'intelligence'},
-  {icon:'🗣️',name:'Parler en public',desc:'Prends la parole devant un groupe, même petit.',difficulty:'hard',reward:350,attr:'social'},
+  {icon:'📞',name:'Appel d\'un ami perdu de vue',desc:'Non contacté depuis 1 mois.',difficulty:'easy',reward:100,attr:'social'},
+  {icon:'🌿',name:'Journée sans réseaux',desc:'Instagram, TikTok, Twitter — off 24h.',difficulty:'hard',reward:280,attr:'discipline'},
+  {icon:'🏃',name:'Courir 5km',desc:'Sans s\'arrêter.',difficulty:'hard',reward:300,attr:'physique'},
+  {icon:'🙏',name:'5 prières à l\'heure',desc:'Exactement à l\'heure, zéro retard.',difficulty:'medium',reward:200,attr:'spiritualite'},
+  {icon:'🤸',name:'10 tractions d\'affilée',desc:'Propres, consécutives.',difficulty:'hard',reward:250,attr:'physique'},
+  {icon:'🏊',name:'Nager 500m non-stop',desc:'Sans s\'arrêter.',difficulty:'hard',reward:280,attr:'physique'},
+  {icon:'🧘',name:'20min méditation',desc:'Pleine conscience.',difficulty:'medium',reward:160,attr:'mental'},
+  {icon:'📸',name:'Documenter ta journée',desc:'Photos + notes.',difficulty:'easy',reward:90,attr:'execution'},
+  {icon:'🗺️',name:'Explorer un endroit nouveau',desc:'Jamais vu.',difficulty:'easy',reward:120,attr:'social'},
+  {icon:'🥊',name:'Session de combat',desc:'Grappling ou sport de combat.',difficulty:'hard',reward:270,attr:'physique'},
+  {icon:'💬',name:'Discussion islamique',desc:'Échange sérieux sur un sujet islamique.',difficulty:'medium',reward:170,attr:'spiritualite'},
+  {icon:'🎯',name:'Tâche repoussée accomplie',desc:'Repoussée depuis +2 semaines.',difficulty:'hard',reward:300,attr:'execution'},
+  {icon:'🌙',name:'1h de Coran d\'un trait',desc:'Sans interruption.',difficulty:'medium',reward:200,attr:'spiritualite'},
+  {icon:'🧹',name:'Réorganiser ton espace',desc:'Tout nettoyer et réorganiser.',difficulty:'medium',reward:150,attr:'execution'},
+  {icon:'🥗',name:'Cuisiner tous ses repas',desc:'Toi-même, toute la journée.',difficulty:'medium',reward:170,attr:'nutrition'},
+  {icon:'🏔️',name:'Marcher 10km en nature',desc:'Dehors, en nature.',difficulty:'hard',reward:320,attr:'physique'},
+  {icon:'📊',name:'Analyser 5 parties d\'échecs',desc:'Parties perdues, analysées.',difficulty:'medium',reward:180,attr:'echecs'},
+  {icon:'✍️',name:'Fiche de révision complète',desc:'Sur un sujet appris.',difficulty:'easy',reward:140,attr:'intelligence'},
+  {icon:'🗣️',name:'Parler en public',desc:'Devant un groupe, même petit.',difficulty:'hard',reward:350,attr:'social'},
 ];
 
-// ══ BONUS / MALUS VIE RÉELLE ══
+// ══ SHOP ══
 const BONUSES=[
-  {emoji:'🍽️',name:'Repas au restaurant',cost:500,cond:'Rang ≥ D',minRank:1,desc:'Tu l\'as mérité'},
-  {emoji:'🍕',name:'Cheat meal',cost:300,cond:'Semaine ≥ 70%',minRank:0,desc:'Un écart contrôlé'},
-  {emoji:'🎬',name:'Soirée série / film',cost:150,cond:'Journée ≥ 7/10',minRank:0,desc:'Détente méritée'},
-  {emoji:'🎮',name:'Session gaming',cost:250,cond:'Streak ≥ 7j',minRank:0,desc:'Récompense streak'},
-  {emoji:'👕',name:'Achat vêtements',cost:800,cond:'Rang ≥ C',minRank:2,desc:'Style mérité'},
-  {emoji:'🛒',name:'Achat non-essentiel',cost:600,cond:'Rang ≥ B',minRank:3,desc:'Tu te récompenses'},
-  {emoji:'🛍️',name:'Achat tech / gadget',cost:1500,cond:'Rang ≥ A',minRank:4,desc:'Investissement mérité'},
-  {emoji:'✈️',name:'Sortie / voyage',cost:3000,cond:'Rang ≥ S',minRank:5,desc:'L\'élite voyage'},
-  {emoji:'🎉',name:'Soirée / sortie entre amis',cost:400,cond:'Rang ≥ D',minRank:1,desc:'Vie sociale méritée'},
-  {emoji:'🍔',name:'Fast food',cost:200,cond:'Journée ≥ 8/10',minRank:0,desc:'Exception contrôlée'},
+  {emoji:'🍽️',name:'Repas au restaurant',cost:500,cond:'Rang ≥ D',minRank:1},
+  {emoji:'🍕',name:'Cheat meal',cost:300,cond:'Semaine ≥ 70%',minRank:0},
+  {emoji:'🎬',name:'Soirée série / film',cost:150,cond:'Journée ≥ 7/10',minRank:0},
+  {emoji:'🎮',name:'Session gaming',cost:250,cond:'Streak ≥ 7j',minRank:0},
+  {emoji:'👕',name:'Achat vêtements',cost:800,cond:'Rang ≥ C',minRank:2},
+  {emoji:'🛒',name:'Achat non-essentiel',cost:600,cond:'Rang ≥ B',minRank:3},
+  {emoji:'🛍️',name:'Achat tech / gadget',cost:1500,cond:'Rang ≥ A',minRank:4},
+  {emoji:'✈️',name:'Sortie / voyage',cost:3000,cond:'Rang ≥ S',minRank:5},
+  {emoji:'🎉',name:'Soirée entre amis',cost:400,cond:'Rang ≥ D',minRank:1},
+  {emoji:'🍔',name:'Fast food',cost:200,cond:'Journée ≥ 8/10',minRank:0},
 ];
-
 const MALUSES=[
-  {emoji:'🍽️',name:'Resto sans mériter',cost:800,desc:'Dépense non accordée'},
-  {emoji:'🍕',name:'Cheat meal non mérité',cost:500,desc:'Écart non justifié'},
-  {emoji:'📱',name:'Soirée réseaux non méritée',cost:350,desc:'Temps volé'},
-  {emoji:'🛒',name:'Achat impulsif',cost:1000,desc:'Décision non méritée'},
-  {emoji:'🎮',name:'Gaming non mérité',cost:400,desc:'Distraction volée'},
-  {emoji:'🎬',name:'Série non méritée',cost:300,desc:'Confort non mérité'},
-  {emoji:'🍔',name:'Fast food non mérité',cost:350,desc:'Nutrition sacrifiée'},
-  {emoji:'😴',name:'Grasse matinée non méritée',cost:250,desc:'Discipline rompue'},
+  {emoji:'🍽️',name:'Resto sans mériter',cost:800},
+  {emoji:'🍕',name:'Cheat meal non mérité',cost:500},
+  {emoji:'📱',name:'Réseaux non mérités',cost:350},
+  {emoji:'🛒',name:'Achat impulsif',cost:1000},
+  {emoji:'🎮',name:'Gaming non mérité',cost:400},
+  {emoji:'🎬',name:'Série non méritée',cost:300},
+  {emoji:'🍔',name:'Fast food non mérité',cost:350},
+  {emoji:'😴',name:'Grasse matinée',cost:250},
 ];
 
-const STREAK_THRESHOLD=0.7,DAY_SUCCESS_MIN=7,QUESTS_PER_WEEK=5;
-let allData={},donutChart=null,ringChart=null;
-let currentFilter='Tout',currentDbId='',weekOffset=0;
+const PA_PER_LEVEL=50;
+function paToLevel(pa){return Math.min(100,Math.max(1,Math.floor(pa/PA_PER_LEVEL)+1));}
+function levelProg(pa){if(paToLevel(pa)>=100)return 100;return Math.round((pa%PA_PER_LEVEL)/PA_PER_LEVEL*100);}
 
-// ══ STORAGE ══
+const STREAK_THRESHOLD=0.7,DAY_SUCCESS=7,QUESTS_PER_WEEK=5;
+let allData={},donutChart=null,ringChart=null;
+let currentFilter='Tout',currentDbId='',weekOffset=0,histFilter='all';
+
 const S={
   db:()=>localStorage.getItem('ht_db'),saveDb:v=>localStorage.setItem('ht_db',v),
   boss:()=>JSON.parse(localStorage.getItem('ht_boss')||'{}'),saveBoss:v=>localStorage.setItem('ht_boss',JSON.stringify(v)),
-  quests:()=>JSON.parse(localStorage.getItem('ht_quests2')||'{}'),saveQuests:v=>localStorage.setItem('ht_quests2',JSON.stringify(v)),
-  malus:()=>JSON.parse(localStorage.getItem('ht_malus2')||'[]'),saveMalus:v=>localStorage.setItem('ht_malus2',JSON.stringify(v)),
-  transactions:()=>JSON.parse(localStorage.getItem('ht_tx')||'[]'),saveTx:v=>localStorage.setItem('ht_tx',JSON.stringify(v)),
-  attrPA:()=>JSON.parse(localStorage.getItem('ht_attr_pa')||'{}'),saveAttrPA:v=>localStorage.setItem('ht_attr_pa',JSON.stringify(v)),
+  quests:()=>JSON.parse(localStorage.getItem('ht_quests3')||'{}'),saveQuests:v=>localStorage.setItem('ht_quests3',JSON.stringify(v)),
+  malus:()=>JSON.parse(localStorage.getItem('ht_malus3')||'[]'),saveMalus:v=>localStorage.setItem('ht_malus3',JSON.stringify(v)),
+  tx:()=>JSON.parse(localStorage.getItem('ht_tx')||'[]'),saveTx:v=>localStorage.setItem('ht_tx',JSON.stringify(v)),
 };
 
-// ══ HELPERS ══
+// ── HELPERS ──
 function todayStr(){return new Date().toISOString().substring(0,10);}
 function scoreDay(d){const x=allData[d]||{};return HABITS.filter(h=>x[h]).length;}
 function isPerfect(d){return scoreDay(d)===HABITS.length;}
@@ -732,25 +802,14 @@ function hasStreak(d){return scoreDay(d)/HABITS.length>=STREAK_THRESHOLD;}
 function getWeekNum(date){const d=new Date(date+'T12:00:00'),j=new Date(d.getFullYear(),0,1);return Math.ceil(((d-j)/86400000+j.getDay()+1)/7);}
 function getWeekStart(today,offset=0){const d=new Date(today+'T12:00:00'),dow=d.getDay();d.setDate(d.getDate()-(dow===0?6:dow-1)+offset*7);return d.toISOString().substring(0,10);}
 function getRank(xp){return RANKS.find(r=>xp>=r.min&&xp<r.max)||RANKS[RANKS.length-1];}
-function getRankIndex(xp){const r=getRank(xp);return RANKS.indexOf(r);}
+function getRankIdx(xp){const r=getRank(xp);return RANKS.indexOf(r);}
 
-// ══ TABS ══
-function switchTab(name){
-  document.querySelectorAll('.tab-btn').forEach((b,i)=>{b.classList.toggle('active',['today','attributes','boss','life','stats'][i]===name);});
-  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
-  document.getElementById('tab-'+name).classList.add('active');
-  if(name==='attributes')renderAttributes();
-  if(name==='life')renderLife();
-  if(name==='stats'){renderStats(todayStr());renderWeekScores(todayStr());renderComparison(todayStr());renderYearSelector();renderHeatmap();renderFilters();renderBars(currentFilter);renderDonut();}
-}
-
-// ══ XP ══
+// ── XP COMPUTE ──
 function computeXP(){
-  const dates=Object.keys(allData).sort();
-  let xp=0,run=0;
+  const dates=Object.keys(allData).sort();let xp=0,run=0;
   for(const d of dates){
     const s=scoreDay(d);xp+=s*10;
-    if(s>=DAY_SUCCESS_MIN)xp+=50;if(isPerfect(d))xp+=150;
+    if(s>=DAY_SUCCESS)xp+=50;if(isPerfect(d))xp+=150;
     if(hasStreak(d)){run++;}else{run=0;}
     if(run===7)xp+=300;if(run===30)xp+=1000;if(run===100)xp+=5000;
     if(isPerfect(d)&&run>=3)xp+=400;
@@ -758,18 +817,15 @@ function computeXP(){
   Object.values(S.boss()).forEach(b=>{if(b.declared==='won'&&b.reward)xp+=b.reward;});
   Object.values(S.quests()).forEach(w=>Object.values(w).forEach(q=>{if(q&&q.state==='done'&&q.reward)xp+=q.reward;}));
   S.malus().forEach(m=>{xp-=m.amount;});
-  // Déduire les transactions (bonus dépensés)
-  S.transactions().forEach(t=>{if(t.type==='bonus')xp-=t.amount;if(t.type==='malus')xp-=t.amount;});
+  S.tx().forEach(t=>{xp-=t.amount;});
   return Math.max(0,xp);
 }
 
-// PD disponible = XP total gagné - ce qui a été dépensé en bonus/malus
-function computeAvailablePD(){
-  const dates=Object.keys(allData).sort();
-  let earned=0,run=0;
+function computePDAvail(){
+  const dates=Object.keys(allData).sort();let earned=0,run=0;
   for(const d of dates){
     const s=scoreDay(d);earned+=s*10;
-    if(s>=DAY_SUCCESS_MIN)earned+=50;if(isPerfect(d))earned+=150;
+    if(s>=DAY_SUCCESS)earned+=50;if(isPerfect(d))earned+=150;
     if(hasStreak(d)){run++;}else{run=0;}
     if(run===7)earned+=300;if(run===30)earned+=1000;if(run===100)earned+=5000;
     if(isPerfect(d)&&run>=3)earned+=400;
@@ -777,87 +833,108 @@ function computeAvailablePD(){
   Object.values(S.boss()).forEach(b=>{if(b.declared==='won'&&b.reward)earned+=b.reward;});
   Object.values(S.quests()).forEach(w=>Object.values(w).forEach(q=>{if(q&&q.state==='done'&&q.reward)earned+=q.reward;}));
   S.malus().forEach(m=>{earned-=m.amount;});
-  let spent=0;
-  S.transactions().forEach(t=>{spent+=t.amount;});
-  return Math.max(0,earned-spent);
+  S.tx().forEach(t=>{earned-=t.amount;});
+  return Math.max(0,earned);
 }
 
 function computeStreak(today){
-  let streak=0,cur=new Date(today+'T12:00:00');
-  while(hasStreak(cur.toISOString().substring(0,10))){streak++;cur.setDate(cur.getDate()-1);}
+  let s=0,c=new Date(today+'T12:00:00');
+  while(hasStreak(c.toISOString().substring(0,10))){s++;c.setDate(c.getDate()-1);}
   let best=0,run=0;
-  for(const s of Object.keys(allData).sort()){run=hasStreak(s)?run+1:0;if(run>best)best=run;}
-  return{streak,best};
+  for(const d of Object.keys(allData).sort()){run=hasStreak(d)?run+1:0;if(run>best)best=run;}
+  return{streak:s,best};
 }
 
-// ══ ATTRIBUTE POINTS ══
+// ── ATTRIBUTE PA COMPUTE ──
 function computeAttrPA(){
   const pa={};ATTRIBUTES.forEach(a=>pa[a.id]=0);
   const dates=Object.keys(allData).sort();
-  let run=0,streak7done=false,streak30done=false;
-
+  let run=0,streak7=false,streak30=false;
   for(const d of dates){
-    const day=allData[d];const s=scoreDay(d);
-    if(hasStreak(d)){run++;}else{run=0;streak7done=false;streak30done=false;}
-
+    const day=allData[d]||{};const s=scoreDay(d);
+    if(hasStreak(d)){run++;}else{run=0;streak7=false;streak30=false;}
     // Discipline
-    if(day['No Scroll']){pa.discipline+=3;pa.mental+=2;}
-    if(isPerfect(d)){pa.discipline+=3;pa.execution+=5;pa.mental+=2;}
-    if(run===7&&!streak7done){pa.discipline+=6;pa.execution+=10;pa.mental+=8;streak7done=true;}
-    if(run===30&&!streak30done){pa.execution+=20;streak30done=true;}
-
+    if(day['No Scroll'])pa.discipline+=3;
+    if(isPerfect(d))pa.discipline+=3;
+    if(run===7&&!streak7){pa.discipline+=6;streak7=true;}
     // Physique
     if(day['Sport'])pa.physique+=2;
-    if(day['Pushup']){pa.physique+=2;}
-
+    if(day['Pushup'])pa.physique+=2;
     // Nutrition
     if(day['Nutrition'])pa.nutrition+=4;
-
     // Spiritualité
+    if(day['Prière'])pa.spiritualite+=3;
     if(day['Coran'])pa.spiritualite+=3;
-    if(day['Prière'])pa.spiritualite+=2;
     if(day['Islam'])pa.spiritualite+=1;
-
     // Intelligence
     if(day['Arabe'])pa.intelligence+=3;
     if(day['Skill'])pa.intelligence+=2;
-
     // Échecs
     if(day['Chess'])pa.echecs+=4;
+    // Mental
+    if(day['No Scroll'])pa.mental+=2;
+    if(isPerfect(d))pa.mental+=2;
+    if(run===7&&!streak7){pa.mental+=8;}
+    // Exécution
+    if(isPerfect(d))pa.execution+=5;
+    if(run===7){pa.execution+=10;}
+    if(run===30&&!streak30){pa.execution+=20;streak30=true;}
+    // Social & Discipline extras
+    if(isPerfect(d))pa.execution+=0;
   }
-
-  // Boss wins
+  // Boss bonuses
   const boss=S.boss();
-  Object.values(boss).forEach(b=>{
-    if(b.declared==='won'){
-      const bossData=BOSSES.find(x=>x.reward===b.reward);
-      if(bossData&&pa[bossData.attr]!==undefined){
-        const bonus={discipline:8,physique:10,nutrition:8,spiritualite:10,intelligence:8,echecs:15,mental:12,social:10,execution:5};
-        pa[bossData.attr]+=(bonus[bossData.attr]||8);
-        pa.execution+=3;
-      }
-    }
+  Object.entries(boss).forEach(([key,b])=>{
+    if(b.declared!=='won')return;
+    const wn=parseInt(key.replace(/[^0-9]/g,''));
+    const bossData=BOSSES[(wn-1)%BOSSES.length];
+    if(!bossData)return;
+    const bonusMap={discipline:10,physique:12,nutrition:10,spiritualite:12,intelligence:10,echecs:20,mental:14,social:14,execution:5};
+    pa[bossData.attr]+=(bonusMap[bossData.attr]||10);
+    pa.execution+=3;
+    pa.mental+=2;
   });
-
-  // Quest wins
+  // Quest bonuses
   const quests=S.quests();
   Object.values(quests).forEach(w=>Object.values(w).forEach(q=>{
-    if(q&&q.state==='done'){
-      const qData=ALL_QUESTS.find(x=>x.reward===q.reward);
-      if(qData&&pa[qData.attr]!==undefined){
-        pa[qData.attr]+=(qData.reward>200?6:4);
-      }
-    }
+    if(!q||q.state!=='done')return;
+    const qData=ALL_QUESTS.find(x=>x.reward===q.reward&&x.attr);
+    if(qData){pa[qData.attr]+=(qData.difficulty==='hard'?7:qData.difficulty==='medium'?5:3);pa.execution+=1;}
   }));
-
-  // Add manually saved bonus PA
-  const savedPA=S.attrPA();
-  ATTRIBUTES.forEach(a=>{if(savedPA[a.id])pa[a.id]+=savedPA[a.id];});
-
+  // Sub-PA per attribute (for display)
   return pa;
 }
 
-// ══ FETCH ══
+// Sub PA per attribute
+function computeSubPA(attrId,day){
+  const dates=Object.keys(allData);
+  switch(attrId){
+    case'discipline':return{no_scroll:dates.filter(d=>allData[d]&&allData[d]['No Scroll']).length*3,routine:dates.filter(d=>isPerfect(d)).length*2,exec:Object.values(S.boss()).filter(b=>b.declared==='won').length*5,constance:computeStreak(todayStr()).best*2};
+    case'physique':return{force:dates.filter(d=>allData[d]&&(allData[d]['Sport']||allData[d]['Pushup'])).length*2,endurance:dates.filter(d=>allData[d]&&allData[d]['Sport']).length,combat:Object.values(S.boss()).filter(b=>b.declared==='won'&&BOSSES.find(x=>x.attr==='physique'&&x.name.includes('Sparring'))).length*15,recup:dates.filter(d=>allData[d]&&allData[d]['Nutrition']).length};
+    case'nutrition':return{qualite:dates.filter(d=>allData[d]&&allData[d]['Nutrition']).length*4,compo:dates.filter(d=>allData[d]&&allData[d]['Nutrition']).length*2,conscience:Object.values(S.quests()).reduce((a,w)=>a+Object.values(w).filter(q=>q&&q.state==='done').length,0)*2,hydrat:dates.filter(d=>allData[d]&&allData[d]['Nutrition']).length};
+    case'spiritualite':return{salat:dates.filter(d=>allData[d]&&allData[d]['Prière']).length*3,coran:dates.filter(d=>allData[d]&&allData[d]['Coran']).length*3,ilm:dates.filter(d=>allData[d]&&allData[d]['Islam']).length,dhikr:Object.values(S.boss()).filter(b=>b.declared==='won').length*3};
+    case'intelligence':return{arabe:dates.filter(d=>allData[d]&&allData[d]['Arabe']).length*3,skill:dates.filter(d=>allData[d]&&allData[d]['Skill']).length*2,memoire:Object.values(S.boss()).filter(b=>b.declared==='won').length*4,analyse:Object.values(S.quests()).reduce((a,w)=>a+Object.values(w).filter(q=>q&&q.state==='done'&&q.reward>150).length,0)*5};
+    case'echecs':return{calcul:dates.filter(d=>allData[d]&&allData[d]['Chess']).length*4,strategie:Object.values(S.boss()).filter(b=>b.declared==='won').length*8,analyse_e:Object.values(S.quests()).reduce((a,w)=>a+Object.values(w).filter(q=>q&&q.state==='done').length,0)*3,patience:computeStreak(todayStr()).best*3};
+    case'mental':return{resist:Object.values(S.boss()).filter(b=>b.declared==='won').length*5,ennui:dates.filter(d=>allData[d]&&allData[d]['No Scroll']).length*2,impulse:dates.filter(d=>isPerfect(d)).length*3,stabilite:computeStreak(todayStr()).best*2};
+    case'social':return{aisance:Object.values(S.quests()).reduce((a,w)=>a+Object.values(w).filter(q=>q&&q.state==='done').length,0)*4,confiance:dates.filter(d=>isPerfect(d)).length*2,comm:Object.values(S.boss()).filter(b=>b.declared==='won').length*5,presence:Object.values(S.boss()).filter(b=>b.declared==='won').length*3};
+    case'execution':return{finish:Object.values(S.boss()).filter(b=>b.declared==='won').length*10,prio:Object.values(S.quests()).reduce((a,w)=>a+Object.values(w).filter(q=>q&&q.state==='done').length,0)*3,vitesse:dates.filter(d=>isPerfect(d)).length*3,const:computeStreak(todayStr()).best*4};
+    default:return{};
+  }
+}
+
+// ── TABS ──
+function switchTab(name){
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',['today','attr','history','badges','shop','stats'][i]===name));
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  if(name==='attr')renderAttr();
+  if(name==='history')renderHistory();
+  if(name==='badges')renderBadgesPage();
+  if(name==='shop')renderShop();
+  if(name==='stats'){renderStats();renderWeekScores(todayStr());renderComparison(todayStr());renderYearSelector();renderHeatmap();renderFilters();renderBars(currentFilter);renderDonut();}
+}
+
+// ── FETCH ──
 async function fetchAll(dbId){
   let results=[],cursor;
   for(let i=0;i<20;i++){
@@ -868,27 +945,23 @@ async function fetchAll(dbId){
   }
   return results;
 }
-
 function parsePages(pages){
   const out={};
   for(const page of pages){
-    const props=page.properties,dv=props['Date']?.date?.start;
-    if(!dv)continue;const date=dv.substring(0,10);
-    if(!out[date]){out[date]={};for(const h of HABITS)out[date][h]=false;}
+    const props=page.properties,dv=props['Date']?.date?.start;if(!dv)continue;
+    const date=dv.substring(0,10);if(!out[date]){out[date]={};for(const h of HABITS)out[date][h]=false;}
     for(const nk of NOTION_KEYS){const dn=NOTION_NAMES[nk];if(props[nk]?.checkbox===true)out[date][dn]=true;}
   }
   return out;
 }
-
 async function connect(){
   const dbId=document.getElementById('db-input').value.trim().replace(/-/g,'').substring(0,32);
-  const errEl=document.getElementById('error-msg');errEl.style.display='none';
-  if(!dbId){errEl.textContent='Entre ton Database ID.';errEl.style.display='block';return;}
+  const err=document.getElementById('error-msg');err.style.display='none';
+  if(!dbId){err.textContent='Entre ton Database ID.';err.style.display='block';return;}
   document.getElementById('config-panel').style.display='none';document.getElementById('loading').style.display='flex';
   try{const pages=await fetchAll(dbId);allData=parsePages(pages);currentDbId=dbId;S.saveDb(dbId);showDashboard();}
-  catch(e){document.getElementById('config-panel').style.display='block';document.getElementById('loading').style.display='none';errEl.textContent='❌ '+e.message;errEl.style.display='block';}
+  catch(e){document.getElementById('config-panel').style.display='block';document.getElementById('loading').style.display='none';err.textContent='❌ '+e.message;err.style.display='block';}
 }
-
 async function refresh(){
   const btn=document.getElementById('refresh-btn');btn.classList.add('spinning');btn.disabled=true;
   try{const pages=await fetchAll(currentDbId);allData=parsePages(pages);renderToday();}
@@ -897,23 +970,21 @@ async function refresh(){
 }
 function logout(){localStorage.removeItem('ht_db');location.reload();}
 function toggleTheme(){const h=document.documentElement,n=h.getAttribute('data-theme')==='dark'?'light':'dark';h.setAttribute('data-theme',n);localStorage.setItem('ht_theme',n);renderToday();}
-function showDashboard(){document.getElementById('loading').style.display='none';document.getElementById('dashboard').style.display='block';renderToday();renderBoss(todayStr());renderQuests(todayStr());renderBadges(todayStr());}
+function showDashboard(){document.getElementById('loading').style.display='none';document.getElementById('dashboard').style.display='block';renderToday();renderBoss(todayStr());renderQuests(todayStr());renderRanksPanel();}
 
-// ══ RENDER TODAY TAB ══
+// ── TODAY ──
 function renderToday(){
   const t=todayStr();
   document.getElementById('today-date-sub').textContent=new Date(t+'T12:00:00').toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-  renderAutoMsg(t);renderRing(t);renderTodayChips(t);renderThresholdBanner(t);renderGamification();
-  const avail=computeAvailablePD();
-  document.getElementById('pd-solde-today').textContent=avail.toLocaleString()+' PD';
+  renderAutoMsg(t);renderRing(t);renderTodayChips(t);renderThresholdBanner(t);renderXP();
 }
 
 function renderAutoMsg(t){
   const s=scoreDay(t),p=Math.round(s/HABITS.length*100);
   const last7=Object.keys(allData).sort().slice(-7);
   const weak=HABITS.filter(h=>last7.filter(d=>allData[d]&&allData[d][h]).length/Math.max(last7.length,1)<0.4);
-  let msg=p===100?`<strong>Journée parfaite 🔥</strong> — 10/10.`:p>=70?`<strong>Solide.</strong> ${s}/10. Continue.`:p>=40?`<strong>Bonne base.</strong> Encore ${HABITS.length-s} à compléter.`:s===0?`<strong>La journée t'attend.</strong>`:` <strong>${s}/10.</strong> Tu peux encore tout renverser.`;
-  if(weak.length>0&&p<100)msg+=` ⚠️ <em>${weak[0]}</em> est ton point faible.`;
+  let msg=p===100?`<strong>Journée parfaite 🔥</strong> — 10/10.`:p>=70?`<strong>Solide.</strong> ${s}/10.`:p>=40?`<strong>Bonne base.</strong> Encore ${HABITS.length-s} à compléter.`:s===0?`<strong>La journée t'attend.</strong>`:` <strong>${s}/10.</strong> Tu peux tout renverser.`;
+  if(weak.length&&p<100)msg+=` ⚠️ <em>${weak[0]}</em> est ton point faible.`;
   document.getElementById('auto-msg').innerHTML=msg;
 }
 
@@ -921,8 +992,8 @@ function renderRing(t){
   const c=scoreDay(t),p=Math.round(c/HABITS.length*100);
   const col=p===100?'#22c55e':p>=70?'#eab308':p>=40?'#f97316':'#ef4444';
   document.getElementById('ring-pct').textContent=p+'%';document.getElementById('ring-pct').style.color=col;
-  document.getElementById('ring-detail').textContent=`${c} / ${HABITS.length} habitudes`;
-  document.getElementById('goal-msg').textContent=c<HABITS.length?`Encore ${HABITS.length-c} à faire`:`Journée complète ! 🎉`;
+  document.getElementById('ring-detail').textContent=`${c} / ${HABITS.length}`;
+  document.getElementById('goal-msg').textContent=c<HABITS.length?`Encore ${HABITS.length-c} à faire`:`Complet 🎉`;
   if(ringChart)ringChart.destroy();
   ringChart=new Chart(document.getElementById('ring-chart').getContext('2d'),{
     type:'doughnut',data:{datasets:[{data:[c,HABITS.length-c],backgroundColor:[col,'rgba(128,128,128,0.1)'],borderWidth:0,hoverOffset:0}]},
@@ -944,246 +1015,81 @@ function renderThresholdBanner(t){
   const s=scoreDay(t),b=document.getElementById('threshold-banner');
   let c,tx;
   if(s>=HABITS.length){c='success';tx=`🏆 Journée parfaite — ${s}/${HABITS.length} !`;}
-  else if(s>=DAY_SUCCESS_MIN){c='success';tx=`✅ Journée réussie — ${s}/${HABITS.length}`;}
-  else{c=s>=4?'warn':'fail';tx=`${s>=4?'⚡':'❌'} ${s}/${HABITS.length} — Seuil : ${DAY_SUCCESS_MIN}/10`;}
+  else if(s>=DAY_SUCCESS){c='success';tx=`✅ Journée réussie — ${s}/${HABITS.length}`;}
+  else{c=s>=4?'warn':'fail';tx=`${s>=4?'⚡':'❌'} ${s}/${HABITS.length} — Seuil : ${DAY_SUCCESS}/10`;}
   b.className='threshold-banner '+c;b.textContent=tx;
 }
 
-function renderGamification(){
+function renderXP(){
   const xp=computeXP();
   const rank=getRank(xp),next=RANKS[RANKS.indexOf(rank)+1];
   const prog=next?Math.round((xp-rank.min)/(next.min-rank.min)*100):100;
   document.getElementById('xp-level').textContent=`${rank.emoji} ${rank.name}`;
-  document.getElementById('xp-info').textContent=next?`→ ${next.emoji} ${next.name}`:`Rang maximum !`;
+  document.getElementById('rank-el').textContent=`${rank.emoji} ${rank.name}`;
+  document.getElementById('rank-el').style.cssText=`background:${rank.color}22;color:${rank.color};border:1px solid ${rank.color}44;padding:3px 10px;border-radius:14px;font-size:.72rem;font-weight:700;`;
   document.getElementById('xp-current').textContent=`${xp.toLocaleString()} PD`;
-  document.getElementById('xp-next').textContent=next?`Objectif : ${next.min.toLocaleString()} PD`:'';
-  document.getElementById('rank-badge-small').textContent=`${rank.emoji} ${rank.name}`;
-  document.getElementById('rank-badge-small').style.cssText=`background:${rank.color}22;color:${rank.color};border:1px solid ${rank.color}44;padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:700;`;
+  document.getElementById('xp-next').textContent=next?`→ ${next.min.toLocaleString()} PD`:'MAX';
   setTimeout(()=>{document.getElementById('xp-bar').style.width=prog+'%';document.getElementById('xp-bar').style.background=`linear-gradient(90deg,${rank.color},${next?next.color:rank.color})`;},100);
-
   const dates=Object.keys(allData);
-  const baseXP=dates.reduce((a,d)=>{const s=scoreDay(d);let x=s*10;if(s>=DAY_SUCCESS_MIN)x+=50;if(isPerfect(d))x+=150;return a+x;},0);
-  const bossXP=Object.values(S.boss()).filter(b=>b.declared==='won').reduce((a,b)=>a+(b.reward||0),0);
-  const questXP=Object.values(S.quests()).reduce((a,w)=>a+Object.values(w).reduce((b,q)=>b+(q&&q.state==='done'?q.reward||0:0),0),0);
-  const malusXP=S.malus().reduce((a,m)=>a+m.amount,0);
-  const spentXP=S.transactions().reduce((a,t)=>a+t.amount,0);
-  document.getElementById('xp-breakdown').innerHTML=`<strong>Détail PD :</strong> Habitudes <strong>+${baseXP.toLocaleString()}</strong> · Boss <strong>+${bossXP.toLocaleString()}</strong> · Quêtes <strong>+${questXP.toLocaleString()}</strong>${malusXP>0?` · Malus <strong style="color:#f87171">-${malusXP.toLocaleString()}</strong>`:''}${spentXP>0?` · Dépensés <strong style="color:#f97316">-${spentXP.toLocaleString()}</strong>`:''}`;
-  const ml=document.getElementById('malus-log');
-  if(malusXP>0){ml.textContent=`⚠️ Malus : -${malusXP.toLocaleString()} PD`;ml.style.display='block';}else{ml.style.display='none';}
+  const bXP=dates.reduce((a,d)=>{const s=scoreDay(d);let x=s*10;if(s>=DAY_SUCCESS)x+=50;if(isPerfect(d))x+=150;return a+x;},0);
+  const boXP=Object.values(S.boss()).filter(b=>b.declared==='won').reduce((a,b)=>a+(b.reward||0),0);
+  const qXP=Object.values(S.quests()).reduce((a,w)=>a+Object.values(w).reduce((b,q)=>b+(q&&q.state==='done'?q.reward||0:0),0),0);
+  const mXP=S.malus().reduce((a,m)=>a+m.amount,0);
+  const tXP=S.tx().reduce((a,t)=>a+t.amount,0);
+  document.getElementById('xp-breakdown').innerHTML=`Habitudes <strong>+${bXP.toLocaleString()}</strong> · Boss <strong>+${boXP.toLocaleString()}</strong> · Quêtes <strong>+${qXP.toLocaleString()}</strong>${mXP?` · Malus <strong style="color:#f87171">-${mXP.toLocaleString()}</strong>`:''}${tXP?` · Boutique <strong style="color:#f97316">-${tXP.toLocaleString()}</strong>`:''}`;
 }
 
-// ══ ATTRIBUTES TAB ══
-function renderAttributes(){
-  const pa=computeAttrPA();
-  document.getElementById('attr-grid').innerHTML=ATTRIBUTES.map(attr=>{
-    const total=pa[attr.id]||0;
-    const level=paToLevel(total);
-    const prog=levelProgress(total);
-    const nextLvlPA=(level>=100)?0:level*PA_PER_LEVEL-total;
-    const lvlColor=level>=80?'#fbbf24':level>=60?'#22c55e':level>=40?'#06b6d4':level>=20?'#a78bfa':attr.color;
-
-    // Sous-compétences : estimation basée sur habitudes liées
-    const subPA=attr.subs.map(sub=>{
-      if(!sub.habit)return Math.round(total*0.6);
-      const dates=Object.keys(allData);
-      const cnt=dates.filter(d=>allData[d]&&allData[d][sub.habit]).length;
-      return cnt*3;
-    });
-    const subMax=Math.max(...subPA,1);
-
-    return`<div class="attr-card" style="border-color:${attr.color}22;">
-      <div class="attr-header">
-        <div class="attr-emoji">${attr.emoji}</div>
-        <div class="attr-title-wrap">
-          <div class="attr-name" style="color:${attr.color};">${attr.name}</div>
-          <div class="attr-desc">${attr.desc}</div>
-        </div>
-        <div class="attr-level-badge" style="background:${lvlColor}22;color:${lvlColor};border:1px solid ${lvlColor}44;">Niv. ${level}</div>
-      </div>
-      <div class="attr-bar-label">
-        <span style="font-size:.62rem;color:var(--muted);">${total} PA</span>
-        <span style="font-size:.62rem;color:var(--muted);">${level>=100?'MAX':nextLvlPA+' PA → Niv.'+(level+1)}</span>
-      </div>
-      <div class="attr-bar-wrap"><div class="attr-bar-fill" style="width:${prog}%;background:${lvlColor};"></div></div>
-      <div class="attr-sub-grid">
-        ${attr.subs.map((sub,i)=>`
-          <div class="attr-sub">
-            <div class="attr-sub-name">${sub.name}</div>
-            <div class="attr-sub-bar"><div class="attr-sub-fill" style="width:${Math.min(100,Math.round(subPA[i]/subMax*100))}%;background:${attr.color};"></div></div>
-            <div class="attr-sub-val">${subPA[i]} PA</div>
-          </div>`).join('')}
-      </div>
-      <div class="attr-how">
-        <strong>Comment progresser :</strong><br>
-        ${getAttrHowTo(attr.id)}
-      </div>
-    </div>`;
-  }).join('');
+// ── RANKS PANEL ──
+let ranksOpen=false;
+function toggleRanks(){
+  ranksOpen=!ranksOpen;
+  document.getElementById('ranks-panel').classList.toggle('open',ranksOpen);
+  document.getElementById('ranks-toggle-btn').textContent=ranksOpen?'Masquer ▴':'Voir les rangs ▾';
+  if(ranksOpen)renderRanksPanel();
 }
-
-function getAttrHowTo(id){
-  const map={
-    discipline:'No Scroll (+3 PA/jour) · Journée parfaite (+3) · Streak 7j (+6) · Boss discipline (+8)',
-    physique:'Sport (+2 PA/jour) · Pushup (+2/jour) · Boss physiques (+10) · Quêtes sport (+5)',
-    nutrition:'Nutrition cochée (+4 PA/jour) · Boss nutrition (+8) · Quête journée parfaite (+6)',
-    spiritualite:'Coran (+3/jour) · Prière (+2/jour) · Islam (+1/jour) · Boss spirituels (+10)',
-    intelligence:'Arabe (+3/jour) · Skill (+2/jour) · Boss intellectuels (+8) · Quêtes appr. (+4)',
-    echecs:'Chess coché (+4/jour) · Boss conquérant échecs (+15) · Analyser 5 parties (+6)',
-    mental:'No Scroll (+2/jour) · Journée parfaite (+2) · Streak 7j (+8) · Boss silence/bain de glace (+12)',
-    social:'Boss social (+10) · Quêtes sociales (+8) · Parler à inconnus · Actes de générosité',
-    execution:'Journée parfaite (+5) · Streak 7j (+10) · Streak 30j (+20) · Tout boss validé (+3)',
-  };
-  return map[id]||'—';
-}
-
-// ══ LIFE TAB ══
-function renderLife(){
-  const avail=computeAvailablePD();
+function renderRanksPanel(){
   const xp=computeXP();
-  const rankIdx=getRankIndex(xp);
-  const{streak}=computeStreak(todayStr());
-  const todayScore=scoreDay(todayStr());
-  const weekPct=computeWeekPct();
-
-  document.getElementById('pd-solde-life').textContent=avail.toLocaleString()+' PD';
-  document.getElementById('pd-rank-cond').textContent=`Rang actuel : ${getRank(xp).emoji} ${getRank(xp).name}`;
-
-  // BONUSES
-  document.getElementById('bonus-grid').innerHTML=BONUSES.map((b,i)=>{
-    let unlocked=true,lockMsg='';
-    if(b.minRank>rankIdx){unlocked=false;lockMsg=`Rang ${RANKS[b.minRank].name} requis`;}
-    if(avail<b.cost){unlocked=false;lockMsg=lockMsg||`${b.cost-avail} PD manquants`;}
-    return`<div class="bonus-card${!unlocked?' locked':''}" onclick="${unlocked?`spendBonus(${i})`:''}">
-      <div class="bonus-emoji">${b.emoji}</div>
-      <div class="bonus-name">${b.name}</div>
-      <div class="bonus-cost">-${b.cost} PD</div>
-      <div class="bonus-cond">${b.cond}</div>
-      ${!unlocked?`<div class="bonus-lock-msg">🔒 ${lockMsg}</div>`:''}
+  document.getElementById('ranks-panel').innerHTML=RANKS.map(r=>{
+    const isCur=xp>=r.min&&xp<r.max;
+    const reached=xp>=r.min;
+    const prog=r.max===Infinity?100:Math.min(100,Math.round((xp-r.min)/(r.max-r.min)*100));
+    return`<div class="rank-row${isCur?' current':''}">
+      <div class="rank-row-emoji">${r.emoji}</div>
+      <div style="flex:1;">
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <div class="rank-row-name" style="color:${r.color};">${r.name}${isCur?' ← Ton rang':''}</div>
+          <div class="rank-row-pd">${r.min===0?'0':r.min.toLocaleString()} PD</div>
+        </div>
+        <div style="font-size:.65rem;color:var(--muted);margin-top:1px;">${r.desc}</div>
+        ${isCur?`<div class="rank-prog-bar"><div class="rank-prog-fill" style="width:${prog}%;background:${r.color};"></div></div>`:reached?`<div style="font-size:.62rem;color:#22c55e;margin-top:2px;">✅ Atteint</div>`:`<div style="font-size:.62rem;color:var(--muted);margin-top:2px;">🔒 ${(r.min-xp).toLocaleString()} PD manquants</div>`}
+      </div>
     </div>`;
   }).join('');
-
-  // MALUSES
-  document.getElementById('malus-grid').innerHTML=MALUSES.map((m,i)=>`
-    <div class="malus-card" onclick="applyMalus(${i})">
-      <div class="malus-emoji">${m.emoji}</div>
-      <div class="malus-name">${m.name}</div>
-      <div class="malus-cost">-${m.cost} PD</div>
-      <div class="malus-desc">${m.desc}</div>
-    </div>`).join('');
-
-  renderTransactionLog();
 }
 
-function computeWeekPct(){
-  const today=todayStr();
-  const now=new Date(today+'T12:00:00'),ws=new Date(getWeekStart(today,0)+'T12:00:00');
-  let done=0,total=0;
-  for(let d=new Date(ws);d<=now;d.setDate(d.getDate()+1)){
-    const s=d.toISOString().substring(0,10);if(allData[s]){done+=scoreDay(s);total+=HABITS.length;}
-  }
-  return total>0?Math.round(done/total*100):0;
-}
-
-function spendBonus(idx){
-  const b=BONUSES[idx];const avail=computeAvailablePD();
-  if(avail<b.cost){alert('PD insuffisants !');return;}
-  showConfirm(`Dépenser ${b.cost} PD ?`,`${b.emoji} ${b.name}\n\nCette récompense est méritée. Profites-en !`,()=>{
-    const tx=S.transactions();
-    tx.unshift({id:Date.now(),type:'bonus',emoji:b.emoji,desc:b.name,amount:b.cost,date:todayStr()});
-    S.saveTx(tx);renderLife();renderGamification();renderToday();
-  });
-}
-
-function applyMalus(idx){
-  const m=MALUSES[idx];
-  showConfirm(`Enregistrer un écart ?`,`${m.emoji} ${m.name}\n\n-${m.cost} PD seront déduits. Sois honnête.`,()=>{
-    const tx=S.transactions();
-    tx.unshift({id:Date.now(),type:'malus',emoji:m.emoji,desc:m.name,amount:m.cost,date:todayStr()});
-    S.saveTx(tx);renderLife();renderGamification();renderToday();
-  });
-}
-
-function renderTransactionLog(){
-  const tx=S.transactions();
-  const el=document.getElementById('transaction-log');
-  if(!tx.length){el.innerHTML='<div style="font-size:.78rem;color:var(--muted);text-align:center;padding:1rem;">Aucune transaction</div>';return;}
-  el.innerHTML=tx.map((t,i)=>`
-    <div class="tx-item">
-      <span style="font-size:1rem;">${t.emoji}</span>
-      <span class="tx-desc">${t.desc}</span>
-      <span class="tx-amount neg">-${t.amount} PD</span>
-      <span class="tx-date">${t.date}</span>
-      <button class="tx-delete" onclick="deleteTx(${i})">✕</button>
-    </div>`).join('');
-}
-
-function deleteTx(idx){
-  const tx=S.transactions();tx.splice(idx,1);S.saveTx(tx);renderLife();renderGamification();renderToday();
-}
-
-// ══ CONFIRM DIALOG ══
-let _confirmCb=null;
-function showConfirm(title,desc,cb){
-  document.getElementById('confirm-title').textContent=title;
-  document.getElementById('confirm-desc').textContent=desc;
-  _confirmCb=cb;document.getElementById('confirm-overlay').classList.add('open');
-  document.getElementById('confirm-yes').onclick=()=>{closeConfirm();if(_confirmCb)_confirmCb();};
-}
-function closeConfirm(){document.getElementById('confirm-overlay').classList.remove('open');}
-
-// ══ RESET ══
-function showResetMenu(){
-  const opts=[
-    {label:'Reset boss de cette semaine',fn:()=>confirmReset('boss')},
-    {label:'Reset quêtes de cette semaine',fn:()=>confirmReset('quests')},
-    {label:'Reset attributs RPG',fn:()=>confirmReset('attributes')},
-    {label:'Reset transactions vie réelle',fn:()=>confirmReset('transactions')},
-    {label:'Reset TOUT',fn:()=>confirmReset('all')},
-  ];
-  const menu=document.createElement('div');
-  menu.style.cssText='position:fixed;top:60px;right:10px;background:var(--surface3);border:1px solid var(--border2);border-radius:12px;padding:.6rem;z-index:300;min-width:220px;box-shadow:0 4px 20px rgba(0,0,0,.4);';
-  menu.innerHTML=opts.map((o,i)=>`<div onclick="window._rm[${i}]()" style="padding:.5rem .8rem;border-radius:8px;font-size:.78rem;cursor:pointer;color:${i===4?'#f87171':'var(--text)'};transition:background .15s;" onmouseover="this.style.background='var(--surface2)'" onmouseout="this.style.background=''">${o.label}</div>`).join('');
-  window._rm=opts.map(o=>()=>{o.fn();menu.remove();});
-  document.body.appendChild(menu);
-  setTimeout(()=>document.addEventListener('click',()=>menu.remove(),{once:true}),100);
-}
-
-function confirmReset(type){
-  const labels={boss:'boss de cette semaine',quests:'quêtes de cette semaine',attributes:'attributs RPG (PA)',transactions:'historique transactions',all:'TOUT le système de jeu'};
-  showConfirm(`Reset ${labels[type]} ?`,`Cette action est irréversible.`,()=>doReset(type));
-}
-
-function doReset(type){
-  if(type==='boss'){const wn=getWeekNum(todayStr()),yr=new Date().getFullYear(),key=`w${wn}_${yr}`;const b=S.boss();delete b[key];S.saveBoss(b);renderBoss(todayStr());}
-  if(type==='quests'){const today=todayStr(),wn=getWeekNum(today),yr=new Date().getFullYear(),key=`qw${wn}_${yr}`;const q=S.quests();delete q[key];S.saveQuests(q);renderQuests(today);}
-  if(type==='attributes'){S.saveAttrPA({});}
-  if(type==='transactions'){S.saveTx([]);renderLife();}
-  if(type==='all'){localStorage.removeItem('ht_boss');localStorage.removeItem('ht_quests2');localStorage.removeItem('ht_malus2');localStorage.removeItem('ht_tx');localStorage.removeItem('ht_attr_pa');}
-  renderGamification();renderToday();
-}
-
-// ══ BOSS ══
+// ── BOSS ──
 function renderBoss(today){
-  const wn=getWeekNum(today),yr=new Date().getFullYear();
-  const boss=BOSSES[(wn-1)%BOSSES.length],key=`w${wn}_${yr}`;
+  const wn=getWeekNum(today),yr=new Date().getFullYear(),key=`w${wn}_${yr}`;
+  const boss=BOSSES[(wn-1)%BOSSES.length];
   const saved=S.boss();if(!saved[key])saved[key]={checks:[],declared:null,reward:boss.reward};
   const bd=saved[key];
   const dc={'Normale':'#22c55e','Difficile':'#f97316','Extrême':'#ef4444','Légendaire':'#fbbf24'};
   const col=dc[boss.diff]||'#8b5cf6';
   document.getElementById('boss-icon').textContent=boss.icon;
-  document.getElementById('boss-week-label').textContent=`Semaine ${wn} · Boss de la semaine`;
-  document.getElementById('boss-name').textContent=boss.name;
+  document.getElementById('boss-wk').textContent=`Semaine ${wn} · Boss`;
+  document.getElementById('boss-nm').textContent=boss.name;
   document.getElementById('boss-diff').textContent=boss.diff;
-  document.getElementById('boss-diff').style.cssText=`background:${col}22;color:${col};border:1px solid ${col}44;padding:3px 10px;border-radius:20px;font-size:.68rem;font-weight:700;`;
+  document.getElementById('boss-diff').style.cssText=`background:${col}22;color:${col};border:1px solid ${col}44;padding:2px 9px;border-radius:14px;font-size:.65rem;font-weight:700;`;
   document.getElementById('boss-lore').textContent=boss.lore;
-  document.getElementById('boss-reward-info').textContent=`🏆 Victoire : +${boss.reward} PD · Attribut ${ATTRIBUTES.find(a=>a.id===boss.attr)?.emoji||''} ${boss.attr} +${boss.reward>800?12:boss.reward>500?10:8} PA`;
+  const attrObj=ATTRIBUTES.find(a=>a.id===boss.attr);
+  document.getElementById('boss-reward-txt').textContent=`🏆 +${boss.reward} PD · ${attrObj?attrObj.emoji+' +PA '+attrObj.name:''}`;
 
   const cl=document.getElementById('boss-checklist');
   cl.innerHTML=boss.steps.map((step,i)=>{
     const checked=bd.checks.includes(i);
-    return`<div class="boss-check-item${checked?' checked':''}">
-      <input type="checkbox" id="bchk${i}" ${checked?'checked':''} ${bd.declared==='won'?'disabled':''} onchange="toggleBossCheck(${i},'${key}')">
-      <label for="bchk${i}">${step}</label></div>`;
+    return`<div class="boss-ci${checked?' checked':''}">
+      <input type="checkbox" id="bck${i}" ${checked?'checked':''} ${bd.declared?'disabled':''} onchange="toggleBossCheck(${i},'${key}')">
+      <label for="bck${i}">${step}</label></div>`;
   }).join('');
 
   const done=bd.checks.length,total=boss.steps.length,hp=Math.max(0,100-Math.round(done/total*100));
@@ -1191,156 +1097,331 @@ function renderBoss(today){
   setTimeout(()=>{document.getElementById('boss-hp-fill').style.width=hp+'%';},200);
 
   const res=document.getElementById('boss-result');
-  if(bd.declared==='won'){
-    res.innerHTML=`<div class="boss-defeated">⚔️ BOSS VAINCU — +${boss.reward} PD intégrés !</div>`;
-  }else if(hp===0){
-    res.innerHTML=`<div style="margin-top:10px;"><button onclick="declareBoss('${key}',${boss.reward})" style="width:100%;background:#22c55e22;border:1px solid #22c55e44;color:#22c55e;border-radius:8px;padding:.55rem;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;font-size:.82rem;">✅ Je valide — Boss vaincu !</button></div>`;
-  }else{
-    res.innerHTML=`<div style="font-size:.7rem;color:#a78bfa;margin-top:5px;text-align:center;">${done}/${total} étapes — Boss à ${hp}% HP</div>`;
-  }
+  if(bd.declared==='won'){res.innerHTML=`<div class="boss-won">⚔️ BOSS VAINCU — +${boss.reward} PD !</div>`;}
+  else if(bd.declared==='failed'){res.innerHTML=`<div class="boss-failed-msg">💀 Boss échoué cette semaine.</div>`;}
+  else if(hp===0){
+    res.innerHTML=`<div style="display:flex;gap:7px;margin-top:8px;">
+      <button onclick="declareBoss('won','${key}',${boss.reward})" style="flex:1;background:#22c55e22;border:1px solid #22c55e44;color:#22c55e;border-radius:8px;padding:.5rem;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;font-size:.78rem;">✅ Boss vaincu</button>
+      <button onclick="declareBoss('failed','${key}')" style="flex:1;background:#f8717122;border:1px solid #f8717144;color:#f87171;border-radius:8px;padding:.5rem;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;font-size:.78rem;">❌ Échoué</button>
+    </div>`;
+  }else{res.innerHTML=`<div class="boss-status-txt">${done}/${total} étapes — ${hp}% HP</div>`;}
 }
 
 function toggleBossCheck(idx,key){
-  const saved=S.boss();if(!saved[key])saved[key]={checks:[],declared:null};
-  const pos=saved[key].checks.indexOf(idx);
-  if(pos>-1)saved[key].checks.splice(pos,1);else saved[key].checks.push(idx);
-  S.saveBoss(saved);renderBoss(todayStr());
+  const s=S.boss();if(!s[key])s[key]={checks:[],declared:null};
+  const pos=s[key].checks.indexOf(idx);if(pos>-1)s[key].checks.splice(pos,1);else s[key].checks.push(idx);
+  S.saveBoss(s);renderBoss(todayStr());
+}
+function declareBoss(result,key,reward){
+  const s=S.boss();if(!s[key])s[key]={checks:[],declared:null};
+  s[key].declared=result;if(reward)s[key].reward=reward;S.saveBoss(s);
+  renderBoss(todayStr());renderXP();
+  if(result==='failed'){const m=S.malus();m.push({key,amount:300,reason:'Boss échoué',date:todayStr()});S.saveMalus(m);}
 }
 
-function declareBoss(key,reward){
-  const saved=S.boss();if(!saved[key])saved[key]={checks:[],declared:null};
-  saved[key].declared='won';saved[key].reward=reward;S.saveBoss(saved);
-  renderBoss(todayStr());renderGamification();renderToday();
-}
-
-// ══ QUESTS ══
-function getQuestWeekKey(today){const wn=getWeekNum(today),yr=new Date().getFullYear();return`qw${wn}_${yr}`;}
-
-function getActiveQuestIndices(key){
-  const saved=S.quests();
-  if(saved[key]&&saved[key]._indices)return saved[key]._indices;
+// ── QUESTS ──
+function getQKey(today){const wn=getWeekNum(today),yr=new Date().getFullYear();return`qw${wn}_${yr}`;}
+function getQIndices(key){
+  const s=S.quests();if(s[key]&&s[key]._indices)return s[key]._indices;
   const wn=parseInt(key.replace(/[^0-9]/g,''));
   const indices=[];let i=(wn*3)%ALL_QUESTS.length;
   while(indices.length<QUESTS_PER_WEEK){if(!indices.includes(i))indices.push(i);i=(i+4)%ALL_QUESTS.length;}
-  if(!saved[key])saved[key]={};saved[key]._indices=indices;S.saveQuests(saved);return indices;
+  if(!s[key])s[key]={};s[key]._indices=indices;S.saveQuests(s);return indices;
 }
 
 function renderQuests(today){
-  const key=getQuestWeekKey(today),saved=S.quests();if(!saved[key])saved[key]={};
-  const indices=getActiveQuestIndices(key);
+  const key=getQKey(today),s=S.quests();if(!s[key])s[key]={};
+  const indices=getQIndices(key);
   document.getElementById('quest-list').innerHTML=indices.map((qIdx,slot)=>{
-    const q=ALL_QUESTS[qIdx],qd=saved[key][slot]||{state:'pending'};
-    const isDone=qd.state==='done';
+    const q=ALL_QUESTS[qIdx],qd=s[key][slot]||{state:'pending'};
+    const isDone=qd.state==='done',isFail=qd.state==='failed';
     const attr=ATTRIBUTES.find(a=>a.id===q.attr);
-    return`<div class="quest-item${isDone?' quest-done':''}">
-      <div class="quest-header">
-        <div class="quest-icon">${q.icon}</div>
-        <div class="quest-name">${q.name}</div>
+    return`<div class="quest-item${isDone?' q-done':isFail?' q-failed':''}">
+      <div class="quest-hdr"><div class="quest-ico">${q.icon}</div><div class="quest-nm">${q.name}</div>
         <div class="quest-badge ${q.difficulty}">${q.difficulty==='easy'?'Facile':q.difficulty==='medium'?'Moyen':'Difficile'}</div>
       </div>
       <div class="quest-desc">${q.desc}</div>
-      <div style="font-size:.65rem;color:var(--muted);margin-bottom:6px;">${attr?attr.emoji+' +PA en '+attr.name:''}</div>
-      <div class="quest-footer">
-        <div class="quest-rewards">🏆 +${q.reward} PD${isDone?' ✅':''}</div>
-        <div class="quest-actions">
-          ${!isDone?`<button class="q-btn success" onclick="validateQuest('${key}',${slot},${q.reward})">✅ Accompli</button>
-            <button class="q-btn swap" onclick="swapQuest('${key}',${slot},${qIdx})">🔄</button>
-            <button class="q-btn reset-q" onclick="resetOneQuest('${key}',${slot})">↺</button>`
-          :`<button class="q-btn reset-q" onclick="resetOneQuest('${key}',${slot})">↺</button>`}
+      ${attr?`<div style="font-size:.62rem;color:var(--muted);margin-bottom:5px;">${attr.emoji} +PA ${attr.name}</div>`:''}
+      <div class="quest-ftr">
+        <div class="quest-rew">🏆 +${q.reward} PD${isDone?' ✅':isFail?' ❌':''}</div>
+        <div class="quest-acts">
+          ${!isDone&&!isFail?`<button class="qb ok" onclick="valQ('${key}',${slot},${q.reward})">✅</button>
+            <button class="qb ko" onclick="failQ('${key}',${slot})">❌</button>`:''}
+          <button class="qb rst" onclick="resetQ('${key}',${slot})">↺</button>
         </div>
       </div>
     </div>`;
   }).join('');
 }
 
-function validateQuest(key,slot,reward){
-  const saved=S.quests();if(!saved[key])saved[key]={};
-  saved[key][slot]={state:'done',reward};S.saveQuests(saved);
-  renderQuests(todayStr());renderGamification();renderToday();
+function valQ(key,slot,reward){const s=S.quests();if(!s[key])s[key]={};s[key][slot]={state:'done',reward};S.saveQuests(s);renderQuests(todayStr());renderXP();}
+function failQ(key,slot){const s=S.quests();if(!s[key])s[key]={};s[key][slot]={state:'failed'};S.saveQuests(s);renderQuests(todayStr());}
+function resetQ(key,slot){const s=S.quests();if(!s[key])s[key]={};delete s[key][slot];S.saveQuests(s);renderQuests(todayStr());renderXP();}
+
+// ── ATTRIBUTES ──
+function renderAttr(){
+  const pa=computeAttrPA();
+  document.getElementById('attr-grid').innerHTML=ATTRIBUTES.map(attr=>{
+    const total=pa[attr.id]||0,level=paToLevel(total),prog=levelProg(total);
+    const nextPA=level>=100?0:level*PA_PER_LEVEL-total;
+    const col=level>=80?'#fbbf24':level>=60?'#22c55e':level>=40?'#06b6d4':level>=20?'#a78bfa':attr.color;
+    const subs=computeSubPA(attr.id,todayStr());
+    const subMax=Math.max(...Object.values(subs),1);
+    return`<div class="attr-card" style="border-color:${attr.color}22;">
+      <div class="attr-hdr">
+        <div class="attr-emoji">${attr.emoji}</div>
+        <div class="attr-title"><div class="attr-name" style="color:${attr.color};">${attr.name}</div><div class="attr-desc">${attr.desc}</div></div>
+        <div class="attr-lvl" style="background:${col}22;color:${col};border:1px solid ${col}44;">Niv. ${level}</div>
+      </div>
+      <div class="attr-bar-meta"><span>${total} PA</span><span>${level>=100?'MAX ✅':nextPA+' PA → Niv.'+(level+1)}</span></div>
+      <div class="attr-bar-wrap"><div class="attr-bar-fill" style="width:${prog}%;background:${col};"></div></div>
+      <div class="attr-subs">
+        ${attr.subs.map((sub,i)=>{const key=sub.key;const val=subs[key]||0;const subProg=Math.min(100,Math.round(val/subMax*100));const subLvl=paToLevel(val);
+          return`<div class="attr-sub">
+            <div class="attr-sub-hdr"><div class="attr-sub-name">${sub.name}</div><div class="attr-sub-val">${val} PA</div></div>
+            <div class="attr-sub-bar"><div class="attr-sub-fill" style="width:${subProg}%;background:${attr.color};"></div></div>
+            <div class="attr-sub-lvl">Niv. ${subLvl} · ${sub.desc}</div>
+          </div>`;}).join('')}
+      </div>
+      <div class="attr-how"><strong>Comment progresser :</strong><br>${attr.gains_txt}</div>
+      <div class="attr-goal">🎯 <strong>Objectif :</strong> ${attr.goal}</div>
+    </div>`;
+  }).join('');
 }
 
-function resetOneQuest(key,slot){
-  const saved=S.quests();if(!saved[key])saved[key]={};delete saved[key][slot];S.saveQuests(saved);renderQuests(todayStr());renderGamification();
+// ── HISTORY ──
+function setHistFilter(f,btn){
+  histFilter=f;document.querySelectorAll('.hf-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderHistory();
 }
 
-function swapQuest(key,slot,currentIdx){
-  const saved=S.quests();if(!saved[key])saved[key]={};
-  const indices=saved[key]._indices||[];const used=new Set(indices);
-  let next=(currentIdx+1)%ALL_QUESTS.length,tries=0;
-  while(used.has(next)&&tries<ALL_QUESTS.length){next=(next+1)%ALL_QUESTS.length;tries++;}
-  if(tries>=ALL_QUESTS.length)return;
-  indices[slot]=next;saved[key]._indices=indices;delete saved[key][slot];S.saveQuests(saved);renderQuests(todayStr());
+function renderHistory(){
+  const today=todayStr();const items=[];
+  // Boss history
+  const boss=S.boss();
+  Object.entries(boss).forEach(([key,b])=>{
+    const wn=parseInt(key.replace(/[^0-9]/g,''));
+    const bossData=BOSSES[(wn-1)%BOSSES.length];
+    if(!bossData)return;
+    items.push({type:'boss',icon:bossData.icon,name:bossData.name,sub:`Semaine ${wn} · ${bossData.diff}`,state:b.declared||'pending',date:key.includes('_')?`Sem. ${wn}`:''});
+  });
+  // Quest history
+  const quests=S.quests();
+  Object.entries(quests).forEach(([key,week])=>{
+    const wn=parseInt(key.replace(/[^0-9]/g,''));
+    const indices=week._indices||[];
+    indices.forEach((qIdx,slot)=>{
+      if(qIdx===undefined)return;
+      const q=ALL_QUESTS[qIdx];if(!q)return;
+      const qd=week[slot]||{state:'pending'};
+      items.push({type:'quest',icon:q.icon,name:q.name,sub:`Quête · Semaine ${wn} · ${q.difficulty}`,state:qd.state,date:`Sem. ${wn}`});
+    });
+  });
+  // Filter
+  const filtered=items.filter(item=>{
+    if(histFilter==='all')return true;
+    if(histFilter==='boss')return item.type==='boss';
+    if(histFilter==='quest')return item.type==='quest';
+    if(histFilter==='won')return item.state==='won'||item.state==='done';
+    if(histFilter==='failed')return item.state==='failed';
+    if(histFilter==='pending')return item.state==='pending';
+    return true;
+  });
+  const el=document.getElementById('hist-list');
+  if(!filtered.length){el.innerHTML=`<div style="font-size:.78rem;color:var(--muted);text-align:center;padding:2rem;">Aucun élément</div>`;return;}
+  el.innerHTML=filtered.reverse().map(item=>{
+    const stateLabel=item.state==='won'||item.state==='done'?'✅ Validé':item.state==='failed'?'❌ Échoué':'⏳ En cours';
+    const stateClass=item.state==='won'||item.state==='done'?'won':item.state==='failed'?'failed':'pending';
+    return`<div class="hist-item">
+      <div class="hist-icon">${item.icon}</div>
+      <div class="hist-info"><div class="hist-name">${item.name}</div><div class="hist-sub">${item.sub}</div></div>
+      <div class="hist-status ${stateClass}">${stateLabel}</div>
+      <div class="hist-date">${item.date}</div>
+    </div>`;
+  }).join('');
 }
 
-// ══ BADGES ══
-function renderBadges(today){
-  const dates=Object.keys(allData).sort();
+// ── BADGES ──
+function getBadges(){
+  const today=todayStr(),dates=Object.keys(allData).sort();
   const total=Object.values(allData).reduce((a,d)=>a+HABITS.filter(h=>d[h]).length,0);
   const perfect=dates.filter(d=>isPerfect(d)).length;
-  const{best}=computeStreak(today);
+  const{streak,best}=computeStreak(today);
   const cc=h=>dates.filter(d=>allData[d]&&allData[d][h]).length;
   const cs=h=>{let r=0,b=0;for(const d of dates){r=allData[d]&&allData[d][h]?r+1:0;if(r>b)b=r;}return b;};
   const bw=Object.values(S.boss()).filter(b=>b.declared==='won').length;
-  const bl=Object.values(S.boss()).filter(b=>b.declared==='lost').length;
+  const bl=Object.values(S.boss()).filter(b=>b.declared==='failed').length;
   const qw=Object.values(S.quests()).reduce((a,w)=>a+Object.values(w).filter(q=>q&&q.state==='done').length,0);
-  const xp=computeXP();const ri=getRankIndex(xp);
-  const BADGES=[
-    {emoji:'🔥',name:'Premier Feu',how:'Streak de 7 jours',type:'n',earned:best>=7},
-    {emoji:'💯',name:'Perfection',how:'1ère journée 10/10',type:'n',earned:perfect>=1},
-    {emoji:'⭐',name:'10 Étoiles',how:'10 journées parfaites',type:'n',earned:perfect>=10},
-    {emoji:'🌟',name:'30 Étoiles',how:'30 journées parfaites',type:'n',earned:perfect>=30},
-    {emoji:'⚡',name:'14 Jours',how:'14j consécutifs ≥70%',type:'n',earned:best>=14},
-    {emoji:'🔱',name:'30 Jours',how:'30j consécutifs',type:'n',earned:best>=30},
-    {emoji:'👑',name:'Centurion',how:'100j consécutifs',type:'n',earned:best>=100},
-    {emoji:'📖',name:'Dévotion',how:'Coran 30 fois',type:'n',earned:cc('Coran')>=30},
-    {emoji:'🌙',name:'Récitant',how:'Coran 100 fois',type:'n',earned:cc('Coran')>=100},
-    {emoji:'🤲',name:'Prière Constante',how:'Prière 60 fois',type:'n',earned:cc('Prière')>=60},
-    {emoji:'📵',name:'Focus 14j',how:'No Scroll 14j suite',type:'n',earned:cs('No Scroll')>=14},
-    {emoji:'🏃',name:'Athlète',how:'Sport 30j suite',type:'n',earned:cs('Sport')>=30},
+  const xp=computeXP(),ri=getRankIdx(xp);
+  return[
+    {cat:'Régularité'},
+    {emoji:'🔥',name:'Premier Feu',how:'Atteindre un streak de 7 jours consécutifs ≥70%',type:'n',earned:best>=7},
+    {emoji:'⚡',name:'Momentum 14j',how:'14 jours consécutifs ≥70%',type:'n',earned:best>=14},
+    {emoji:'🔱',name:'30 Jours',how:'30 jours consécutifs ≥70%',type:'n',earned:best>=30},
+    {emoji:'👑',name:'Centurion',how:'100 jours consécutifs ≥70%',type:'n',earned:best>=100},
+    {cat:'Perfection'},
+    {emoji:'💯',name:'Premier Parfait',how:'Première journée 10/10',type:'n',earned:perfect>=1},
+    {emoji:'⭐',name:'10 Parfaits',how:'10 journées 10/10',type:'n',earned:perfect>=10},
+    {emoji:'🌟',name:'30 Parfaits',how:'30 journées 10/10',type:'n',earned:perfect>=30},
+    {emoji:'✨',name:'100 Parfaits',how:'100 journées 10/10',type:'n',earned:perfect>=100},
+    {cat:'Habitudes'},
+    {emoji:'📖',name:'Dévotion Coran',how:'Coran coché 30 fois',type:'n',earned:cc('Coran')>=30},
+    {emoji:'🌙',name:'Récitant',how:'Coran coché 100 fois',type:'n',earned:cc('Coran')>=100},
+    {emoji:'🤲',name:'Prière Constante',how:'Prière cochée 60 fois',type:'n',earned:cc('Prière')>=60},
+    {emoji:'📵',name:'Focus 14j',how:'No Scroll 14 jours consécutifs',type:'n',earned:cs('No Scroll')>=14},
+    {emoji:'🏃',name:'Athlète',how:'Sport 30 jours consécutifs',type:'n',earned:cs('Sport')>=30},
+    {emoji:'♟️',name:'Joueur d\'Échecs',how:'Chess coché 30 fois',type:'n',earned:cc('Chess')>=30},
+    {cat:'Volume'},
     {emoji:'🏅',name:'50 Jours',how:'50 jours trackés',type:'n',earned:dates.length>=50},
     {emoji:'🎖️',name:'100 Jours',how:'100 jours trackés',type:'n',earned:dates.length>=100},
     {emoji:'💎',name:'200 Jours',how:'200 jours trackés',type:'n',earned:dates.length>=200},
     {emoji:'🏆',name:'Légendaire',how:'365 jours trackés',type:'n',earned:dates.length>=365},
-    {emoji:'💪',name:'500 Complétions',how:'500 habitudes',type:'n',earned:total>=500},
-    {emoji:'🦾',name:'1000 Complétions',how:'1000 habitudes',type:'n',earned:total>=1000},
-    {emoji:'⚔️',name:'Premier Boss',how:'Vaincre 1 boss',type:'b',earned:bw>=1},
+    {emoji:'💪',name:'500 Complétions',how:'500 habitudes cochées au total',type:'n',earned:total>=500},
+    {emoji:'🦾',name:'1000 Complétions',how:'1000 habitudes cochées au total',type:'n',earned:total>=1000},
+    {cat:'Rangs'},
+    {emoji:'🛡️',name:'Rang D atteint',how:'Accumuler 2 000 PD',type:'b',earned:ri>=1},
+    {emoji:'⚔️',name:'Rang C atteint',how:'Accumuler 6 000 PD',type:'b',earned:ri>=2},
+    {emoji:'🏹',name:'Rang B atteint',how:'Accumuler 14 000 PD',type:'b',earned:ri>=3},
+    {emoji:'🔥',name:'Rang A atteint',how:'Accumuler 28 000 PD',type:'b',earned:ri>=4},
+    {emoji:'💎',name:'Rang S atteint',how:'Accumuler 50 000 PD',type:'b',earned:ri>=5},
+    {cat:'Boss'},
+    {emoji:'⚔️',name:'Premier Boss',how:'Vaincre 1 boss hebdomadaire',type:'b',earned:bw>=1},
     {emoji:'🗡️',name:'5 Boss',how:'Vaincre 5 boss',type:'b',earned:bw>=5},
     {emoji:'🔱',name:'10 Boss',how:'Vaincre 10 boss',type:'b',earned:bw>=10},
-    {emoji:'🛡️',name:'Invaincu',how:'3 boss sans défaite',type:'b',earned:bw>=3&&bl===0},
-    {emoji:'📜',name:'5 Quêtes',how:'Valider 5 quêtes',type:'b',earned:qw>=5},
-    {emoji:'📋',name:'15 Quêtes',how:'Valider 15 quêtes',type:'b',earned:qw>=15},
-    {emoji:'🥗',name:'Rang D',how:'Atteindre le rang D',type:'b',earned:ri>=1},
-    {emoji:'⚔️',name:'Rang C',how:'Atteindre le rang C',type:'b',earned:ri>=2},
-    {emoji:'🔥',name:'Rang A',how:'Atteindre le rang A',type:'b',earned:ri>=4},
-    {emoji:'💎',name:'Rang S',how:'Atteindre le rang S',type:'b',earned:ri>=5},
+    {emoji:'🛡️',name:'Invaincu',how:'Vaincre 3 boss sans aucun échec',type:'b',earned:bw>=3&&bl===0},
+    {emoji:'💀',name:'Boss Légendaire',how:'Vaincre un boss de difficulté Légendaire',type:'b',earned:Object.entries(S.boss()).some(([k,b])=>{if(b.declared!=='won')return false;const wn=parseInt(k.replace(/[^0-9]/g,''));const bd=BOSSES[(wn-1)%BOSSES.length];return bd&&bd.diff==='Légendaire';})},
+    {cat:'Quêtes'},
+    {emoji:'📜',name:'5 Quêtes',how:'Valider 5 quêtes secondaires',type:'b',earned:qw>=5},
+    {emoji:'📋',name:'15 Quêtes',how:'Valider 15 quêtes secondaires',type:'b',earned:qw>=15},
+    {emoji:'📗',name:'30 Quêtes',how:'Valider 30 quêtes secondaires',type:'b',earned:qw>=30},
   ];
-  document.getElementById('badges-grid').innerHTML=BADGES.map(b=>`
-    <div class="badge${b.earned?(b.type==='b'?' boss-badge':' earned'):' locked'}">
-      <span>${b.emoji}</span>
-      <span style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.71rem;">${b.name}</span>
-      <div class="badge-tooltip"><strong>${b.name}</strong><br>${b.earned?'✅ Obtenu !':'🔒 '+b.how}</div>
+}
+
+function renderBadgesPage(){
+  const badges=getBadges();let html='';let inGrid=false;
+  for(const b of badges){
+    if(b.cat){if(inGrid){html+='</div>';inGrid=false;}html+=`<div class="badge-cat-title">${b.cat}</div><div class="badges-page-grid">`;inGrid=true;}
+    else{
+      html+=`<div class="badge-card${b.earned?(b.type==='b'?' boss-b':' earned'):' locked'}">
+        <div class="badge-card-hdr"><div class="badge-card-emoji">${b.emoji}</div><div class="badge-card-name">${b.name}</div><div class="badge-card-status">${b.earned?'✅':'🔒'}</div></div>
+        <div class="badge-card-how${b.earned?' how-done':''}">${b.earned?'Badge obtenu !':b.how}</div>
+      </div>`;
+    }
+  }
+  if(inGrid)html+='</div>';
+  document.getElementById('badges-page').innerHTML=html;
+}
+
+// ── SHOP ──
+function renderShop(){
+  const avail=computePDAvail();const xp=computeXP();const ri=getRankIdx(xp);
+  const{streak}=computeStreak(todayStr());
+  document.getElementById('pd-val').textContent=avail.toLocaleString()+' PD';
+  document.getElementById('pd-rank-txt').textContent=`Rang actuel : ${getRank(xp).emoji} ${getRank(xp).name}`;
+
+  document.getElementById('shop-grid').innerHTML=BONUSES.map((b,i)=>{
+    const locked=ri<b.minRank||avail<b.cost;
+    const lockMsg=ri<b.minRank?`Rang ${RANKS[b.minRank].name} requis`:avail<b.cost?`${(b.cost-avail).toLocaleString()} PD manquants`:'';
+    return`<div class="shop-card${locked?' locked':''}" onclick="${!locked?`buyBonus(${i})`:''}" >
+      <div class="shop-emoji">${b.emoji}</div><div class="shop-name">${b.name}</div>
+      <div class="shop-cost">-${b.cost} PD</div><div class="shop-cond">${b.cond}</div>
+      ${locked&&lockMsg?`<div class="shop-lock">🔒 ${lockMsg}</div>`:''}
+    </div>`;
+  }).join('');
+
+  document.getElementById('malus-shop-grid').innerHTML=MALUSES.map((m,i)=>`
+    <div class="malus-card" onclick="applyMalus(${i})">
+      <div class="malus-emoji">${m.emoji}</div><div class="malus-name">${m.name}</div>
+      <div class="malus-cost">-${m.cost} PD</div>
+    </div>`).join('');
+
+  renderTxLog();
+}
+
+function buyBonus(idx){
+  const b=BONUSES[idx];const avail=computePDAvail();
+  if(avail<b.cost){alert('PD insuffisants !');return;}
+  showConfirm(`Dépenser ${b.cost} PD ?`,`${b.emoji} ${b.name}\n\nTu l\'as mérité.`,()=>{
+    const tx=S.tx();tx.unshift({id:Date.now(),type:'bonus',emoji:b.emoji,desc:b.name,amount:b.cost,date:todayStr()});
+    S.saveTx(tx);renderShop();renderXP();
+  });
+}
+function applyMalus(idx){
+  const m=MALUSES[idx];
+  showConfirm(`Enregistrer un écart ?`,`${m.emoji} ${m.name}\n\n-${m.cost} PD.`,()=>{
+    const mal=S.malus();mal.push({key:'manual_'+Date.now(),amount:m.cost,reason:m.name,date:todayStr()});S.saveMalus(mal);
+    renderShop();renderXP();
+  });
+}
+function renderTxLog(){
+  const tx=S.tx();const mal=S.malus().filter(m=>m.key&&m.key.startsWith('manual'));
+  const all=[...tx.map(t=>({...t,sign:'-'})),...mal.map(m=>({emoji:'💀',desc:m.reason,amount:m.amount,date:m.date,sign:'-'}))].sort((a,b)=>b.date>a.date?1:-1);
+  const el=document.getElementById('tx-log');
+  if(!all.length){el.innerHTML=`<div style="font-size:.76rem;color:var(--muted);text-align:center;padding:1rem;">Aucune transaction</div>`;return;}
+  el.innerHTML=all.slice(0,30).map((t,i)=>`
+    <div class="tx-item">
+      <span style="font-size:.9rem;">${t.emoji}</span>
+      <span class="tx-desc">${t.desc}</span>
+      <span class="tx-amt neg">-${t.amount} PD</span>
+      <span class="tx-date">${t.date}</span>
     </div>`).join('');
 }
 
-// ══ STATS TAB ══
-function renderStats(today){
-  const{streak,best}=computeStreak(today);
+function deleteTx(idx){const tx=S.tx();tx.splice(idx,1);S.saveTx(tx);renderShop();renderXP();}
+
+// ── CONFIRM ──
+let _cb=null;
+function showConfirm(title,desc,cb){
+  document.getElementById('confirm-title').textContent=title;
+  document.getElementById('confirm-desc').textContent=desc;
+  _cb=cb;document.getElementById('confirm-overlay').classList.add('open');
+  document.getElementById('confirm-yes').onclick=()=>{closeConfirm();if(_cb)_cb();};
+}
+function closeConfirm(){document.getElementById('confirm-overlay').classList.remove('open');}
+
+// ── RESET ──
+function showResetMenu(){
+  const opts=[
+    {label:'Reset boss semaine',fn:()=>confirmReset('boss')},
+    {label:'Reset quêtes semaine',fn:()=>confirmReset('quests')},
+    {label:'Reset attributs RPG',fn:()=>confirmReset('attributes')},
+    {label:'Reset boutique',fn:()=>confirmReset('transactions')},
+    {label:'Reset TOUT',fn:()=>confirmReset('all')},
+  ];
+  const menu=document.createElement('div');
+  menu.style.cssText='position:fixed;top:55px;right:8px;background:var(--surface3);border:1px solid var(--border2);border-radius:11px;padding:.5rem;z-index:300;min-width:200px;box-shadow:0 4px 20px rgba(0,0,0,.4);';
+  menu.innerHTML=opts.map((o,i)=>`<div onclick="window.__rm[${i}]()" style="padding:.45rem .75rem;border-radius:7px;font-size:.76rem;cursor:pointer;color:${i===4?'#f87171':'var(--text)'};transition:background .15s;" onmouseover="this.style.background='var(--surface2)'" onmouseout="this.style.background=''">${o.label}</div>`).join('');
+  window.__rm=opts.map(o=>()=>{o.fn();menu.remove();});
+  document.body.appendChild(menu);setTimeout(()=>document.addEventListener('click',()=>menu.remove(),{once:true}),100);
+}
+function confirmReset(type){
+  const labels={boss:'boss de cette semaine',quests:'quêtes de cette semaine',attributes:'attributs RPG',transactions:'historique boutique',all:'TOUT le système'};
+  showConfirm(`Reset ${labels[type]} ?`,'Cette action est irréversible.',()=>doReset(type));
+}
+function doReset(type){
+  const t=todayStr(),wn=getWeekNum(t),yr=new Date().getFullYear();
+  if(type==='boss'){const b=S.boss();delete b[`w${wn}_${yr}`];S.saveBoss(b);renderBoss(t);}
+  if(type==='quests'){const q=S.quests();delete q[`qw${wn}_${yr}`];S.saveQuests(q);renderQuests(t);}
+  if(type==='attributes'){}  // PA computed dynamically — nothing to reset manually
+  if(type==='transactions'){S.saveTx([]);renderShop();}
+  if(type==='all'){localStorage.removeItem('ht_boss');localStorage.removeItem('ht_quests3');localStorage.removeItem('ht_malus3');localStorage.removeItem('ht_tx');}
+  renderXP();renderToday();
+}
+
+// ── STATS ──
+function renderStats(){
+  const t=todayStr(),{streak,best}=computeStreak(t);
   const total=Object.values(allData).reduce((a,d)=>a+HABITS.filter(h=>d[h]).length,0);
   const perfect=Object.keys(allData).filter(d=>isPerfect(d)).length;
   document.getElementById('stat-streak').textContent=streak+'j';
   document.getElementById('stat-best').textContent=best+'j';
   document.getElementById('stat-total').textContent=total;
   document.getElementById('stat-perfect').textContent=perfect;
-  const now=new Date(today+'T12:00:00');
-  const ws=new Date(now),dow=ws.getDay();ws.setDate(ws.getDate()-(dow===0?6:dow-1));
-  let wD=0,wT=0;
-  for(let d=new Date(ws);d<=now;d.setDate(d.getDate()+1)){const s=d.toISOString().substring(0,10);if(allData[s]){wD+=HABITS.filter(h=>allData[s][h]).length;wT+=HABITS.length;}}
+  const now=new Date(t+'T12:00:00'),ws=new Date(now),dow=ws.getDay();ws.setDate(ws.getDate()-(dow===0?6:dow-1));
+  let wD=0,wT=0;for(let d=new Date(ws);d<=now;d.setDate(d.getDate()+1)){const s=d.toISOString().substring(0,10);if(allData[s]){wD+=HABITS.filter(h=>allData[s][h]).length;wT+=HABITS.length;}}
   document.getElementById('con-week').textContent=(wT>0?Math.round(wD/wT*100):0)+'%';
-  const ms=new Date(now.getFullYear(),now.getMonth(),1);let mD=0,mT=0;
-  for(let d=new Date(ms);d<=now;d.setDate(d.getDate()+1)){const s=d.toISOString().substring(0,10);if(allData[s]){mD+=HABITS.filter(h=>allData[s][h]).length;mT+=HABITS.length;}}
+  const ms=new Date(now.getFullYear(),now.getMonth(),1);let mD=0,mT=0;for(let d=new Date(ms);d<=now;d.setDate(d.getDate()+1)){const s=d.toISOString().substring(0,10);if(allData[s]){mD+=HABITS.filter(h=>allData[s][h]).length;mT+=HABITS.length;}}
   document.getElementById('con-month').textContent=(mT>0?Math.round(mD/mT*100):0)+'%';
-  const aD=Object.values(allData).reduce((a,d)=>a+HABITS.filter(h=>d[h]).length,0);
-  const aT=Object.keys(allData).length*HABITS.length;
+  const aD=Object.values(allData).reduce((a,d)=>a+HABITS.filter(h=>d[h]).length,0),aT=Object.keys(allData).length*HABITS.length;
   document.getElementById('con-rate').textContent=(aT>0?Math.round(aD/aT*100):0)+'%';
   const dates=Object.keys(allData);if(!dates.length)return;
   const rates=HABITS.map((h,i)=>({h,i,rate:Math.round(dates.filter(d=>allData[d][h]).length/dates.length*100)}));
@@ -1352,11 +1433,10 @@ function renderStats(today){
 }
 
 function changeWeek(dir){weekOffset+=dir;renderWeekScores(todayStr());}
-
 function renderWeekScores(today){
   const days=['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
   const now=new Date(today+'T12:00:00'),ws=new Date(getWeekStart(today,weekOffset)+'T12:00:00');
-  const label=weekOffset===0?'Cette semaine':weekOffset===-1?'Semaine dernière':`Il y a ${Math.abs(weekOffset)} semaines`;
+  const label=weekOffset===0?'Cette semaine':weekOffset===-1?'Semaine dernière':`Il y a ${Math.abs(weekOffset)} sem.`;
   document.getElementById('week-nav-label').textContent=label;
   document.getElementById('week-next').disabled=weekOffset>=0;
   document.getElementById('week-prev').disabled=weekOffset<=-20;
@@ -1413,14 +1493,14 @@ function renderHeatmap(){
     if(d.getFullYear()===year){
       const dd=allData[ds]||{},cnt=HABITS.filter(h=>dd[h]).length;
       cell.style.background=getHeatColor(cnt);if(isPerfect(ds))cell.style.outline='1.5px solid #4ade80';
-      cell.addEventListener('mouseenter',()=>{const dn=HABITS.filter(h=>dd[h]);tt.innerHTML=`<strong>${ds}</strong> · ${cnt}/10${isPerfect(ds)?' ⭐':''}<br><span style="color:var(--muted);font-size:.68rem;">${dn.length?dn.join(', '):'Aucune'}</span>`;tt.style.display='block';});
-      cell.addEventListener('mousemove',e=>{tt.style.left=(e.clientX+12)+'px';tt.style.top=(e.clientY-44)+'px';});
+      cell.addEventListener('mouseenter',()=>{const dn=HABITS.filter(h=>dd[h]);tt.innerHTML=`<strong>${ds}</strong> · ${cnt}/10${isPerfect(ds)?' ⭐':''}<br><span style="color:var(--muted);font-size:.66rem;">${dn.length?dn.join(', '):'Aucune'}</span>`;tt.style.display='block';});
+      cell.addEventListener('mousemove',e=>{tt.style.left=(e.clientX+10)+'px';tt.style.top=(e.clientY-42)+'px';});
       cell.addEventListener('mouseleave',()=>{tt.style.display='none';});
-    }else{cell.style.opacity='0';}
+    }else cell.style.opacity='0';
     if(col)col.appendChild(cell);d.setDate(d.getDate()+1);if(d>end&&d.getDay()===1)break;
   }
   const months=['Jan','Fév','Mar','Avr','Mai','Juin','Juil','Aoû','Sep','Oct','Nov','Déc'];
-  for(let m=0;m<12;m++){const pos=mp[m]||0,nx=mp[m+1]||wc,sp=document.createElement('div');sp.className='month-label';sp.style.width=((nx-pos)*14)+'px';sp.textContent=months[m];me.appendChild(sp);}
+  for(let m=0;m<12;m++){const pos=mp[m]||0,nx=mp[m+1]||wc,sp=document.createElement('div');sp.className='month-label';sp.style.width=((nx-pos)*13)+'px';sp.textContent=months[m];me.appendChild(sp);}
   const lg=document.getElementById('heatmap-legend-cells');lg.innerHTML='';
   [0,2,4,6,8,10].forEach(n=>{const c=document.createElement('div');c.className='legend-cell';c.style.background=getHeatColor(n);lg.appendChild(c);});
 }
@@ -1433,7 +1513,7 @@ function renderBars(filter){
   const filtered=filter==='Tout'||!CATEGORIES[filter]?HABITS:HABITS.filter(h=>CATEGORIES[filter].includes(h));
   document.getElementById('bar-list').innerHTML=filtered.map(h=>{
     const i=HABITS.indexOf(h),count=dates.filter(d=>allData[d][h]).length,pct=Math.round(count/total*100);
-    return`<div class="bar-row"><div class="bar-meta"><div class="bar-name-wrap"><div class="bar-color-dot" style="background:${COLORS[i]}"></div><span>${h}</span></div><div class="bar-right"><span class="bar-count">${count}j</span><span class="bar-pct">${pct}%</span></div></div><div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${COLORS[i]}"></div></div></div>`;
+    return`<div class="bar-row"><div class="bar-meta"><div class="bar-name-wrap"><div class="bar-dot" style="background:${COLORS[i]}"></div><span>${h}</span></div><div class="bar-right"><span class="bar-count">${count}j</span><span class="bar-pct">${pct}%</span></div></div><div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${COLORS[i]}"></div></div></div>`;
   }).join('');
 }
 
@@ -1443,7 +1523,7 @@ function renderDonut(){
   document.getElementById('donut-total').textContent=total;
   if(donutChart)donutChart.destroy();
   donutChart=new Chart(document.getElementById('donut-chart').getContext('2d'),{
-    type:'doughnut',data:{labels:HABITS,datasets:[{data:counts,backgroundColor:COLORS,borderWidth:0,hoverOffset:5}]},
+    type:'doughnut',data:{labels:HABITS,datasets:[{data:counts,backgroundColor:COLORS,borderWidth:0,hoverOffset:4}]},
     options:{cutout:'65%',plugins:{legend:{display:false}},animation:{duration:700}}
   });
   document.getElementById('donut-legend').innerHTML=HABITS.map((h,i)=>`<div class="legend-item"><div class="legend-dot" style="background:${COLORS[i]}"></div><span>${h}</span><span class="legend-count">${counts[i]}</span></div>`).join('');
