@@ -1186,26 +1186,28 @@ function renderSkills(){
     <div class="skill-stat-card"><div class="skill-stat-val" style="color:#eab308;">${prog}</div><div class="skill-stat-lbl">⏳ En cours</div></div>
     <div class="skill-stat-card"><div class="skill-stat-val" style="color:var(--muted);">${allItems.length-done-prog}</div><div class="skill-stat-lbl">🔒 À faire</div></div>`;
   const cats=['Tout',...SKILLS_DATA.map(c=>c.cat)];
-  document.getElementById('skill-cats').innerHTML=cats.map(c=>`<button class="skill-cat-btn${c===skillCat?' active':''}" onclick="setSkillCat('${c.replace(/'/g,"\\'")}')">${c}</button>`).join('');
+  document.getElementById('skill-cats').innerHTML=cats.map((c,i)=>`<button class="skill-cat-btn${c===skillCat?' active':''}" onclick="setSkillCatIdx(${i})">${c}</button>`).join('');
   filterSkills();
 }
 function setSkillCat(cat){skillCat=cat;renderSkills();}
+function setSkillCatIdx(i){const cats=['Tout',...SKILLS_DATA.map(c=>c.cat)];skillCat=cats[i]||'Tout';renderSkills();}
 function filterSkills(){
-  const ss=S.skills();const q=(document.getElementById('skills-search')||{}).value||skillSearch;
-  let items=[];SKILLS_DATA.forEach(cat=>{cat.items.forEach(name=>{if(skillCat==='Tout'||cat.cat===skillCat)items.push({name,cat:cat.cat,icon:cat.icon});});});
-  if(q)items=items.filter(s=>s.name.toLowerCase().includes(q.toLowerCase()));
+  const ss=S.skills();const q=(document.getElementById('skills-search')||{}).value||'';
+  let allItems=[];SKILLS_DATA.forEach(cat=>{cat.items.forEach(name=>{allItems.push({name,cat:cat.cat,icon:cat.icon});});});
+  let items=allItems.map((s,globalIdx)=>({...s,globalIdx})).filter(s=>(skillCat==='Tout'||s.cat===skillCat)&&(!q||s.name.toLowerCase().includes(q.toLowerCase())));
   document.getElementById('skills-grid').innerHTML=items.map(s=>{
     const st=ss[s.name]||0;const cls=st===2?'done':st===1?'prog':'';
-    const stLbl=st===2?'✅ Maîtrisé':st===1?'⏳ En cours':'—';
+    const stLbl=st===2?'Maîtrisé':st===1?'En cours':'Non commencé';
     const stCol=st===2?'#4ade80':st===1?'#eab308':'var(--muted)';
-    return`<div class="skill-card ${cls}" onclick="cycleSkill('${s.name.replace(/'/g,"\\'")}')">
+    return`<div class="skill-card ${cls}" onclick="cycleSkillByIdx(${s.globalIdx})">
       <div class="skill-hdr"><div class="skill-ico">${s.icon}</div><div class="skill-nm">${s.name}</div><div class="skill-status" style="color:${stCol};">${stLbl}</div></div>
-      <div class="skill-cat-tag">${s.cat.replace(/^[^\s]+ /,'')}</div>
+      <div class="skill-cat-tag">${s.cat.replace(/^\S+ /,'')}</div>
       ${st>0?`<div class="skill-bar-bg"><div style="height:100%;border-radius:3px;background:${st===2?'#4ade80':'#eab308'};width:${st===2?100:50}%;transition:width .8s;"></div></div>`:''}
     </div>`;
   }).join('');
 }
 function cycleSkill(name){const ss=S.skills();ss[name]=((ss[name]||0)+1)%3;S.saveSkills(ss);renderSkills();}
+function cycleSkillByIdx(idx){const allItems=[];SKILLS_DATA.forEach(cat=>{cat.items.forEach(name=>{allItems.push(name);});});const name=allItems[idx];if(!name)return;cycleSkill(name);}
 
 function renderGuide(){
   const xp=computeXP();const{sub}=computeAttrPA();
@@ -1380,7 +1382,7 @@ function renderBadgesPage(){
     if(b.cat){if(inGrid){html+='</div>';inGrid=false;}html+=`<div class="badge-cat">${b.cat}</div><div class="badges-grid">`;inGrid=true;}
     else{html+=`<div class="badge-card${b.ok?(b.t==='b'?' boss-b':' earned'):' locked'}">
       <div class="badge-hdr"><div class="badge-emoji">${b.e}</div><div class="badge-nm">${b.n}</div><div class="badge-st">${b.ok?'✅':'🔒'}</div></div>
-      <div class="badge-how${b.ok?' ok:''}">${b.ok?'Badge obtenu !':b.h}</div>
+      <div class="badge-how${b.ok?' ok':''}">${b.ok?'Badge obtenu !':b.h}</div>
     </div>`;}
   }
   if(inGrid)html+='</div>';
@@ -1527,5 +1529,3 @@ window.addEventListener('DOMContentLoaded',()=>{
   const db=S.db();if(db){document.getElementById('db-input').value=db;curDbId=db;connect();}
 });
 </script></body></html>
-
-
