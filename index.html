@@ -323,6 +323,8 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
     <button class="tab-btn" onclick="switchTab('attr')">⚔️ Attributs</button>
     <button class="tab-btn" onclick="switchTab('skills')">🧠 Skills</button>
     <button class="tab-btn" onclick="switchTab('guide')">📖 Guide</button>
+    <button class="tab-btn" onclick="switchTab('bosscal')">👹 Calendrier Boss</button>
+    <button class="tab-btn" onclick="switchTab('questlist')">📜 Toutes les Quêtes</button>
     <button class="tab-btn" onclick="switchTab('history')">📋 Historique</button>
     <button class="tab-btn" onclick="switchTab('badges')">🎖️ Badges</button>
     <button class="tab-btn" onclick="switchTab('shop')">🛍️ Boutique</button>
@@ -513,6 +515,14 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
         <div class="card"><div class="card-title">Légende</div><div class="legend" id="donut-legend"></div></div>
       </div>
     </div>
+  </div>
+  <!-- BOSS CALENDAR -->
+  <div class="tab-content" id="tab-bosscal">
+    <div style="padding-top:.8rem;" id="bosscal-content"></div>
+  </div>
+  <!-- ALL QUESTS -->
+  <div class="tab-content" id="tab-questlist">
+    <div style="padding-top:.8rem;" id="questlist-content"></div>
   </div>
 </div>
 <script>
@@ -707,27 +717,172 @@ const ALL_QUESTS=[
 ];
 
 const SKILLS_DATA=[
-  {cat:'💻 Tech / Digital',icon:'💻',items:['Excel formules base','Excel avancé','PowerPoint pro','Word structuré','Notion organisation','HTML','CSS','JavaScript bases','Python bases','Créer un site web','Utiliser GitHub','Automatiser tâches','Montage vidéo','Retouche photo','Utiliser Canva','Créer un dashboard','Analyse de données','Utiliser API','Créer une app simple','Cybersécurité basique']},
-  {cat:'🧠 Science',icon:'🧠',items:['Fonctionnement du cerveau','Mémoire humaine','Apprentissage efficace','Sommeil (cycles)','Nutrition (macros)','Digestion','Hormones','Fonctionnement cœur','Système immunitaire','Respiration','Hydratation','Métabolisme','Calories','Fonctionnement muscles','Récupération physique']},
-  {cat:'⚙️ Mécanique',icon:'⚙️',items:['Fonctionnement moteur','Changer une roue','Vérifier huile moteur','Boîte de vitesse','Fonctionnement frein','Batterie voiture','Entretien basique vélo','Chaîne vélo','Pression pneus','Utiliser outils','Monter meuble','Réparer objet simple','Électricité basique','Fusible','Circuit simple']},
-  {cat:'🧭 Survie',icon:'🧭',items:['Utiliser une boussole','Lire une carte','S\'orienter sans GPS','Faire un feu','Trouver eau potable','Monter une tente','Lire météo','Nœuds de base','Premiers secours','RCP','Désinfection plaie','Survivre en nature']},
-  {cat:'💪 Physique',icon:'💪',items:['Pompes','Pompes claquées','Tractions','L-sit','Handstand','Squats','Gainage','Sprint','Endurance course','Natation','Respiration sportive','Étirements','Mobilité','Coordination','Équilibre']},
-  {cat:'🍽️ Nutrition / Cuisine',icon:'🍽️',items:['Cuisiner un repas simple','Cuisiner sain','Lire étiquette alimentaire','Calcul calories','Protéines / glucides / lipides','Hydratation optimale','Plan alimentaire','Préparer repas semaine','Conservation aliments','Cuisson viande','Cuisson légumes','Épices','Éviter sucre caché']},
-  {cat:'🏠 Vie pratique',icon:'🏠',items:['Nettoyage efficace','Organisation maison','Gestion linge','Repassage','Budget personnel','Économiser argent','Payer factures','Planifier semaine','Ranger efficacement','Minimalisme']},
-  {cat:'💰 Argent / Business',icon:'💰',items:['Gérer budget','Épargne','Investissement basique','Comprendre intérêts','Crypto bases','Créer une offre','Vente simple','Négociation','Fixer un prix','Comprendre marché','Générer revenu simple']},
-  {cat:'🧠 Religion / Islam',icon:'🕌',items:['Règles de prière','Ablutions correctes','Tajwid','Mémorisation Coran','Compréhension Coran','Hadith bases','Fiqh basique','Règles héritage islam','Douas essentielles','Histoire islam']},
-  {cat:'🗣️ Langues',icon:'🗣️',items:['Lire arabe','Écrire arabe','Vocabulaire arabe','Grammaire arabe','Parler anglais','Compréhension orale','Prononciation','Structurer discours','Argumenter','Écouter activement']},
-  {cat:'🎨 Création',icon:'🎨',items:['Dessin','Écriture','Storytelling','Photographie','Vidéo','Design simple','Création contenu','Brainstorming','Structurer idée']},
-  {cat:'🌱 Nature',icon:'🌱',items:['Jardinage','Planter','Agriculture basique','Reconnaître plantes','Cycle saisons','Écologie','Eau / environnement']},
-  {cat:'🧠 Logique',icon:'🧠',items:['Résolution problème','Pensée logique','Analyse situation','Détection erreurs','Prise décision','Planification']},
-  {cat:'🧠 Mémoire',icon:'🧠',items:['Mémorisation','Répétition espacée','Fiches','Résumer','Enseigner','Apprentissage actif']},
-  {cat:'⚙️ Bricolage',icon:'⚙️',items:['Percer mur','Fixer étagère','Peinture','Mesures','Niveau','Réparation basique','Construction simple']},
-  {cat:'🧴 Santé',icon:'🧴',items:['Hygiène corporelle','Soins peau','Soins dents','Posture','Respiration calme','Gestion fatigue']},
-  {cat:'🧠 Psychologie',icon:'🧠',items:['Reconnaître émotions','Gérer stress','Gérer colère','Comprendre motivation','Éviter procrastination']},
-  {cat:'📦 Divers',icon:'📦',items:['Faire valise','Organisation voyage','Lire contrat','Utiliser banque','Scanner documents','Utiliser imprimante']},
-  {cat:'⚔️ Bonus rares',icon:'⚔️',items:['Feu sans briquet','Lire les étoiles','Direction soleil','Survivre sans téléphone','Silence volontaire','Observer environnement','Réagir en urgence','Se défendre basique','Résister froid','Résister chaleur','Gérer faim','Gérer fatigue extrême','Marcher longtemps','Porter charge','Discipline alimentaire','Routine efficace','Auto-évaluation réelle']},
+  {cat:'Calisthenics',icon:'💪',items:[
+    `Faire 1 muscle-up strict`,`Faire 5 muscle-ups consécutifs`,`Tenir un front lever 5 secondes`,
+    `Tenir un back lever 5 secondes`,`Faire un human flag 3 secondes`,`Tenir handstand 10s contre mur`,
+    `Tenir un handstand libre 5 secondes`,`Faire un handstand push-up`,`Faire 20 tractions strictes`,
+    `Faire 10 tractions à une main assistée`,`Faire 50 pompes consécutives`,`Faire des pompes diamant x30`,
+    `Faire des archer push-ups x10 par côté`,`Tenir un L-sit 10 secondes au sol`,
+    `Tenir un L-sit 5 secondes aux barres`,`Faire 20 dips aux barres parallèles`,
+    `Faire un planche lean 3 secondes`,`Faire 10 pike push-ups`,
+    `Réaliser un backflip depuis le sol`,`Réaliser un frontflip depuis le sol`,
+  ]},
+  {cat:'Endurance & Course',icon:'🏃',items:[
+    `Courir 5km sans arrêter`,`Courir 10km en moins d'1h`,`Courir un semi-marathon 21km`,
+    `Finir un marathon 42km`,`Courir 5km en moins de 22 min`,`Faire 100 burpees en moins de 10 min`,
+    `Nager 1km en continu`,`Nager 2km en continu`,`Faire 1000 sauts à la corde en continu`,
+    `Marcher 30km en une journée`,`Marcher 50km en une journée`,`Faire du vélo 50km en une sortie`,
+    `Atteindre 10 000 pas par jour pendant 30j`,`Faire 200 squats en une session`,
+    `Faire une séance HIIT 20 min sans pause`,
+  ]},
+  {cat:'Force & Musculation',icon:'🏋️',items:[
+    `Squatter 1x son propre poids de corps`,`Développé couché 1x son poids de corps`,
+    `Soulevé de terre 1.5x son poids`,`10 répétitions squat avec 80kg`,
+    `10 répétitions développé couché 70kg`,`Overhead press avec 60kg`,
+    `Bulgarian split squats x15 par jambe`,`Hip thrust avec charge maîtrisé`,
+    `Face pulls correctement exécutés`,`Romanian deadlift technique propre`,
+    `Faire 100 pompes en une journée`,`Faire 100 squats en une session`,
+    `Faire 100 tractions en une journée`,`Faire 200 abdos en une session`,
+    `Réaliser programme 100 pompes en 6 semaines`,
+  ]},
+  {cat:'Mobilité & Souplesse',icon:'🤸',items:[
+    `Toucher ses orteils jambes tendues`,`Faire le grand écart complet`,
+    `Faire le pont wheel pose complet`,`Tenir posture du pigeon 2 min par côté`,
+    `Rotation complète des épaules`,`Maîtriser le squat profond ass to grass`,
+    `Tenir la posture du lotus complet`,`Rotations de hanches complètes`,
+    `Maîtriser les étirements du psoas`,`Tenir la posture du scorpion`,
+  ]},
+  {cat:'Arts Martiaux & Grappling',icon:'🥊',items:[
+    `Apprendre la chute arrière ukemi`,`Apprendre la chute avant`,
+    `Maîtriser la prise de garde boxe`,`Réaliser un takedown double jambe`,
+    `Maîtriser le rear naked choke`,`Passer la garde en grappling`,
+    `Faire un armbar depuis la garde`,`Maîtriser le triangle choke`,
+    `Faire un hip throw o-goshi propre`,`Tenir 3 min de sparring debout`,
+    `Tenir 5 min de roulage BJJ`,`Maîtriser le croc-en-jambe`,
+    `Défense contre une clé de bras`,`Sortir d'un étranglement arrière`,
+    `Connaître 5 positions de contrôle au sol`,
+  ]},
+  {cat:'Natation',icon:'🏊',items:[
+    `Nager le crawl sur 25m technique propre`,`Nager le dos crawlé sur 50m`,
+    `Nager la brasse sur 100m sans pause`,`Nager le papillon sur 25m`,
+    `Apprendre le virage culbute flip turn`,`Nager en apnée 25m sous l'eau`,
+    `Sauver quelqu'un qui se noie`,`Plonger depuis 5m de hauteur`,
+    `Nager en eau libre 500m`,`Tenir l'eau 10 min sans bouger les bras`,
+  ]},
+  {cat:'Echecs',icon:'♟️',items:[
+    `Atteindre 1200 Elo en ligne`,`Atteindre 1500 Elo en ligne`,
+    `Atteindre 1800 Elo en ligne`,`Atteindre 2000 Elo en ligne`,
+    `Maîtriser l'ouverture italienne`,`Maîtriser la défense sicilienne`,
+    `Maîtriser l'attaque espagnole`,`Connaître 10 fins de partie théoriques`,
+    `Analyser 50 parties perdues`,`Résoudre 500 puzzles tactiques`,
+    `Maîtriser le mat du couloir`,`Maîtriser le mat des 2 tours`,
+    `Apprendre la méthode Silman pour finales`,`Jouer en blitz 3min avec confiance`,
+    `Jouer en bullet 1min régulièrement`,
+  ]},
+  {cat:'Coran & Islam',icon:'🕌',items:[
+    `Mémoriser Al-Fatiha parfaitement`,`Mémoriser Juz Amma complet 30e`,
+    `Mémoriser les 10 dernières sourates`,`Mémoriser Ayat Al-Kursi`,
+    `Mémoriser Al-Baqarah 10 premiers versets`,`Lire le Coran entier une fois`,
+    `Apprendre le Tajwid basique`,`Apprendre les règles de la madd`,
+    `Apprendre les règles du ghunna`,`Comprendre 300 mots arabes coraniques`,
+    `Apprendre 20 douas essentielles du prophète`,`Connaître les 5 piliers en détail`,
+    `Connaître les 6 piliers de la foi`,`Connaître les règles de la prière en détail`,
+    `Apprendre les ablutions woudou parfaitement`,`Connaître les règles de purification`,
+    `Apprendre les règles du jeûne Ramadan`,`Connaître 50 hadiths Nawawi`,
+    `Connaître la Sira du Prophète en résumé`,`Apprendre les 99 noms d'Allah et leur sens`,
+  ]},
+  {cat:'Langue Arabe',icon:'🗣️',items:[
+    `Apprendre l'alphabet arabe complet`,`Lire des mots arabes sans voyelles`,
+    `Ecrire l'alphabet arabe en cursive`,`Apprendre 500 mots de vocabulaire courant`,
+    `Apprendre 1000 mots de vocabulaire`,`Comprendre une conversation simple`,
+    `Tenir une conversation de 5 min en arabe`,`Connaître les règles de base de la grammaire`,
+    `Maîtriser les conjugaisons au passé madi`,`Maîtriser les conjugaisons au présent mudari`,
+    `Apprendre les pronoms personnels arabes`,`Comprendre un extrait de journal arabe`,
+    `Regarder une vidéo en arabe et comprendre 70%`,`Ecrire un paragraphe en arabe de sa tête`,
+    `Connaître les racines trilitères communes`,
+  ]},
+  {cat:'Code & Tech',icon:'💻',items:[
+    `Créer une page web HTML CSS complète`,`Rendre un site responsive mobile`,
+    `Créer une animation CSS`,`Ecrire un script JavaScript fonctionnel`,
+    `Créer un formulaire avec validation JS`,`Utiliser l'API fetch pour afficher des données`,
+    `Déployer un site sur GitHub Pages`,`Créer un repo GitHub et faire des commits`,
+    `Utiliser VS Code avec extensions utiles`,`Ecrire un script Python de base`,
+    `Automatiser une tâche répétitive avec Python`,`Créer un bot simple Discord ou Telegram`,
+    `Comprendre ce qu'est une API REST`,`Créer et lire un fichier JSON en Python`,
+    `Manipuler des données avec pandas`,`Faire un graphique avec matplotlib`,
+    `Comprendre les bases de SQL`,`Faire une requête SELECT JOIN WHERE`,
+    `Créer une base de données SQLite`,`Utiliser l'IA pour coder efficacement`,
+  ]},
+  {cat:'Mécanique & Bricolage',icon:'⚙️',items:[
+    `Changer une roue de voiture seul`,`Vérifier et faire l'appoint d'huile moteur`,
+    `Changer les plaquettes de frein`,`Lire un plan de montage complexe`,
+    `Visser un chevron dans un mur porteur`,`Installer une prise électrique`,
+    `Remplacer un robinet qui fuit`,`Lire un multimètre électrique`,
+    `Souder deux fils électriques proprement`,`Démonter et remonter un vélo complet`,
+    `Changer une chambre à air de vélo`,`Comprendre un schéma électrique simple`,
+    `Monter un meuble complexe IKEA avancé`,`Percer et fixer une étagère au mur`,
+    `Peindre une pièce proprement`,
+  ]},
+  {cat:'Cuisine & Nutrition',icon:'🍳',items:[
+    `Cuisiner un poulet rôti entier`,`Préparer une sauce béchamel maison`,
+    `Faire du pain maison sans machine`,`Préparer des sushis maison`,
+    `Cuisiner un tajine complet`,`Préparer des maklouba riz arabe renversé`,
+    `Faire du hummus maison`,`Calculer ses macros journalières`,
+    `Préparer ses repas pour la semaine meal prep`,`Cuisiner sans huile saturée pendant 30j`,
+    `Lire et comprendre une étiquette nutritionnelle`,`Calculer ses besoins caloriques de maintenance`,
+    `Faire un plan alimentaire pour prise de masse`,`Faire un plan alimentaire pour sèche`,
+    `Maîtriser la cuisson des oeufs toutes formes`,
+  ]},
+  {cat:'Finance & Business',icon:'💰',items:[
+    `Créer un budget mensuel personnel`,`Epargner 10% de ses revenus pendant 3 mois`,
+    `Ouvrir un livret d'épargne`,`Comprendre ce qu'est un ETF`,
+    `Investir pour la première fois même 50 euros`,`Comprendre la différence actions obligations`,
+    `Lire un bilan comptable simple`,`Créer une micro-entreprise en ligne`,
+    `Vendre quelque chose en ligne`,`Négocier un prix ou un salaire`,
+    `Créer une offre de service claire`,`Comprendre les charges sociales en France`,
+    `Comprendre ce qu'est la TVA`,`Faire une déclaration de revenus seul`,
+    `Comprendre l'intérêt composé et le calculer`,
+  ]},
+  {cat:'Survie & Autonomie',icon:'🧭',items:[
+    `Allumer un feu sans briquet silex ou friction`,`S'orienter avec une boussole`,
+    `Lire une carte topographique`,`Filtrer de l'eau en nature`,
+    `Construire un abri d'urgence en forêt`,`Faire un noeud de chaise bowline`,
+    `Faire un noeud de cabestan`,`Reconnaître 10 plantes comestibles locales`,
+    `Reconnaître 5 plantes toxiques locales`,`Faire un garrot d'urgence`,
+    `Pratiquer le RCP réanimation cardio-pulmonaire`,`Poser un bandage propre sur une plaie`,
+    `Identifier les symptômes d'hypothermie`,`Survivre une nuit en plein air sans tente`,
+    `Trouver le nord sans boussole soleil ou étoiles`,
+  ]},
+  {cat:'Mémoire & Apprentissage',icon:'🧠',items:[
+    `Mémoriser 50 mots étrangers en une semaine`,`Utiliser la méthode des palais de mémoire`,
+    `Mémoriser un jeu de 52 cartes dans l'ordre`,`Appliquer la répétition espacée Anki 30j`,
+    `Mémoriser les 44 présidents américains en ordre`,`Mémoriser 50 capitales du monde`,
+    `Mémoriser les tables de multiplication jusqu'à 20`,`Apprendre à lire 2x plus vite`,
+    `Résumer un livre de 200 pages en 1 page`,`Retenir le contenu d'une conférence sans notes`,
+  ]},
+  {cat:'Création & Expression',icon:'🎨',items:[
+    `Dessiner un portrait ressemblant`,`Dessiner en perspective 1 point de fuite`,
+    `Apprendre les bases du shading`,`Ecrire une nouvelle courte 1000 mots`,
+    `Ecrire un poème de 3 strophes`,`Monter une vidéo de 2 min avec musique`,
+    `Prendre une photo avec la règle des tiers`,`Maîtriser la balance des blancs en photo`,
+    `Créer un logo simple avec Canva`,`Composer une beat simple sur GarageBand ou FL`,
+  ]},
+  {cat:'Psychologie & Discipline',icon:'🧘',items:[
+    `Méditer 10 min pendant 30j consécutifs`,`Tenir un journal pendant 60 jours`,
+    `Compléter un challenge 75 Hard`,`Pratiquer la visualisation positive 30j`,
+    `Identifier ses 5 biais cognitifs principaux`,`Pratiquer le stoïcisme 30j journaling`,
+    `Résister à une habitude négative 30j`,`Apprendre la respiration Wim Hof`,
+    `Faire une retraite de silence volontaire 1j`,`Maîtriser la technique de box breathing`,
+  ]},
+  {cat:'Culture Générale',icon:'🌍',items:[
+    `Connaître les 195 pays et leur continent`,`Connaître les 10 plus grandes économies mondiales`,
+    `Comprendre ce qu'est l'OTAN et ses membres`,`Comprendre le fonctionnement de l'ONU`,
+    `Connaître les grandes phases de l'Histoire de France`,`Comprendre les bases de l'économie de marché`,
+    `Connaître les grandes religions mondiales et leurs piliers`,
+    `Comprendre le fonctionnement d'une élection présidentielle`,
+    `Lire 10 livres de non-fiction dans l'année`,`Regarder 5 documentaires sur sujets inconnus`,
+  ]},
 ];
-
 const BONUSES=[
   {e:'🍽️',n:'Repas au restaurant',c:500,cond:'Rang ≥ D',mr:1},
   {e:'🍕',n:'Cheat meal',c:300,cond:'Semaine ≥ 70%',mr:0},
@@ -798,10 +953,9 @@ function computeXP(){
   const dates=Object.keys(allData).sort();let xp=0,run=0;
   for(const d of dates){
     const s=scoreDay(d);xp+=s*10;
-    if(s>=DS)xp+=50;if(isPerfect(d))xp+=150;
-    if(hasStreak(d)){run++;}else{run=0;}
+    if(isPerfect(d))xp+=150;
+    if(isPerfect(d)){run++;}else{run=0;}
     if(run===7)xp+=300;if(run===30)xp+=1000;if(run===100)xp+=5000;
-    if(isPerfect(d)&&run>=3)xp+=400;
   }
   Object.values(S.boss()).forEach(b=>{if(b.declared==='won'&&b.reward)xp+=b.reward;});
   Object.values(S.quests()).forEach(w=>Object.values(w).forEach(q=>{if(q&&q.state==='done'&&q.reward)xp+=q.reward;}));
@@ -813,10 +967,9 @@ function computePD(){
   const dates=Object.keys(allData).sort();let e=0,run=0;
   for(const d of dates){
     const s=scoreDay(d);e+=s*10;
-    if(s>=DS)e+=50;if(isPerfect(d))e+=150;
-    if(hasStreak(d)){run++;}else{run=0;}
+    if(isPerfect(d))e+=150;
+    if(isPerfect(d)){run++;}else{run=0;}
     if(run===7)e+=300;if(run===30)e+=1000;if(run===100)e+=5000;
-    if(isPerfect(d)&&run>=3)e+=400;
   }
   Object.values(S.boss()).forEach(b=>{if(b.declared==='won'&&b.reward)e+=b.reward;});
   Object.values(S.quests()).forEach(w=>Object.values(w).forEach(q=>{if(q&&q.state==='done'&&q.reward)e+=q.reward;}));
@@ -943,13 +1096,15 @@ function computeAttrPA(){
 }
 
 function switchTab(name){
-  const names=['today','attr','skills','guide','history','badges','shop','stats'];
+  const names=['today','attr','skills','guide','bosscal','questlist','history','badges','shop','stats'];
   document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',names[i]===name));
   document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
   document.getElementById('tab-'+name).classList.add('active');
   if(name==='attr')renderAttr();
   if(name==='skills')renderSkills();
   if(name==='guide')renderGuide();
+  if(name==='bosscal')renderBossCalendar();
+  if(name==='questlist')renderQuestList();
   if(name==='history')renderHistory();
   if(name==='badges')renderBadgesPage();
   if(name==='shop')renderShop();
@@ -1114,9 +1269,29 @@ function getQKey(today){const wn=getWN(today),yr=new Date().getFullYear();return
 function getQIdx(key){
   const s=S.quests();if(s[key]&&s[key]._i)return s[key]._i;
   const wn=parseInt(key.replace(/[^0-9]/g,''));
-  const idx=[];let i=(wn*3)%ALL_QUESTS.length;
-  while(idx.length<QPW){if(!idx.includes(i))idx.push(i);i=(i+4)%ALL_QUESTS.length;}
-  if(!s[key])s[key]={};s[key]._i=idx;S.saveQuests(s);return idx;
+  // Collect undone quests from previous weeks (max 3 carry-overs)
+  const carryOver=[];
+  const allSaved=s;
+  const sortedKeys=Object.keys(allSaved).filter(k=>k.startsWith('qw')&&k!==key).sort();
+  for(const prevKey of sortedKeys.reverse()){
+    const prevWeek=allSaved[prevKey];
+    const prevIdx=prevWeek._i||[];
+    for(let slot=0;slot<prevIdx.length;slot++){
+      const qd=prevWeek[slot]||{state:'pending'};
+      if(qd.state==='pending'&&!carryOver.includes(prevIdx[slot])&&carryOver.length<3){
+        carryOver.push(prevIdx[slot]);
+      }
+    }
+    if(carryOver.length>=3)break;
+  }
+  // Fill remaining slots with new quests
+  const idx=[...carryOver];
+  let i=(wn*7+3)%ALL_QUESTS.length;
+  while(idx.length<QPW){
+    if(!idx.includes(i))idx.push(i);
+    i=(i+4)%ALL_QUESTS.length;
+  }
+  if(!s[key])s[key]={};s[key]._i=idx.slice(0,QPW);S.saveQuests(s);return idx.slice(0,QPW);
 }
 function renderQuests(today){
   const key=getQKey(today),s=S.quests();if(!s[key])s[key]={};
@@ -1181,10 +1356,16 @@ function renderSkills(){
   let allItems=[];SKILLS_DATA.forEach(cat=>{cat.items.forEach(name=>{allItems.push({name,cat:cat.cat,icon:cat.icon});});});
   const done=allItems.filter(s=>(ss[s.name]||0)===2).length;
   const prog=allItems.filter(s=>(ss[s.name]||0)===1).length;
+  const total=allItems.length;
+  const pct=total>0?Math.round((done+prog*0.5)/total*100):0;
   document.getElementById('skills-stats').innerHTML=`
     <div class="skill-stat-card"><div class="skill-stat-val" style="color:#4ade80;">${done}</div><div class="skill-stat-lbl">✅ Maîtrisées</div></div>
     <div class="skill-stat-card"><div class="skill-stat-val" style="color:#eab308;">${prog}</div><div class="skill-stat-lbl">⏳ En cours</div></div>
-    <div class="skill-stat-card"><div class="skill-stat-val" style="color:var(--muted);">${allItems.length-done-prog}</div><div class="skill-stat-lbl">🔒 À faire</div></div>`;
+    <div class="skill-stat-card"><div class="skill-stat-val" style="color:var(--muted);">${total-done-prog}</div><div class="skill-stat-lbl">🔒 À faire</div></div>
+    <div style="grid-column:1/-1;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:.75rem;">
+      <div style="display:flex;justify-content:space-between;font-size:.65rem;color:var(--muted);margin-bottom:5px;"><span>Progression globale</span><span style="font-family:'DM Mono',monospace;color:var(--accent);">${pct}%</span></div>
+      <div style="background:var(--surface2);border-radius:4px;height:6px;overflow:hidden;"><div style="width:${pct}%;height:100%;border-radius:4px;background:linear-gradient(90deg,#4ade80,#22c55e);transition:width 1s;"></div></div>
+    </div>`;
   const cats=['Tout',...SKILLS_DATA.map(c=>c.cat)];
   document.getElementById('skill-cats').innerHTML=cats.map((c,i)=>`<button class="skill-cat-btn${c===skillCat?' active':''}" onclick="setSkillCatIdx(${i})">${c}</button>`).join('');
   filterSkills();
@@ -1197,12 +1378,22 @@ function filterSkills(){
   let items=allItems.map((s,globalIdx)=>({...s,globalIdx})).filter(s=>(skillCat==='Tout'||s.cat===skillCat)&&(!q||s.name.toLowerCase().includes(q.toLowerCase())));
   document.getElementById('skills-grid').innerHTML=items.map(s=>{
     const st=ss[s.name]||0;const cls=st===2?'done':st===1?'prog':'';
+    const stEmoji=st===2?'✅':st===1?'⏳':'○';
     const stLbl=st===2?'Maîtrisé':st===1?'En cours':'Non commencé';
     const stCol=st===2?'#4ade80':st===1?'#eab308':'var(--muted)';
-    return`<div class="skill-card ${cls}" onclick="cycleSkillByIdx(${s.globalIdx})">
-      <div class="skill-hdr"><div class="skill-ico">${s.icon}</div><div class="skill-nm">${s.name}</div><div class="skill-status" style="color:${stCol};">${stLbl}</div></div>
-      <div class="skill-cat-tag">${s.cat.replace(/^\S+ /,'')}</div>
-      ${st>0?`<div class="skill-bar-bg"><div style="height:100%;border-radius:3px;background:${st===2?'#4ade80':'#eab308'};width:${st===2?100:50}%;transition:width .8s;"></div></div>`:''}
+    const catShort=s.cat.replace(/^\S+ /,'');
+    return`<div class="skill-card ${cls}" onclick="cycleSkillByIdx(${s.globalIdx})" title="Cliquer pour changer le statut">
+      <div style="display:flex;align-items:flex-start;gap:7px;">
+        <div style="font-size:1.1rem;flex-shrink:0;margin-top:1px;">${s.icon}</div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:.75rem;font-weight:600;line-height:1.3;margin-bottom:3px;">${s.name}</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <span style="font-size:.58rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;">${catShort}</span>
+            <span style="font-size:.65rem;font-weight:700;color:${stCol};">${stEmoji} ${stLbl}</span>
+          </div>
+          ${st>0?`<div style="background:var(--surface3);border-radius:3px;height:3px;overflow:hidden;margin-top:5px;"><div style="height:100%;border-radius:3px;background:${st===2?'#4ade80':'#eab308'};width:${st===2?100:50}%;transition:width .8s;"></div></div>`:''}
+        </div>
+      </div>
     </div>`;
   }).join('');
 }
@@ -1345,7 +1536,7 @@ function getBadges(){
     {e:'🤲',n:'Prière Constante',h:'Prière cochée 60 fois',t:'n',ok:cc('Prière')>=60},
     {e:'📵',n:'Focus 14j',h:'No Scroll 14j consécutifs',t:'n',ok:cs('No Scroll')>=14},
     {e:'🏃',n:'Athlète',h:'Sport 30j consécutifs',t:'n',ok:cs('Sport')>=30},
-    {e:'♟️',n:'Joueur d\'Échecs',h:'Chess coché 30 fois',t:'n',ok:cc('Chess')>=30},
+    {e:'♟️',n:"Joueur d'Échecs",h:'Chess coché 30 fois',t:'n',ok:cc('Chess')>=30},
     {e:'🧠',n:'Arabophone',h:'Arabe coché 50 fois',t:'n',ok:cc('Arabe')>=50},
     {cat:'📊 Volume'},
     {e:'🏅',n:'50 Jours',h:'50 jours trackés',t:'n',ok:dates.length>=50},
@@ -1522,6 +1713,106 @@ function renderDonut(){
   if(donutCh)donutCh.destroy();
   donutCh=new Chart(document.getElementById('donut-chart').getContext('2d'),{type:'doughnut',data:{labels:HABITS,datasets:[{data:counts,backgroundColor:COLORS,borderWidth:0,hoverOffset:4}]},options:{cutout:'65%',plugins:{legend:{display:false}},animation:{duration:700}}});
   document.getElementById('donut-legend').innerHTML=HABITS.map((h,i)=>`<div class="legend-item"><div class="legend-dot" style="background:${COLORS[i]}"></div><span>${h}</span><span class="legend-count">${counts[i]}</span></div>`).join('');
+}
+
+function renderBossCalendar(){
+  const today=toDay();
+  const curWN=getWN(today);
+  const yr=new Date().getFullYear();
+  const saved=S.boss();
+  let html=`<div style="font-size:1rem;font-weight:700;margin-bottom:.3rem;">👹 Calendrier des Boss — 52 semaines</div>
+  <div style="font-size:.72rem;color:var(--muted);margin-bottom:1rem;">Rotation des boss sur l'année. Semaine ${curWN} en cours.</div>
+  <div style="display:flex;flex-direction:column;gap:8px;">`;
+  for(let wn=1;wn<=52;wn++){
+    const boss=BOSSES[(wn-1)%BOSSES.length];
+    const key=`w${wn}_${yr}`;
+    const bdata=saved[key];
+    const isCur=wn===curWN;
+    const isPast=wn<curWN;
+    const dc={'Normale':'#22c55e','Difficile':'#f97316','Extrême':'#ef4444','Légendaire':'#fbbf24'};
+    const col=dc[boss.d]||'#8b5cf6';
+    let statusTxt='';let statusCol='var(--muted)';
+    if(bdata&&bdata.declared==='won'){statusTxt='✅ Vaincu';statusCol='#4ade80';}
+    else if(bdata&&bdata.declared==='failed'){statusTxt='❌ Échoué';statusCol='#f87171';}
+    else if(isCur){statusTxt='⚔️ En cours';statusCol='#a78bfa';}
+    else if(isPast){statusTxt='⏭️ Passé';statusCol='var(--muted)';}
+    else{statusTxt='🔒 À venir';statusCol='var(--muted)';}
+    // Calculate week date range (Monday to Sunday)
+    const jan1=new Date(yr,0,1);
+    const monDay=new Date(jan1);
+    monDay.setDate(jan1.getDate()+(wn-1)*7-(jan1.getDay()===0?6:jan1.getDay()-1));
+    const sunDay=new Date(monDay);sunDay.setDate(monDay.getDate()+6);
+    const fmt=d=>d.toLocaleDateString('fr-FR',{day:'numeric',month:'short'});
+    html+=`<div style="background:${isCur?'var(--surface3)':'var(--surface2)'};border:1px solid ${isCur?col+'44':'var(--border)'};border-radius:12px;padding:.8rem;display:flex;align-items:center;gap:10px;${isCur?'box-shadow:0 0 0 1px '+col+'22;':''}">
+      <div style="font-size:1.4rem;flex-shrink:0;filter:${isCur?'drop-shadow(0 0 6px '+col+')':'none'}">${boss.i}</div>
+      <div style="flex:1;">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:2px;">
+          <span style="font-size:.72rem;font-family:'DM Mono',monospace;color:var(--muted);font-weight:600;width:52px;">Sem. ${wn}</span>
+          <span style="font-size:.78rem;font-weight:700;${isCur?'color:'+col+';':''}">${boss.n}</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <span style="font-size:.62rem;background:${col}22;color:${col};border:1px solid ${col}38;padding:1px 7px;border-radius:10px;font-weight:700;">${boss.d}</span>
+          <span style="font-size:.62rem;color:var(--muted);">${fmt(monDay)} → ${fmt(sunDay)}</span>
+          <span style="font-size:.65rem;font-family:'DM Mono',monospace;color:#fbbf24;">+${boss.r} PD</span>
+        </div>
+      </div>
+      <div style="font-size:.68rem;font-weight:700;color:${statusCol};flex-shrink:0;">${statusTxt}</div>
+    </div>`;
+  }
+  html+='</div>';
+  document.getElementById('bosscal-content').innerHTML=html;
+}
+
+function renderQuestList(){
+  const diffColors={easy:'#22c55e',medium:'#ca8a04',hard:'#ef4444'};
+  const diffLabels={easy:'Facile',medium:'Moyen',hard:'Difficile'};
+  const attrMap={};ATTRIBUTES.forEach(a=>attrMap[a.id]=a);
+  // Count how many times each quest has been done
+  const doneCounts={};
+  Object.values(S.quests()).forEach(week=>{
+    const idx=week._i||[];
+    idx.forEach((qIdx,slot)=>{
+      const qd=week[slot]||{state:'pending'};
+      if(qd.state==='done'){doneCounts[qIdx]=(doneCounts[qIdx]||0)+1;}
+    });
+  });
+  // Group by attribute
+  const groups={};
+  ALL_QUESTS.forEach((q,i)=>{
+    if(!groups[q.a])groups[q.a]=[];
+    groups[q.a].push({...q,idx:i,done:doneCounts[i]||0});
+  });
+  let html=`<div style="font-size:1rem;font-weight:700;margin-bottom:.3rem;">📜 Toutes les Quêtes Secondaires</div>
+  <div style="font-size:.72rem;color:var(--muted);margin-bottom:1rem;">${ALL_QUESTS.length} quêtes — Les quêtes non-faites reviennent les semaines suivantes</div>`;
+  const attrOrder=['physique','spiritualite','nutrition','social','discipline','mental','intelligence','execution'];
+  for(const attrId of attrOrder){
+    const qs=groups[attrId]||[];if(!qs.length)continue;
+    const attr=attrMap[attrId];if(!attr)continue;
+    html+=`<div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1rem;margin-bottom:10px;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:.8rem;">
+        <span style="font-size:1.2rem;">${attr.emoji}</span>
+        <span style="font-size:.82rem;font-weight:700;color:${attr.color};">${attr.name}</span>
+        <span style="font-size:.65rem;color:var(--muted);margin-left:auto;">${qs.length} quêtes</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;">`;
+    for(const q of qs){
+      const col=diffColors[q.diff];
+      html+=`<div style="background:var(--surface2);border:1px solid ${q.done>0?'rgba(74,222,128,.2)':'var(--border)'};border-radius:10px;padding:.65rem .8rem;display:flex;align-items:center;gap:8px;">
+        <span style="font-size:1rem;flex-shrink:0;">${q.i}</span>
+        <div style="flex:1;">
+          <div style="font-size:.76rem;font-weight:600;">${q.n}</div>
+          <div style="font-size:.65rem;color:var(--text2);">${q.d}</div>
+        </div>
+        <div style="text-align:right;flex-shrink:0;">
+          <div style="font-size:.65rem;background:${col}15;color:${col};border:1px solid ${col}35;padding:1px 7px;border-radius:8px;font-weight:700;margin-bottom:2px;">${diffLabels[q.diff]}</div>
+          <div style="font-size:.63rem;color:#fbbf24;font-family:'DM Mono',monospace;">+${q.r} PD</div>
+          ${q.done>0?`<div style="font-size:.6rem;color:#4ade80;">✅ ×${q.done}</div>`:''}
+        </div>
+      </div>`;
+    }
+    html+='</div></div>';
+  }
+  document.getElementById('questlist-content').innerHTML=html;
 }
 
 window.addEventListener('DOMContentLoaded',()=>{
