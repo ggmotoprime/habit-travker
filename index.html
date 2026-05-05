@@ -1950,39 +1950,4 @@ window.addEventListener('DOMContentLoaded',()=>{
   const t=localStorage.getItem('ht_theme');if(t)document.documentElement.setAttribute('data-theme',t);
   const db=S.db();if(db){document.getElementById('db-input').value=db;curDbId=db;connect();}
 });
-</script></body></html>"""
-
-# Verify edit-modal HTML exists, if not add it after confirm-overlay
-if 'id="edit-modal"' not in content:
-    old_confirm = '<div class="overlay" id="confirm-overlay">'
-    new_confirm = '''<!-- EDIT MODAL -->
-<div class="modal-overlay" id="edit-modal">
-  <div class="modal-box">
-    <div class="modal-title"><span id="edit-modal-title">Modifier</span><button class="modal-close" onclick="closeEditModal()">✕</button></div>
-    <div id="edit-modal-body"></div>
-    <div class="modal-acts">
-      <button class="btn-save" onclick="saveEditModal()">💾 Sauvegarder</button>
-      <button class="btn-cancel-m" onclick="closeEditModal()">Annuler</button>
-    </div>
-  </div>
-</div>
-<div class="overlay" id="confirm-overlay">'''
-    content = content.replace(old_confirm, new_confirm, 1)
-
-# Add edit bar HTML if missing
-if 'id="edit-dot"' not in content:
-    old_tab_end = '</div>\n  <!-- TODAY -->'
-    new_tab_end = '''</div>
-  <div class="edit-bar">
-    <div style="display:flex;align-items:center;gap:8px;">
-      <div class="edit-dot" id="edit-dot"></div>
-      <span id="edit-mode-label" style="font-size:.7rem;color:var(--muted);">Mode normal</span>
-    </div>
-    <button class="edit-toggle-btn" id="edit-toggle-btn" onclick="toggleEditMode()">✏️ Mode édition</button>
-  </div>
-  <!-- TODAY -->
-window.addEventListener('DOMContentLoaded',()=>{
-  const t=localStorage.getItem('ht_theme');if(t)document.documentElement.setAttribute('data-theme',t);
-  const db=S.db();if(db){document.getElementById('db-input').value=db;curDbId=db;connect();}
-});
 </script></body></html>
