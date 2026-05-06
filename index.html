@@ -921,6 +921,8 @@ async function refresh() {
     const pages = await fetchAll(curDbId);
     allData = parsePages(pages);
     renderToday();
+    renderBoss(toDay());
+    renderQuests(toDay());
   } catch (e) { alert('Impossible : ' + e.message); }
   finally { btn.classList.remove('spinning'); btn.disabled = false; }
 }
@@ -934,14 +936,15 @@ function toggleTheme() {
 function showDash() {
   document.getElementById('loading').style.display = 'none';
   document.getElementById('dashboard').style.display = 'block';
-  // Render in sequence - small delay ensures DOM is ready on all browsers/iPads
   renderToday();
   renderRanksPanel();
-  // Defer boss + quests slightly so ring chart doesn't block
-  setTimeout(() => {
-    renderBoss(toDay());
-    renderQuests(toDay());
-  }, 50);
+  // iPad Safari needs rAF + delay to ensure DOM paint is complete before populating lists
+  requestAnimationFrame(() => {
+    setTimeout(() => {
+      renderBoss(toDay());
+      renderQuests(toDay());
+    }, 100);
+  });
 }
 
 // ══════════════════════════════════════════════
@@ -1387,10 +1390,8 @@ function renderBossCalendar() {
 
     const row = document.createElement('div');
     row.style.cssText = `background:${isCur ? 'var(--surface3)' : 'var(--surface2)'};border:1px solid ${isCur ? col + '44' : 'var(--border)'};border-radius:12px;padding:.8rem;display:flex;align-items:center;gap:10px;`;
-    row.draggable = true;
     row.dataset.bossIdx = realIdx;
     row.innerHTML = `
-      <div class="drag-handle">⠿</div>
       <div style="font-size:1.4rem;flex-shrink:0;">${boss.i}</div>
       <div style="flex:1;">
         <div style="display:flex;align-items:center;gap:6px;margin-bottom:2px;">
@@ -1411,68 +1412,13 @@ function renderBossCalendar() {
 
     row.querySelector('.boss-cal-edit').addEventListener('click', () => openEditModal('editboss', realIdx));
     row.querySelector('.boss-cal-del').addEventListener('click', () => deleteBoss(realIdx));
-    row.addEventListener('dragstart', e => { dragSrcIdx = realIdx; row.classList.add('dragging'); });
-    row.addEventListener('dragover', e => { e.preventDefault(); row.classList.add('drag-over'); });
-    row.addEventListener('dragleave', () => row.classList.remove('drag-over'));
-    row.addEventListener('drop', e => { e.preventDefault(); row.classList.remove('drag-over'); bossRDrop(realIdx); });
-    row.addEventListener('dragend', () => { row.classList.remove('dragging'); });
-    setupTouchDrag(row, realIdx);
     list.appendChild(row);
   }
   container.appendChild(list);
 }
-function bossRDrop(targetIdx) {
-  if (dragSrcIdx === null || dragSrcIdx === targetIdx) { dragSrcIdx = null; return; }
-  const list = JSON.parse(JSON.stringify(getBosses()));
-  const [moved] = list.splice(dragSrcIdx, 1);
-  list.splice(targetIdx, 0, moved);
-  S.saveCustomBosses(list);
-  dragSrcIdx = null;
-  renderBossCalendar();
-}
+function bossRDrop(targetIdx) {} // kept for compat, unused
 
-// Touch drag-drop support (iPad/mobile)
-let _touchDragSrc = null, _touchDragEl = null, _touchClone = null;
-function setupTouchDrag(el, idx) {
-  el.addEventListener('touchstart', e => {
-    if (!editMode) return;
-    _touchDragSrc = idx;
-    _touchDragEl = el;
-    const touch = e.touches[0];
-    _touchClone = el.cloneNode(true);
-    _touchClone.style.cssText = `position:fixed;opacity:.7;pointer-events:none;z-index:999;width:${el.offsetWidth}px;left:${touch.clientX - el.offsetWidth/2}px;top:${touch.clientY - 30}px;border:2px dashed var(--accent);`;
-    document.body.appendChild(_touchClone);
-    el.style.opacity = '.3';
-    e.preventDefault();
-  }, { passive: false });
-  el.addEventListener('touchmove', e => {
-    if (!_touchClone) return;
-    const touch = e.touches[0];
-    _touchClone.style.left = (touch.clientX - _touchClone.offsetWidth/2) + 'px';
-    _touchClone.style.top = (touch.clientY - 30) + 'px';
-    e.preventDefault();
-  }, { passive: false });
-  el.addEventListener('touchend', e => {
-    if (!_touchClone) return;
-    const touch = e.changedTouches[0];
-    if (_touchClone) { _touchClone.remove(); _touchClone = null; }
-    if (_touchDragEl) _touchDragEl.style.opacity = '';
-    // Find target element under touch point
-    const els = document.querySelectorAll('#bosscal-content [data-boss-idx]');
-    let targetIdx = null;
-    els.forEach(row => {
-      const r = row.getBoundingClientRect();
-      if (touch.clientX >= r.left && touch.clientX <= r.right && touch.clientY >= r.top && touch.clientY <= r.bottom) {
-        targetIdx = parseInt(row.dataset.bossIdx);
-      }
-    });
-    if (targetIdx !== null && _touchDragSrc !== null && targetIdx !== _touchDragSrc) {
-      dragSrcIdx = _touchDragSrc;
-      bossRDrop(targetIdx);
-    }
-    _touchDragSrc = null; _touchDragEl = null;
-  }, { passive: false });
-}
+
 
 // ══════════════════════════════════════════════
 // QUEST LIST — FIX: DOM buttons
@@ -1827,6 +1773,10 @@ function openEditModal(type, idxOrData) {
   if (type === 'addboss' || type === 'editboss') {
     const d = type === 'editboss' ? getBosses()[idx] : { n: '', i: '👹', d: 'Difficile', l: '', r: 500, a: 'discipline', s: [] };
     if (!d) { closeEditModal(); return; }
+    const totalBosses = getBosses().length;
+    const posOptions = Array.from({length: totalBosses + (type === 'addboss' ? 1 : 0)}, (_, i) => i + 1)
+      .map(p => `<option value="${p}" ${type === 'editboss' && idx + 1 === p ? 'selected' : type === 'addboss' && p === totalBosses + 1 ? 'selected' : ''}>${p === 1 ? '1 (Semaine 1, 53, 105…)' : `${p} (Sem. ${p}, ${p+52}…)`}</option>`)
+      .join('');
     body.innerHTML = `
       <div class="m-field"><label>Emoji</label><input id="mf-icon" value="${escAttr(d.i || '👹')}"></div>
       <div class="m-field"><label>Nom</label><input id="mf-name" value="${escAttr(d.n || '')}"></div>
@@ -1834,6 +1784,7 @@ function openEditModal(type, idxOrData) {
       <div class="m-field"><label>Lore / Description</label><textarea id="mf-lore" rows="3">${escAttr(d.l || '')}</textarea></div>
       <div class="m-field"><label>Recompense PD</label><input id="mf-reward" type="number" value="${d.r || 500}"></div>
       <div class="m-field"><label>Attribut</label><select id="mf-attr">${['discipline', 'physique', 'nutrition', 'spiritualite', 'intelligence', 'mental', 'social', 'execution'].map(a => `<option value="${a}" ${d.a === a ? 'selected' : ''}>${a}</option>`).join('')}</select></div>
+      ${type === 'editboss' ? `<div class="m-field"><label>Position dans la rotation (semaine assignée)</label><select id="mf-pos">${posOptions}</select><div style="font-size:.62rem;color:var(--muted);margin-top:3px;">La position détermine quelle semaine ce boss apparaît en premier</div></div>` : ''}
       <div class="m-field"><label>Etapes checklist (une par ligne)</label><textarea id="mf-steps" rows="6">${(d.s || []).join('\n')}</textarea></div>`;
   } else if (type === 'addquest' || type === 'editquest') {
     const d = type === 'editquest' ? getQuests()[idx] : { i: '🎯', n: '', d: '', diff: 'medium', r: 150, a: 'execution' };
@@ -1888,8 +1839,18 @@ function saveEditModal() {
     const steps = g('mf-steps').split('\n').map(s => s.trim()).filter(Boolean);
     const nb = { n: g('mf-name'), i: g('mf-icon') || '👹', d: g('mf-diff'), l: g('mf-lore'), r: parseInt(g('mf-reward')) || 500, a: g('mf-attr'), s: steps.length ? steps : ['Completer le defi'] };
     if (!nb.n) { alert('Nom requis'); return; }
-    const list = JSON.parse(JSON.stringify(getBosses()));
-    if (type === 'editboss' && idx !== null) list[idx] = nb; else list.push(nb);
+    let list = JSON.parse(JSON.stringify(getBosses()));
+    if (type === 'editboss' && idx !== null) {
+      list[idx] = nb;
+      // Handle position change
+      const newPos = parseInt(g('mf-pos')) - 1; // 0-based
+      if (!isNaN(newPos) && newPos !== idx && newPos >= 0 && newPos < list.length) {
+        const [item] = list.splice(idx, 1);
+        list.splice(newPos, 0, item);
+      }
+    } else {
+      list.push(nb);
+    }
     S.saveCustomBosses(list); closeEditModal(); renderBossCalendar(); renderBoss(toDay());
   } else if (type === 'addquest' || type === 'editquest') {
     const nq = { i: g('mf-icon') || '🎯', n: g('mf-name'), d: g('mf-desc'), diff: g('mf-diff'), r: parseInt(g('mf-reward')) || 150, a: g('mf-attr') };
