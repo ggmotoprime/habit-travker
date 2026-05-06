@@ -605,21 +605,21 @@ const ATTRIBUTES = [
 ];
 
 const BOSSES_DEFAULT = [
-  {n:'L Ascete du Silence',i:'🔕',d:'Difficile',c:'#8b5cf6',l:'Aucune musique, YouTube, podcast. 7 jours.',s:['Aucune musique lundi','Aucune musique mardi','Aucune musique mercredi','Aucune musique jeudi','Aucune musique vendredi','Aucune video semaine','Aucun podcast semaine'],r:600,a:'mental'},
-  {n:'Le Reveil du Guerrier',i:'🌅',d:'Extreme',c:'#f97316',l:'5h du matin, 7 jours.',s:['5h00 lundi','5h00 mardi','5h00 mercredi','5h00 jeudi','5h00 vendredi','5h00 samedi','5h00 dimanche'],r:800,a:'discipline'},
-  {n:'Le Marcheur de l Infini',i:'🦶',d:'Extreme',c:'#22c55e',l:'200 000 pas en 7 jours.',s:['28k pas lundi','28k pas mardi','28k pas mercredi','28k pas jeudi','28k pas vendredi','28k pas samedi','28k pas dimanche'],r:950,a:'physique'},
-  {n:'Le Bain de Glace',i:'🧊',d:'Difficile',c:'#06b6d4',l:'Douche froide chaque matin. 7 jours.',s:['Douche froide lundi','Douche froide mardi','Douche froide mercredi','Douche froide jeudi','Douche froide vendredi','Douche froide samedi','Douche froide dimanche'],r:500,a:'mental'},
-  {n:'Le Conquerant des Echecs',i:'♟️',d:'Legendaire',c:'#fbbf24',l:'+100 Elo en une semaine.',s:['Analyser 1 partie/jour','5 parties min/jour','Gagner 3 consecutives','+100 Elo net'],r:1000,a:'intelligence'},
-  {n:'L Ermite Numerique',i:'📵',d:'Legendaire',c:'#ef4444',l:'Telephone eteint a 20h. 7 jours.',s:['Eteint 20h lundi','Eteint 20h mardi','Eteint 20h mercredi','Eteint 20h jeudi','Eteint 20h vendredi','Eteint 20h samedi','Eteint 20h dimanche'],r:700,a:'discipline'},
-  {n:'Le Double Effort',i:'💥',d:'Extreme',c:'#f43f5e',l:'2 seances de sport par jour, 7 jours.',s:['2 seances lundi','2 seances mardi','2 seances mercredi','2 seances jeudi','2 seances vendredi','2 seances samedi','2 seances dimanche'],r:900,a:'physique'},
-  {n:'La Recitation Totale',i:'📖',d:'Legendaire',c:'#a78bfa',l:'3 nouvelles sourates memorisees.',s:['Memoriser sourate 1 j1-2','Reciter sourate 1 sans regarder','Memoriser sourate 2 j3-4','Reciter sourate 2 sans regarder','Memoriser sourate 3 j5-6','Reciter les 3 dimanche'],r:1000,a:'spiritualite'},
-  {n:'Le Centurion',i:'💪',d:'Extreme',c:'#3b82f6',l:'100 pompes d affilee dimanche.',s:['Max pompes lundi','Battre record mercredi','S approcher 100 vendredi','100 pompes dimanche'],r:750,a:'physique'},
-  {n:'Le Journal du Sage',i:'✍️',d:'Normale',c:'#14b8a6',l:'1 page de journal chaque soir.',s:['Page lundi','Page mardi','Page mercredi','Page jeudi','Page vendredi','Page samedi','Page dimanche'],r:400,a:'intelligence'},
-  {n:'L Abstinent Total',i:'🚫',d:'Difficile',c:'#f97316',l:'Zero nourriture transformee. 7 jours.',s:['Zero junk lundi','Zero junk mardi','Zero junk mercredi','Zero junk jeudi','Zero junk vendredi','Zero junk samedi','Zero junk dimanche'],r:600,a:'nutrition'},
-  {n:'L Invisible Social',i:'🗣️',d:'Difficile',c:'#ec4899',l:'1 inconnu par jour. 7 jours.',s:['Inconnu lundi','Inconnu mardi','Inconnu mercredi','Inconnu jeudi','Inconnu vendredi','Inconnu samedi','Inconnu dimanche'],r:650,a:'social'},
-  {n:'Le Moine du Lever',i:'🌙',d:'Extreme',c:'#8b5cf6',l:'Fajr + 20min dhikr avant tout ecran. 7j.',s:['Fajr+dhikr lundi','Fajr+dhikr mardi','Fajr+dhikr mercredi','Fajr+dhikr jeudi','Fajr+dhikr vendredi','Fajr+dhikr samedi','Fajr+dhikr dimanche'],r:800,a:'spiritualite'},
-  {n:'Le Polyglotte',i:'🌍',d:'Difficile',c:'#eab308',l:'100 mots arabes/jour + test final.',s:['100 mots lundi','100 mots mardi','100 mots mercredi','100 mots jeudi','100 mots vendredi','100 mots samedi','Test 80% dimanche'],r:700,a:'intelligence'},
-  {n:'La Diete Mentale',i:'🧘',d:'Difficile',c:'#06b6d4',l:'10min meditation + 30min sans telephone. 7j.',s:['Meditation lundi','Meditation mardi','Meditation mercredi','Meditation jeudi','Meditation vendredi','Meditation samedi','Meditation dimanche'],r:500,a:'mental'},
+  {n:'L Ascete du Silence',i:'🔕',d:'Difficile',l:'Aucune musique, YouTube, podcast. 7 jours.',s:['Aucune musique lundi','Aucune musique mardi','Aucune musique mercredi','Aucune musique jeudi','Aucune musique vendredi','Aucune video semaine','Aucun podcast semaine'],r:600,a:'mental',week:1},
+  {n:'Le Reveil du Guerrier',i:'🌅',d:'Extreme',l:'5h du matin, 7 jours.',s:['5h00 lundi','5h00 mardi','5h00 mercredi','5h00 jeudi','5h00 vendredi','5h00 samedi','5h00 dimanche'],r:800,a:'discipline',week:2},
+  {n:'Le Marcheur de l Infini',i:'🦶',d:'Extreme',l:'200 000 pas en 7 jours.',s:['28k pas lundi','28k pas mardi','28k pas mercredi','28k pas jeudi','28k pas vendredi','28k pas samedi','28k pas dimanche'],r:950,a:'physique',week:3},
+  {n:'Le Bain de Glace',i:'🧊',d:'Difficile',l:'Douche froide chaque matin. 7 jours.',s:['Douche froide lundi','Douche froide mardi','Douche froide mercredi','Douche froide jeudi','Douche froide vendredi','Douche froide samedi','Douche froide dimanche'],r:500,a:'mental',week:4},
+  {n:'Le Conquerant des Echecs',i:'♟️',d:'Legendaire',l:'+100 Elo en une semaine.',s:['Analyser 1 partie/jour','5 parties min/jour','Gagner 3 consecutives','+100 Elo net'],r:1000,a:'intelligence',week:5},
+  {n:'L Ermite Numerique',i:'📵',d:'Legendaire',l:'Telephone eteint a 20h. 7 jours.',s:['Eteint 20h lundi','Eteint 20h mardi','Eteint 20h mercredi','Eteint 20h jeudi','Eteint 20h vendredi','Eteint 20h samedi','Eteint 20h dimanche'],r:700,a:'discipline',week:6},
+  {n:'Le Double Effort',i:'💥',d:'Extreme',l:'2 seances de sport par jour, 7 jours.',s:['2 seances lundi','2 seances mardi','2 seances mercredi','2 seances jeudi','2 seances vendredi','2 seances samedi','2 seances dimanche'],r:900,a:'physique',week:7},
+  {n:'La Recitation Totale',i:'📖',d:'Legendaire',l:'3 nouvelles sourates memorisees.',s:['Memoriser sourate 1 j1-2','Reciter sourate 1 sans regarder','Memoriser sourate 2 j3-4','Reciter sourate 2 sans regarder','Memoriser sourate 3 j5-6','Reciter les 3 dimanche'],r:1000,a:'spiritualite',week:8},
+  {n:'Le Centurion',i:'💪',d:'Extreme',l:'100 pompes d affilee dimanche.',s:['Max pompes lundi','Battre record mercredi','S approcher 100 vendredi','100 pompes dimanche'],r:750,a:'physique',week:9},
+  {n:'Le Journal du Sage',i:'✍️',d:'Normale',l:'1 page de journal chaque soir.',s:['Page lundi','Page mardi','Page mercredi','Page jeudi','Page vendredi','Page samedi','Page dimanche'],r:400,a:'intelligence',week:10},
+  {n:'L Abstinent Total',i:'🚫',d:'Difficile',l:'Zero nourriture transformee. 7 jours.',s:['Zero junk lundi','Zero junk mardi','Zero junk mercredi','Zero junk jeudi','Zero junk vendredi','Zero junk samedi','Zero junk dimanche'],r:600,a:'nutrition',week:11},
+  {n:'L Invisible Social',i:'🗣️',d:'Difficile',l:'1 inconnu par jour. 7 jours.',s:['Inconnu lundi','Inconnu mardi','Inconnu mercredi','Inconnu jeudi','Inconnu vendredi','Inconnu samedi','Inconnu dimanche'],r:650,a:'social',week:12},
+  {n:'Le Moine du Lever',i:'🌙',d:'Extreme',l:'Fajr + 20min dhikr avant tout ecran. 7j.',s:['Fajr+dhikr lundi','Fajr+dhikr mardi','Fajr+dhikr mercredi','Fajr+dhikr jeudi','Fajr+dhikr vendredi','Fajr+dhikr samedi','Fajr+dhikr dimanche'],r:800,a:'spiritualite',week:13},
+  {n:'Le Polyglotte',i:'🌍',d:'Difficile',l:'100 mots arabes/jour + test final.',s:['100 mots lundi','100 mots mardi','100 mots mercredi','100 mots jeudi','100 mots vendredi','100 mots samedi','Test 80% dimanche'],r:700,a:'intelligence',week:14},
+  {n:'La Diete Mentale',i:'🧘',d:'Difficile',l:'10min meditation + 30min sans telephone. 7j.',s:['Meditation lundi','Meditation mardi','Meditation mercredi','Meditation jeudi','Meditation vendredi','Meditation samedi','Meditation dimanche'],r:500,a:'mental',week:15},
 ];
 
 const QUESTS_DEFAULT = [
@@ -1048,16 +1048,80 @@ function renderRanksPanel() {
 }
 
 // ══════════════════════════════════════════════
-// BOSS
+// BOSS — lookup par semaine explicite
 // ══════════════════════════════════════════════
+function getBossByWeek(wn) {
+  return getBosses().find(b => b.week === wn) || null;
+}
 function renderBoss(today) {
   const wn = getWN(today), yr = new Date().getFullYear(), key = `w${wn}_${yr}`;
-  const bossList = getBosses();
-  const boss = bossList[(wn - 1) % bossList.length];
-  if (!boss) return;
+  const boss = getBossByWeek(wn);
+  const bossCard = document.getElementById('boss-card');
+
+  if (!boss) {
+    bossCard.innerHTML = `
+      <div class="boss-glow"></div>
+      <div style="text-align:center;padding:1.5rem 1rem;">
+        <div style="font-size:2rem;margin-bottom:.5rem;">🔒</div>
+        <div style="font-size:.85rem;font-weight:700;color:var(--muted);margin-bottom:.3rem;">Semaine ${wn} — Pas de boss</div>
+        <div style="font-size:.72rem;color:var(--muted);">Assigne un boss à cette semaine depuis l'onglet 👹 Boss</div>
+      </div>`;
+    return;
+  }
+
   const saved = S.boss();
   if (!saved[key]) saved[key] = { checks: [], declared: null, reward: boss.r };
   const bd = saved[key];
+  const dc = { 'Normale': '#22c55e', 'Difficile': '#f97316', 'Extreme': '#ef4444', 'Legendaire': '#fbbf24' };
+  const col = dc[boss.d] || '#8b5cf6';
+  document.getElementById('boss-icon').textContent = boss.i;
+  document.getElementById('boss-wk').textContent = `Semaine ${wn} · Boss`;
+  document.getElementById('boss-nm').textContent = boss.n;
+  document.getElementById('boss-diff').textContent = boss.d;
+  document.getElementById('boss-diff').style.cssText = `background:${col}20;color:${col};border:1px solid ${col}40;padding:2px 9px;border-radius:14px;font-size:.63rem;font-weight:700;`;
+  document.getElementById('boss-lore').textContent = boss.l;
+  const attr = ATTRIBUTES.find(a => a.id === boss.a);
+  document.getElementById('boss-rew').textContent = `🏆 +${boss.r} PD · ${attr ? attr.emoji + ' +PA ' + attr.name : ''}`;
+
+  const clEl = document.getElementById('boss-cl');
+  clEl.innerHTML = '';
+  (boss.s || []).forEach((step, i) => {
+    const checked = bd.checks.includes(i);
+    const div = document.createElement('div');
+    div.className = 'boss-ci' + (checked ? ' checked' : '');
+    const cb = document.createElement('input');
+    cb.type = 'checkbox'; cb.id = 'bc' + i; cb.checked = checked;
+    if (bd.declared) cb.disabled = true;
+    cb.addEventListener('change', () => toggleBossCheck(i, key));
+    const lbl = document.createElement('label');
+    lbl.htmlFor = 'bc' + i; lbl.textContent = step;
+    div.appendChild(cb); div.appendChild(lbl);
+    clEl.appendChild(div);
+  });
+
+  const done = bd.checks.length, total = (boss.s || []).length;
+  const hp = Math.max(0, 100 - Math.round(done / Math.max(total, 1) * 100));
+  document.getElementById('boss-hp-pct').textContent = hp + '%';
+  setTimeout(() => { document.getElementById('boss-hp-fill').style.width = hp + '%'; }, 200);
+
+  const res = document.getElementById('boss-result');
+  res.innerHTML = '';
+  if (bd.declared === 'won') {
+    res.innerHTML = `<div class="boss-won">⚔️ BOSS VAINCU — +${boss.r} PD !</div>`;
+  } else if (bd.declared === 'failed') {
+    res.innerHTML = `<div class="boss-failed">💀 Boss echoue cette semaine.</div>`;
+  } else if (hp === 0) {
+    const btns = document.createElement('div'); btns.className = 'boss-btns';
+    const winBtn = document.createElement('button'); winBtn.className = 'boss-btn win'; winBtn.textContent = '✅ Boss vaincu';
+    winBtn.addEventListener('click', () => declareBoss('won', key, boss.r));
+    const loseBtn = document.createElement('button'); loseBtn.className = 'boss-btn lose'; loseBtn.textContent = '❌ Echoue';
+    loseBtn.addEventListener('click', () => declareBoss('failed', key));
+    btns.appendChild(winBtn); btns.appendChild(loseBtn);
+    res.appendChild(btns);
+  } else {
+    res.innerHTML = `<div style="font-size:.67rem;color:#a78bfa;margin-top:5px;text-align:center;">${done}/${total} etapes — ${hp}% HP</div>`;
+  }
+}
   const dc = { 'Normale': '#22c55e', 'Difficile': '#f97316', 'Extreme': '#ef4444', 'Legendaire': '#fbbf24' };
   const col = dc[boss.d] || '#8b5cf6';
   document.getElementById('boss-icon').textContent = boss.i;
@@ -1148,8 +1212,7 @@ function declareBoss(result, key, reward) {
 // ══════════════════════════════════════════════
 function getQKey(today) { const wn = getWN(today), yr = new Date().getFullYear(); return `qw${wn}_${yr}`; }
 function getQIdx(key) {
-  const s = S.quests();
-  if (s[key] && Array.isArray(s[key]._i) && s[key]._i.length > 0) return s[key]._i;
+  // Always recompute — cached indices can point to deleted quests
   const wn = parseInt(key.replace(/[^0-9]/g, '')) || 1;
   const questList = getQuests();
   if (!questList.length) return [];
@@ -1162,9 +1225,13 @@ function getQIdx(key) {
     i = (i + 4) % questList.length;
     safety++;
   }
+  // Persist for slot consistency within the week (don't re-roll mid-week)
+  const s = S.quests();
   if (!s[key]) s[key] = {};
-  s[key]._i = idx;
-  S.saveQuests(s);
+  // Only update if different (avoid infinite save loops)
+  const existing = s[key]._i;
+  const same = existing && existing.length === idx.length && existing.every((v,j) => v === idx[j]);
+  if (!same) { s[key]._i = idx; S.saveQuests(s); }
   return idx;
 }
 function renderQuests(today) {
