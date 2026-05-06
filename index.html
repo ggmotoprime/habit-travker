@@ -31,7 +31,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 .tab-btn:hover{color:var(--text2);}
 .tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:600;}
 .tab-content{display:none;padding:1rem 1rem 6rem;max-width:860px;margin:0 auto;}
-.tab-content.active{display:block;}
+.tab-content.active{display:block !important;}
 .edit-bar{display:flex;align-items:center;justify-content:space-between;padding:.4rem 1rem;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:45px;z-index:49;}
 .edit-dot{width:7px;height:7px;border-radius:50%;background:var(--muted);transition:all .3s;}
 .edit-dot.on{background:#f97316;box-shadow:0 0 8px #f9731688;animation:pulse-dot 1.5s infinite;}
@@ -100,15 +100,6 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 .rank-row.cur{background:var(--surface3);}
 .rr-bar{height:3px;border-radius:2px;margin-top:4px;background:var(--surface3);overflow:hidden;}
 .rr-fill{height:100%;border-radius:2px;}
-/* BOSS WEEK SELECTOR */
-.boss-week-selector{display:flex;align-items:center;gap:8px;margin-bottom:10px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:.7rem 1rem;}
-.boss-week-selector label{font-size:.7rem;color:var(--muted);white-space:nowrap;}
-.boss-week-nav{display:flex;align-items:center;gap:6px;flex:1;}
-.bwn-btn{background:var(--surface2);border:1px solid var(--border2);color:var(--text2);border-radius:8px;font-size:.82rem;padding:.2rem .55rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;line-height:1;}
-.bwn-btn:hover{background:var(--surface3);color:var(--text);}
-.bwn-input{background:var(--surface2);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-family:'DM Mono',monospace;font-size:.82rem;font-weight:700;padding:.2rem .5rem;width:52px;text-align:center;outline:none;transition:border-color .2s;}
-.bwn-input:focus{border-color:var(--accent);}
-.bwn-max{font-size:.65rem;color:var(--muted);}
 /* BOSS CARD */
 .boss-card{background:linear-gradient(145deg,#09071a,#070d18,#0a0f16);border:1px solid rgba(139,92,246,.3);border-radius:18px;padding:1.3rem;margin-bottom:10px;position:relative;overflow:hidden;}
 [data-theme="light"] .boss-card{background:linear-gradient(145deg,#f5f0ff,#f0f4ff);border-color:rgba(109,40,217,.25);}
@@ -141,8 +132,10 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 .boss-btn{flex:1;border:none;border-radius:9px;padding:.52rem;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:700;font-size:.78rem;transition:all .18s;}
 .boss-btn.win{background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.35);color:#4ade80;}
 .boss-btn.lose{background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.3);color:#f87171;}
-.quest-list{display:flex;flex-direction:column;gap:7px;}
-.quest-item{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:.85rem;}
+/* QUÊTES - fix iPad */
+.quest-section{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.1rem;margin-bottom:10px;display:block;width:100%;}
+.quest-list{display:flex;flex-direction:column;gap:7px;width:100%;}
+.quest-item{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:.85rem;display:block;width:100%;}
 .quest-item.q-done{border-color:rgba(74,222,128,.25);background:rgba(74,222,128,.03);}
 .quest-item.q-fail{border-color:rgba(248,113,113,.25);background:rgba(248,113,113,.03);}
 .quest-hdr{display:flex;align-items:center;gap:7px;margin-bottom:5px;}
@@ -328,12 +321,26 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 .confirm-yes{flex:1;background:rgba(248,113,113,.15);border:1px solid rgba(248,113,113,.35);color:#f87171;border-radius:10px;padding:.6rem;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:700;font-size:.8rem;}
 .confirm-no{flex:1;background:var(--surface2);border:1px solid var(--border2);color:var(--text2);border-radius:10px;padding:.6rem;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.8rem;}
 #tooltip{position:fixed;background:var(--surface3);border:1px solid var(--border2);border-radius:10px;padding:7px 11px;font-size:.7rem;pointer-events:none;z-index:999;display:none;color:var(--text);white-space:nowrap;line-height:1.7;}
+/* Boss info banner on today tab */
+.boss-today-info{background:var(--surface);border:1px solid rgba(139,92,246,.25);border-radius:14px;padding:.75rem 1rem;margin-bottom:10px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.boss-today-badge{font-size:.65rem;font-weight:700;padding:3px 9px;border-radius:10px;flex-shrink:0;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
 .anim{animation:fadeUp .38s ease both;}
-/* FIX iPad : quest-list min-height pour forcer le rendu */
-#quest-list{min-height:10px;}
-@media(max-width:500px){.stats-grid{grid-template-columns:repeat(2,1fr);}.charts-row,.hero-row,.bw-row{grid-template-columns:1fr;}.shop-grid,.badges-grid,.attr-subs,.skills-grid{grid-template-columns:1fr;}}
-@media(max-width:768px){.hero-row{grid-template-columns:140px 1fr;}.tab-btn{font-size:.65rem;padding:.38rem .55rem;}}
+@media(max-width:500px){
+  .stats-grid{grid-template-columns:repeat(2,1fr);}
+  .charts-row,.bw-row{grid-template-columns:1fr;}
+  .hero-row{grid-template-columns:1fr;}
+  .ring-box{padding:.8rem;}
+  .shop-grid,.badges-grid,.attr-subs,.skills-grid{grid-template-columns:1fr;}
+  .habits-grid{grid-template-columns:repeat(2,1fr);}
+  .quest-section{padding:.8rem;}
+  .quest-item{padding:.7rem;}
+}
+@media(min-width:501px) and (max-width:900px){
+  .hero-row{grid-template-columns:140px 1fr;}
+  .tab-btn{font-size:.65rem;padding:.38rem .55rem;}
+  .shop-grid{grid-template-columns:repeat(2,1fr);}
+}
 </style></head><body>
 <div id="tooltip"></div>
 <div class="overlay" id="confirm-overlay">
@@ -382,6 +389,8 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
     <div style="display:flex;align-items:center;gap:8px;"><div class="edit-dot" id="edit-dot"></div><span id="edit-mode-label" style="font-size:.7rem;color:var(--muted);">Mode normal</span></div>
     <button class="edit-toggle-btn" id="edit-toggle-btn">✏️ Mode édition</button>
   </div>
+
+  <!-- TAB TODAY -->
   <div class="tab-content active" id="tab-today">
     <div class="top-bar">
       <div><div style="font-size:1rem;font-weight:700;">🌿 Solo Leveling</div><div style="font-size:.7rem;color:var(--muted);margin-top:1px;" id="today-date-sub"></div></div>
@@ -418,40 +427,12 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
       <div class="xp-breakdown" id="xp-breakdown"></div>
       <div class="ranks-panel" id="ranks-panel"></div>
     </div>
-    <!-- BOSS WEEK SELECTOR -->
-    <div class="boss-week-selector anim">
-      <label>⚔️ Semaine boss :</label>
-      <div class="boss-week-nav">
-        <button class="bwn-btn" id="bwn-prev">◀</button>
-        <input class="bwn-input" type="number" id="bwn-input" min="1" value="1">
-        <button class="bwn-btn" id="bwn-next">▶</button>
-        <span class="bwn-max" id="bwn-max-label"></span>
-      </div>
-      <button class="icon-btn" id="bwn-today-btn" style="font-size:.65rem;white-space:nowrap;">Sem. actuelle</button>
-    </div>
-    <div class="boss-card anim" id="boss-card">
-      <div class="boss-glow"></div>
-      <div class="boss-header">
-        <div class="boss-ico" id="boss-icon"></div>
-        <div class="boss-meta">
-          <div class="boss-week" id="boss-wk"></div>
-          <div class="boss-name" id="boss-nm"></div>
-          <div style="margin-top:4px;display:flex;align-items:center;gap:6px;">
-            <span class="boss-diff" id="boss-diff"></span>
-            <button class="qb rst" id="boss-reset-btn" style="font-size:.62rem;padding:2px 7px;">↺ Reset</button>
-          </div>
-        </div>
-      </div>
-      <div class="boss-lore" id="boss-lore"></div>
-      <div class="boss-cl-wrap"><div class="boss-cl-title">⚔️ Checklist</div><div class="boss-cl" id="boss-cl"></div></div>
-      <div style="margin-top:6px;font-size:.72rem;color:#fbbf24;font-weight:600;" id="boss-rew"></div>
-      <div class="boss-hp-section">
-        <div class="boss-hp-lbl"><span>HP du Boss</span><span id="boss-hp-pct">100%</span></div>
-        <div class="boss-hp-track"><div class="boss-hp-fill" id="boss-hp-fill" style="width:100%"></div></div>
-      </div>
-      <div id="boss-result"></div>
-    </div>
-    <div class="card anim">
+
+    <!-- Boss de la semaine courante (affiché automatiquement) -->
+    <div id="boss-today-container"></div>
+
+    <!-- Quêtes secondaires : section explicite avec ID stable -->
+    <div class="quest-section anim" id="quest-section">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem;">
         <div class="card-title" style="margin:0;">⚔️ Quêtes secondaires</div>
         <div style="display:flex;gap:5px;align-items:center;">
@@ -462,6 +443,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
       <div class="quest-list" id="quest-list"></div>
     </div>
   </div>
+
   <div class="tab-content" id="tab-attr">
     <div style="padding-top:.8rem;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem;">
@@ -484,12 +466,8 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
     </div>
   </div>
   <div class="tab-content" id="tab-guide"><div style="padding-top:.8rem;" id="guide-content"></div></div>
-  <div class="tab-content" id="tab-bosscal">
-    <div style="padding-top:.8rem;" id="bosscal-content"></div>
-  </div>
-  <div class="tab-content" id="tab-questlist">
-    <div style="padding-top:.8rem;" id="questlist-content"></div>
-  </div>
+  <div class="tab-content" id="tab-bosscal"><div style="padding-top:.8rem;" id="bosscal-content"></div></div>
+  <div class="tab-content" id="tab-questlist"><div style="padding-top:.8rem;" id="questlist-content"></div></div>
   <div class="tab-content" id="tab-history">
     <div style="padding-top:.8rem;">
       <div style="font-size:1rem;font-weight:700;margin-bottom:.8rem;">📋 Historique Boss & Quêtes</div>
@@ -605,39 +583,41 @@ const RANKS = [
 
 const ATTRIBUTES = [
   {id:'discipline',name:'Discipline',emoji:'⚔️',color:'#06b6d4',desc:'La base absolue.',goal:'Maitriser ses impulsions, respecter sa routine sans exception.',
-   subs:[{id:'disc_noscroll',name:'No Scroll',desc:'Resistance numerique',src:'No Scroll +3/j · Streak 7j +8 · Boss Ermite +15'},{id:'disc_routine',name:'Routine',desc:'Reveil tot, protocole',src:'Boss Reveil +12 · Parfaite +3 · Boss Leve-Tot +20'},{id:'disc_exec',name:'Execution',desc:'Agir sans reporter',src:'Tous boss +5 · Tache repoussee +8 · Parfaite +2'},{id:'disc_constance',name:'Constance',desc:'Tenir sur la duree',src:'Chaque jour +1 · Streak 7j +6 · Streak 30j +15'}],gt:'No Scroll +3/j · Parfaite +3 · Streak 7j +6 · Boss discipline +8-20'},
+   subs:[{id:'disc_noscroll',name:'No Scroll',desc:'Resistance numerique',src:'No Scroll +3/j · Streak 7j +8'},{id:'disc_routine',name:'Routine',desc:'Reveil tot, protocole',src:'Boss Reveil +12 · Parfaite +3'},{id:'disc_exec',name:'Execution',desc:'Agir sans reporter',src:'Tous boss +5 · Parfaite +2'},{id:'disc_constance',name:'Constance',desc:'Tenir sur la duree',src:'Chaque jour +1 · Streak 7j +6'}],gt:'No Scroll +3/j · Parfaite +3 · Streak 7j +6'},
   {id:'physique',name:'Physique',emoji:'💪',color:'#ef4444',desc:'Force, endurance, technique.',goal:'Corps fonctionnel et puissant.',
-   subs:[{id:'phy_force',name:'Force',desc:'Musculation, calisthenics',src:'Pushup +2/j · Sport +1/j · Boss Centurion +15'},{id:'phy_endurance',name:'Endurance',desc:'Course, marche, cardio',src:'Sport +1/j · Boss Marathon +30 · Boss Marcheur +18'},{id:'phy_technique',name:'Technique',desc:'Grappling, natation',src:'Boss Sparring +12 · Boss Nageur +12 · Boss Handstand +20'},{id:'phy_vitesse',name:'Vitesse',desc:'Explosivite, sprint',src:'Boss 1000 Reps +12 · Boss Double Effort +8'}],gt:'Sport +2/j · Pushup +2/j · Boss physiques +10-30'},
-  {id:'nutrition',name:'Nutrition',emoji:'🥗',color:'#22c55e',desc:'70-75kg / 1m75 muscle.',goal:'Nutrition propre. Corps muscle.',
-   subs:[{id:'nut_qualite',name:'Qualite repas',desc:'Manger propre',src:'Nutrition +4/j · Boss Abstinent +15'},{id:'nut_cuisinier',name:'Cuisinier',desc:'Cuisiner soi-meme',src:'Quete cuisiner +8 · Streak Nutrition +6'},{id:'nut_compo',name:'Composition',desc:'Ratio muscle/graisse',src:'Streaks Nutrition +2 · Boss Abstinent +8'},{id:'nut_connaissance',name:'Connaissance',desc:'Macros, timing',src:'Quete fiche nutrition +6 · Boss 7j +8'}],gt:'Nutrition +4/j · Streaks +2 · Boss Abstinent +10'},
-  {id:'spiritualite',name:'Spiritualite',emoji:'🌙',color:'#a78bfa',desc:'Se rapprocher d Allah.',goal:'5 prieres a l heure, memoriser sourates, Sira, Hadith.',
-   subs:[{id:'spi_salat',name:'Salat',desc:'5 prieres a l heure',src:'Priere +3/j · Quete 5 prieres +6 · Boss Retraite +18'},{id:'spi_coran',name:'Coran',desc:'Lecture + memorisation',src:'Coran +3/j · Boss Recitation +20 · Quete sourate +10'},{id:'spi_ilm',name:'Connaissance',desc:'Hadith, Sira, Fiqh',src:'Islam +2/j · Quete fiche Islam +8'},{id:'spi_dhikr',name:'Dhikr',desc:'Dhikr quotidien',src:'Boss Moine +12 · Boss Retraite +10'}],gt:'Priere +3/j · Coran +3/j · Islam +2/j · Boss spirituels +10-20'},
-  {id:'intelligence',name:'Intelligence',emoji:'🧠',color:'#f97316',desc:'Apprendre, analyser, retenir.',goal:'Arabe maitrise, competences reelles, 2000 Elo.',
-   subs:[{id:'int_arabe',name:'Arabe',desc:'Vocabulaire et grammaire',src:'Arabe +3/j · Boss Polyglotte +15 · Boss Arabophone +20'},{id:'int_skill',name:'Competences',desc:'Apprentissage actif',src:'Skill +2/j · Boss Scripteur +6'},{id:'int_echecs',name:'Echecs 2000 Elo',desc:'Strategie, calcul',src:'Chess +4/j · Boss +100 Elo +30 · Analyser parties +8'},{id:'int_memoire',name:'Memoire',desc:'Retention, fiches',src:'Boss Repetiteur +10 · Fiches +6'}],gt:'Arabe +3/j · Skill +2/j · Chess +4/j · Boss intellectuels +8-30'},
-  {id:'mental',name:'Controle Mental',emoji:'🧘',color:'#8b5cf6',desc:'Resistance a l inconfort.',goal:'Gerer emotions, resister distractions, stabilite.',
-   subs:[{id:'men_resist',name:'Resistance',desc:'Douche froide, bain glace',src:'Boss Glace +12 · Boss Immersion +18 · Quete douche +4'},{id:'men_ennui',name:'Gestion ennui',desc:'Tenir sans distractions',src:'No Scroll +2/j · Boss Silence +14 · Quete 3h sans tel +5'},{id:'men_impulse',name:'Impulsions',desc:'Resister aux envies',src:'Parfaite +2 · Streak 7j +8 · Boss Stoique +12'},{id:'men_stabilite',name:'Stabilite',desc:'Constance humeur',src:'Boss Stoique +12 · Streak 30j +10'}],gt:'No Scroll +2/j · Parfaite +2 · Streak 7j +8 · Boss mental +12-20'},
-  {id:'social',name:'Social',emoji:'🗣️',color:'#ec4899',desc:'Aisance et presence naturelle.',goal:'A l aise avec les gens, conversations, connexions.',
-   subs:[{id:'soc_aisance',name:'Aisance',desc:'Approcher sans hesiter',src:'Boss Social +15 · Quete inconnu +8 · Parler public +12'},{id:'soc_confiance',name:'Confiance',desc:'Presence, assurance',src:'Parfaites consecutives +3 · Boss Stoique +8'},{id:'soc_comm',name:'Communication',desc:'Clarte, ecoute',src:'Quete discussion islam +6 · Boss Journal +5'},{id:'soc_presence',name:'Presence',desc:'Impact dans un groupe',src:'Boss Social 7j +12 · Explorer +4'}],gt:'Boss Social +12 · Quete inconnu +8 · Parler public +12'},
-  {id:'execution',name:'Execution',emoji:'⚡',color:'#14b8a6',desc:'Intention action. Sans delai.',goal:'Finir ce qu on commence. Constance.',
-   subs:[{id:'exe_finish',name:'Finir',desc:'Aller jusqu au bout',src:'Boss Tireur +12 · Tache repoussee +8 · Tout boss +3'},{id:'exe_prio',name:'Priorisation',desc:'Identifier ce qui compte',src:'Quete 3 objectifs +6 · Boss Journal +5'},{id:'exe_vitesse',name:'Vitesse',desc:'Agir rapidement',src:'Parfaite +5 · Streak 7j +10 · Streak 30j +20'},{id:'exe_constance',name:'Constance',desc:'Maintenir effort',src:'7/10 +1/j · Streak 7j +8 · Streak 30j +15'}],gt:'Parfaite +5 · Streak 7j +10 · Streak 30j +20 · Tout boss +3'},
+   subs:[{id:'phy_force',name:'Force',desc:'Musculation, calisthenics',src:'Pushup +2/j · Sport +1/j'},{id:'phy_endurance',name:'Endurance',desc:'Course, marche, cardio',src:'Sport +1/j'},{id:'phy_technique',name:'Technique',desc:'Grappling, natation',src:'Boss physiques +12'},{id:'phy_vitesse',name:'Vitesse',desc:'Explosivite, sprint',src:'Boss +8'}],gt:'Sport +2/j · Pushup +2/j'},
+  {id:'nutrition',name:'Nutrition',emoji:'🥗',color:'#22c55e',desc:'Corps muscle.',goal:'Nutrition propre.',
+   subs:[{id:'nut_qualite',name:'Qualite repas',desc:'Manger propre',src:'Nutrition +4/j'},{id:'nut_cuisinier',name:'Cuisinier',desc:'Cuisiner soi-meme',src:'Quete cuisiner +8'},{id:'nut_compo',name:'Composition',desc:'Ratio muscle/graisse',src:'Streaks Nutrition +2'},{id:'nut_connaissance',name:'Connaissance',desc:'Macros, timing',src:'Quete fiche +6'}],gt:'Nutrition +4/j'},
+  {id:'spiritualite',name:'Spiritualite',emoji:'🌙',color:'#a78bfa',desc:'Se rapprocher d Allah.',goal:'5 prieres a l heure, memoriser sourates.',
+   subs:[{id:'spi_salat',name:'Salat',desc:'5 prieres a l heure',src:'Priere +3/j'},{id:'spi_coran',name:'Coran',desc:'Lecture + memorisation',src:'Coran +3/j'},{id:'spi_ilm',name:'Connaissance',desc:'Hadith, Sira, Fiqh',src:'Islam +2/j'},{id:'spi_dhikr',name:'Dhikr',desc:'Dhikr quotidien',src:'Boss Moine +12'}],gt:'Priere +3/j · Coran +3/j · Islam +2/j'},
+  {id:'intelligence',name:'Intelligence',emoji:'🧠',color:'#f97316',desc:'Apprendre, analyser, retenir.',goal:'Arabe maitrise, 2000 Elo.',
+   subs:[{id:'int_arabe',name:'Arabe',desc:'Vocabulaire et grammaire',src:'Arabe +3/j'},{id:'int_skill',name:'Competences',desc:'Apprentissage actif',src:'Skill +2/j'},{id:'int_echecs',name:'Echecs 2000 Elo',desc:'Strategie, calcul',src:'Chess +4/j'},{id:'int_memoire',name:'Memoire',desc:'Retention, fiches',src:'Boss Repetiteur +10'}],gt:'Arabe +3/j · Skill +2/j · Chess +4/j'},
+  {id:'mental',name:'Controle Mental',emoji:'🧘',color:'#8b5cf6',desc:'Resistance a l inconfort.',goal:'Gerer emotions, resister distractions.',
+   subs:[{id:'men_resist',name:'Resistance',desc:'Douche froide',src:'Boss Glace +12'},{id:'men_ennui',name:'Gestion ennui',desc:'Tenir sans distractions',src:'No Scroll +2/j'},{id:'men_impulse',name:'Impulsions',desc:'Resister aux envies',src:'Parfaite +2 · Streak 7j +8'},{id:'men_stabilite',name:'Stabilite',desc:'Constance humeur',src:'Streak 30j +10'}],gt:'No Scroll +2/j · Parfaite +2 · Streak 7j +8'},
+  {id:'social',name:'Social',emoji:'🗣️',color:'#ec4899',desc:'Aisance et presence naturelle.',goal:'A l aise avec les gens.',
+   subs:[{id:'soc_aisance',name:'Aisance',desc:'Approcher sans hesiter',src:'Boss Social +15'},{id:'soc_confiance',name:'Confiance',desc:'Presence, assurance',src:'Parfaites consecutives +3'},{id:'soc_comm',name:'Communication',desc:'Clarte, ecoute',src:'Quete discussion +6'},{id:'soc_presence',name:'Presence',desc:'Impact dans un groupe',src:'Boss Social 7j +12'}],gt:'Boss Social +12 · Quete inconnu +8'},
+  {id:'execution',name:'Execution',emoji:'⚡',color:'#14b8a6',desc:'Intention action. Sans delai.',goal:'Finir ce qu on commence.',
+   subs:[{id:'exe_finish',name:'Finir',desc:'Aller jusqu au bout',src:'Tout boss +3'},{id:'exe_prio',name:'Priorisation',desc:'Identifier ce qui compte',src:'Quete 3 objectifs +6'},{id:'exe_vitesse',name:'Vitesse',desc:'Agir rapidement',src:'Parfaite +5 · Streak 7j +10'},{id:'exe_constance',name:'Constance',desc:'Maintenir effort',src:'7/10 +1/j · Streak 7j +8'}],gt:'Parfaite +5 · Streak 7j +10 · Streak 30j +20'},
 ];
 
+// ══ BOSS : nouveau système — chaque boss porte sa semaine ══
+// Structure : { n, i, d, l, r, a, s:[], week:number }
 const BOSSES_DEFAULT = [
-  {n:'L Ascete du Silence',i:'🔕',d:'Difficile',c:'#8b5cf6',l:'Aucune musique, YouTube, podcast. 7 jours.',s:['Aucune musique lundi','Aucune musique mardi','Aucune musique mercredi','Aucune musique jeudi','Aucune musique vendredi','Aucune video semaine','Aucun podcast semaine'],r:600,a:'mental'},
-  {n:'Le Reveil du Guerrier',i:'🌅',d:'Extreme',c:'#f97316',l:'5h du matin, 7 jours.',s:['5h00 lundi','5h00 mardi','5h00 mercredi','5h00 jeudi','5h00 vendredi','5h00 samedi','5h00 dimanche'],r:800,a:'discipline'},
-  {n:'Le Marcheur de l Infini',i:'🦶',d:'Extreme',c:'#22c55e',l:'200 000 pas en 7 jours.',s:['28k pas lundi','28k pas mardi','28k pas mercredi','28k pas jeudi','28k pas vendredi','28k pas samedi','28k pas dimanche'],r:950,a:'physique'},
-  {n:'Le Bain de Glace',i:'🧊',d:'Difficile',c:'#06b6d4',l:'Douche froide chaque matin. 7 jours.',s:['Douche froide lundi','Douche froide mardi','Douche froide mercredi','Douche froide jeudi','Douche froide vendredi','Douche froide samedi','Douche froide dimanche'],r:500,a:'mental'},
-  {n:'Le Conquerant des Echecs',i:'♟️',d:'Legendaire',c:'#fbbf24',l:'+100 Elo en une semaine.',s:['Analyser 1 partie/jour','5 parties min/jour','Gagner 3 consecutives','+100 Elo net'],r:1000,a:'intelligence'},
-  {n:'L Ermite Numerique',i:'📵',d:'Legendaire',c:'#ef4444',l:'Telephone eteint a 20h. 7 jours.',s:['Eteint 20h lundi','Eteint 20h mardi','Eteint 20h mercredi','Eteint 20h jeudi','Eteint 20h vendredi','Eteint 20h samedi','Eteint 20h dimanche'],r:700,a:'discipline'},
-  {n:'Le Double Effort',i:'💥',d:'Extreme',c:'#f43f5e',l:'2 seances de sport par jour, 7 jours.',s:['2 seances lundi','2 seances mardi','2 seances mercredi','2 seances jeudi','2 seances vendredi','2 seances samedi','2 seances dimanche'],r:900,a:'physique'},
-  {n:'La Recitation Totale',i:'📖',d:'Legendaire',c:'#a78bfa',l:'3 nouvelles sourates memorisees.',s:['Memoriser sourate 1 j1-2','Reciter sourate 1 sans regarder','Memoriser sourate 2 j3-4','Reciter sourate 2 sans regarder','Memoriser sourate 3 j5-6','Reciter les 3 dimanche'],r:1000,a:'spiritualite'},
-  {n:'Le Centurion',i:'💪',d:'Extreme',c:'#3b82f6',l:'100 pompes d affilee dimanche.',s:['Max pompes lundi','Battre record mercredi','S approcher 100 vendredi','100 pompes dimanche'],r:750,a:'physique'},
-  {n:'Le Journal du Sage',i:'✍️',d:'Normale',c:'#14b8a6',l:'1 page de journal chaque soir.',s:['Page lundi','Page mardi','Page mercredi','Page jeudi','Page vendredi','Page samedi','Page dimanche'],r:400,a:'intelligence'},
-  {n:'L Abstinent Total',i:'🚫',d:'Difficile',c:'#f97316',l:'Zero nourriture transformee. 7 jours.',s:['Zero junk lundi','Zero junk mardi','Zero junk mercredi','Zero junk jeudi','Zero junk vendredi','Zero junk samedi','Zero junk dimanche'],r:600,a:'nutrition'},
-  {n:'L Invisible Social',i:'🗣️',d:'Difficile',c:'#ec4899',l:'1 inconnu par jour. 7 jours.',s:['Inconnu lundi','Inconnu mardi','Inconnu mercredi','Inconnu jeudi','Inconnu vendredi','Inconnu samedi','Inconnu dimanche'],r:650,a:'social'},
-  {n:'Le Moine du Lever',i:'🌙',d:'Extreme',c:'#8b5cf6',l:'Fajr + 20min dhikr avant tout ecran. 7j.',s:['Fajr+dhikr lundi','Fajr+dhikr mardi','Fajr+dhikr mercredi','Fajr+dhikr jeudi','Fajr+dhikr vendredi','Fajr+dhikr samedi','Fajr+dhikr dimanche'],r:800,a:'spiritualite'},
-  {n:'Le Polyglotte',i:'🌍',d:'Difficile',c:'#eab308',l:'100 mots arabes/jour + test final.',s:['100 mots lundi','100 mots mardi','100 mots mercredi','100 mots jeudi','100 mots vendredi','100 mots samedi','Test 80% dimanche'],r:700,a:'intelligence'},
-  {n:'La Diete Mentale',i:'🧘',d:'Difficile',c:'#06b6d4',l:'10min meditation + 30min sans telephone. 7j.',s:['Meditation lundi','Meditation mardi','Meditation mercredi','Meditation jeudi','Meditation vendredi','Meditation samedi','Meditation dimanche'],r:500,a:'mental'},
+  {n:'L Ascete du Silence',i:'🔕',d:'Difficile',c:'#8b5cf6',l:'Aucune musique, YouTube, podcast. 7 jours.',s:['Aucune musique lundi','Aucune musique mardi','Aucune musique mercredi','Aucune musique jeudi','Aucune musique vendredi','Aucune video semaine','Aucun podcast semaine'],r:600,a:'mental',week:1},
+  {n:'Le Reveil du Guerrier',i:'🌅',d:'Extreme',c:'#f97316',l:'5h du matin, 7 jours.',s:['5h00 lundi','5h00 mardi','5h00 mercredi','5h00 jeudi','5h00 vendredi','5h00 samedi','5h00 dimanche'],r:800,a:'discipline',week:2},
+  {n:'Le Marcheur de l Infini',i:'🦶',d:'Extreme',c:'#22c55e',l:'200 000 pas en 7 jours.',s:['28k pas lundi','28k pas mardi','28k pas mercredi','28k pas jeudi','28k pas vendredi','28k pas samedi','28k pas dimanche'],r:950,a:'physique',week:3},
+  {n:'Le Bain de Glace',i:'🧊',d:'Difficile',c:'#06b6d4',l:'Douche froide chaque matin. 7 jours.',s:['Douche froide lundi','Douche froide mardi','Douche froide mercredi','Douche froide jeudi','Douche froide vendredi','Douche froide samedi','Douche froide dimanche'],r:500,a:'mental',week:4},
+  {n:'Le Conquerant des Echecs',i:'♟️',d:'Legendaire',c:'#fbbf24',l:'+100 Elo en une semaine.',s:['Analyser 1 partie/jour','5 parties min/jour','Gagner 3 consecutives','+100 Elo net'],r:1000,a:'intelligence',week:5},
+  {n:'L Ermite Numerique',i:'📵',d:'Legendaire',c:'#ef4444',l:'Telephone eteint a 20h. 7 jours.',s:['Eteint 20h lundi','Eteint 20h mardi','Eteint 20h mercredi','Eteint 20h jeudi','Eteint 20h vendredi','Eteint 20h samedi','Eteint 20h dimanche'],r:700,a:'discipline',week:6},
+  {n:'Le Double Effort',i:'💥',d:'Extreme',c:'#f43f5e',l:'2 seances de sport par jour, 7 jours.',s:['2 seances lundi','2 seances mardi','2 seances mercredi','2 seances jeudi','2 seances vendredi','2 seances samedi','2 seances dimanche'],r:900,a:'physique',week:7},
+  {n:'La Recitation Totale',i:'📖',d:'Legendaire',c:'#a78bfa',l:'3 nouvelles sourates memorisees.',s:['Memoriser sourate 1 j1-2','Reciter sourate 1 sans regarder','Memoriser sourate 2 j3-4','Reciter sourate 2 sans regarder','Memoriser sourate 3 j5-6','Reciter les 3 dimanche'],r:1000,a:'spiritualite',week:8},
+  {n:'Le Centurion',i:'💪',d:'Extreme',c:'#3b82f6',l:'100 pompes d affilee dimanche.',s:['Max pompes lundi','Battre record mercredi','S approcher 100 vendredi','100 pompes dimanche'],r:750,a:'physique',week:9},
+  {n:'Le Journal du Sage',i:'✍️',d:'Normale',c:'#14b8a6',l:'1 page de journal chaque soir.',s:['Page lundi','Page mardi','Page mercredi','Page jeudi','Page vendredi','Page samedi','Page dimanche'],r:400,a:'intelligence',week:10},
+  {n:'L Abstinent Total',i:'🚫',d:'Difficile',c:'#f97316',l:'Zero nourriture transformee. 7 jours.',s:['Zero junk lundi','Zero junk mardi','Zero junk mercredi','Zero junk jeudi','Zero junk vendredi','Zero junk samedi','Zero junk dimanche'],r:600,a:'nutrition',week:11},
+  {n:'L Invisible Social',i:'🗣️',d:'Difficile',c:'#ec4899',l:'1 inconnu par jour. 7 jours.',s:['Inconnu lundi','Inconnu mardi','Inconnu mercredi','Inconnu jeudi','Inconnu vendredi','Inconnu samedi','Inconnu dimanche'],r:650,a:'social',week:12},
+  {n:'Le Moine du Lever',i:'🌙',d:'Extreme',c:'#8b5cf6',l:'Fajr + 20min dhikr avant tout ecran. 7j.',s:['Fajr+dhikr lundi','Fajr+dhikr mardi','Fajr+dhikr mercredi','Fajr+dhikr jeudi','Fajr+dhikr vendredi','Fajr+dhikr samedi','Fajr+dhikr dimanche'],r:800,a:'spiritualite',week:13},
+  {n:'Le Polyglotte',i:'🌍',d:'Difficile',c:'#eab308',l:'100 mots arabes/jour + test final.',s:['100 mots lundi','100 mots mardi','100 mots mercredi','100 mots jeudi','100 mots vendredi','100 mots samedi','Test 80% dimanche'],r:700,a:'intelligence',week:14},
+  {n:'La Diete Mentale',i:'🧘',d:'Difficile',c:'#06b6d4',l:'10min meditation + 30min sans telephone. 7j.',s:['Meditation lundi','Meditation mardi','Meditation mercredi','Meditation jeudi','Meditation vendredi','Meditation samedi','Meditation dimanche'],r:500,a:'mental',week:15},
 ];
 
 const QUESTS_DEFAULT = [
@@ -736,9 +716,6 @@ const S = {
   saveCustomMaluses: v => localStorage.setItem('ht_cmal', JSON.stringify(v)),
   customSkillCats: () => JSON.parse(localStorage.getItem('ht_csk') || 'null'),
   saveCustomSkillCats: v => localStorage.setItem('ht_csk', JSON.stringify(v)),
-  // Persist selected boss week
-  bossWeek: () => parseInt(localStorage.getItem('ht_bw') || '0') || 0,
-  saveBossWeek: v => localStorage.setItem('ht_bw', String(v)),
 };
 
 function getBosses() { return S.customBosses() || BOSSES_DEFAULT; }
@@ -773,8 +750,6 @@ function paRemain(pa) {
 const ST = 0.7, DS = 7, QPW = 5;
 let allData = {}, donutCh = null, ringCh = null, curFilter = 'Tout', curDbId = '', weekOff = 0, histFil = 'all', skillCatFilter = 'Tout';
 let editMode = false, editModalCtx = null, _confirmCb = null;
-// Selected boss week number (1-based, manual selection)
-let selectedBossWeek = 0; // 0 means use current week
 
 function toDay() { return new Date().toISOString().substring(0, 10); }
 function scoreDay(d) { const x = allData[d] || {}; return HABITS.filter(h => x[h]).length; }
@@ -794,64 +769,24 @@ function getRankIdx(xp) { return RANKS.indexOf(getRank(xp)); }
 function escAttr(str) { return String(str).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#39;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
 // ══════════════════════════════════════════════
-// BOSS WEEK SELECTOR — Manuel, sans rotation auto
+// BOSS : nouveau système par semaine fixe
+// Chaque boss a une propriété `week` (numéro de semaine ISO).
+// Le boss affiché sur Today = celui dont week === semaine ISO actuelle.
+// La clé de stockage = `boss_w{week}_{year}` (stable, pas de rotation).
 // ══════════════════════════════════════════════
-function getCurrentRealWeek() {
+
+function getCurrentWeekNumber() {
   return getWN(toDay());
 }
 
-function getActiveBossWeek() {
-  // Returns the selected boss week number (1-based)
-  if (selectedBossWeek > 0) return selectedBossWeek;
-  return getCurrentRealWeek();
+function getBossForWeek(weekNum) {
+  // Retourne le boss assigné à cette semaine, ou null
+  return getBosses().find(b => Number(b.week) === Number(weekNum)) || null;
 }
 
-function updateBossWeekUI() {
-  const bossList = getBosses();
-  const total = bossList.length;
-  const wn = getActiveBossWeek();
-  const input = document.getElementById('bwn-input');
-  if (input) input.value = wn;
-  const maxLabel = document.getElementById('bwn-max-label');
-  if (maxLabel) maxLabel.textContent = `/ ${total} boss`;
-}
-
-function setBossWeek(wn) {
-  const bossList = getBosses();
-  const total = bossList.length;
-  if (total === 0) return;
-  wn = Math.max(1, Math.min(wn, total));
-  selectedBossWeek = wn;
-  S.saveBossWeek(wn);
-  updateBossWeekUI();
-  renderBoss(toDay());
-}
-
-function initBossWeekSelector() {
-  const saved = S.bossWeek();
-  selectedBossWeek = saved > 0 ? saved : getCurrentRealWeek();
-  updateBossWeekUI();
-
-  document.getElementById('bwn-prev').addEventListener('click', () => {
-    setBossWeek(getActiveBossWeek() - 1);
-  });
-  document.getElementById('bwn-next').addEventListener('click', () => {
-    setBossWeek(getActiveBossWeek() + 1);
-  });
-  document.getElementById('bwn-input').addEventListener('change', e => {
-    const v = parseInt(e.target.value);
-    if (!isNaN(v)) setBossWeek(v);
-  });
-  document.getElementById('bwn-input').addEventListener('input', e => {
-    const v = parseInt(e.target.value);
-    if (!isNaN(v) && v > 0) setBossWeek(v);
-  });
-  document.getElementById('bwn-today-btn').addEventListener('click', () => {
-    selectedBossWeek = getCurrentRealWeek();
-    S.saveBossWeek(selectedBossWeek);
-    updateBossWeekUI();
-    renderBoss(toDay());
-  });
+function getBossStorageKey(weekNum) {
+  const yr = new Date().getFullYear();
+  return `boss_w${weekNum}_${yr}`;
 }
 
 // ══════════════════════════════════════════════
@@ -868,6 +803,7 @@ function computeXP() {
     if (run === 30) xp += 1000;
     if (run === 100) xp += 5000;
   }
+  // Boss wins — clés peuvent être ancien format (wN_yr) ou nouveau (boss_wN_yr)
   Object.values(S.boss()).forEach(b => { if (b.declared === 'won' && b.reward) xp += b.reward; });
   Object.values(S.quests()).forEach(w => Object.values(w).forEach(q => { if (q && q.state === 'done' && q.reward) xp += q.reward; }));
   S.malus().forEach(m => { xp -= m.amount; });
@@ -923,10 +859,9 @@ function computeAttrPA() {
 // ══════════════════════════════════════════════
 function switchTab(name) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === name));
-  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t => { t.classList.remove('active'); t.style.display = ''; });
   const target = document.getElementById('tab-' + name);
-  if (target) target.classList.add('active');
-
+  if (target) { target.classList.add('active'); target.style.display = 'block'; }
   if (name === 'attr') renderAttr();
   if (name === 'skills') renderSkills();
   if (name === 'guide') renderGuide();
@@ -999,13 +934,12 @@ async function connect() {
 }
 async function refresh() {
   const btn = document.getElementById('refresh-btn');
-  btn.classList.add('spinning');
-  btn.disabled = true;
+  btn.classList.add('spinning'); btn.disabled = true;
   try {
     const pages = await fetchAll(curDbId);
     allData = parsePages(pages);
     renderToday();
-    renderBoss(toDay());
+    renderBossToday();
     renderQuests(toDay());
   } catch (e) { alert('Impossible : ' + e.message); }
   finally { btn.classList.remove('spinning'); btn.disabled = false; }
@@ -1020,13 +954,11 @@ function toggleTheme() {
 function showDash() {
   document.getElementById('loading').style.display = 'none';
   document.getElementById('dashboard').style.display = 'block';
-  // Init boss week selector first
-  initBossWeekSelector();
-  // Render all today elements synchronously — no timeout needed
   renderToday();
   renderRanksPanel();
-  renderBoss(toDay());
-  renderQuests(toDay());
+  renderBossToday();
+  // Quêtes : rendu explicite après un court délai pour iPad
+  setTimeout(() => { renderQuests(toDay()); }, 80);
 }
 
 // ══════════════════════════════════════════════
@@ -1130,114 +1062,144 @@ function renderRanksPanel() {
 }
 
 // ══════════════════════════════════════════════
-// BOSS — sélection manuelle par numéro de semaine
-// La clé de stockage reste basée sur le numéro de semaine choisi
-// Le boss affiché = bossList[wn - 1] (index direct, sans modulo rotation)
+// BOSS — Affichage Today : boss de la semaine courante
 // ══════════════════════════════════════════════
-function renderBoss(today) {
-  const yr = new Date().getFullYear();
-  const wn = getActiveBossWeek();
-  const key = `w${wn}_${yr}`;
-  const bossList = getBosses();
-  // Direct index: semaine 1 = boss index 0, semaine 2 = boss index 1, etc.
-  // Si wn dépasse le nombre de boss, on arrête (pas de répétition)
-  if (wn < 1 || wn > bossList.length) {
-    const bcard = document.getElementById('boss-card');
-    if (bcard) {
-      document.getElementById('boss-icon').textContent = '🔒';
-      document.getElementById('boss-wk').textContent = `Semaine ${wn}`;
-      document.getElementById('boss-nm').textContent = wn > bossList.length ? 'Aucun boss pour cette semaine' : 'Boss indisponible';
-      document.getElementById('boss-diff').textContent = '';
-      document.getElementById('boss-lore').textContent = wn > bossList.length ? `Il n'y a que ${bossList.length} boss configurés.` : '';
-      document.getElementById('boss-cl').innerHTML = '';
-      document.getElementById('boss-rew').textContent = '';
-      document.getElementById('boss-hp-pct').textContent = '—';
-      document.getElementById('boss-hp-fill').style.width = '0%';
-      document.getElementById('boss-result').innerHTML = '';
-    }
+function renderBossToday() {
+  const wn = getCurrentWeekNumber();
+  const boss = getBossForWeek(wn);
+  const container = document.getElementById('boss-today-container');
+  container.innerHTML = '';
+
+  if (!boss) {
+    // Aucun boss cette semaine
+    const info = document.createElement('div');
+    info.className = 'boss-today-info anim';
+    info.innerHTML = `<span style="font-size:1.3rem;">⚔️</span><div style="flex:1;"><div style="font-size:.8rem;font-weight:700;color:var(--muted);">Aucun boss cette semaine (sem. ${wn})</div><div style="font-size:.68rem;color:var(--muted);margin-top:2px;">Crée un boss avec la semaine ${wn} dans l'onglet Boss.</div></div>`;
+    container.appendChild(info);
     return;
   }
-  const boss = bossList[wn - 1];
-  if (!boss) return;
+
+  const key = getBossStorageKey(wn);
   const saved = S.boss();
-  if (!saved[key]) saved[key] = { checks: [], declared: null, reward: boss.r };
+  if (!saved[key]) { saved[key] = { checks: [], declared: null, reward: boss.r }; S.saveBoss(saved); }
   const bd = saved[key];
+
   const dc = { 'Normale': '#22c55e', 'Difficile': '#f97316', 'Extreme': '#ef4444', 'Legendaire': '#fbbf24' };
   const col = dc[boss.d] || '#8b5cf6';
-  document.getElementById('boss-icon').textContent = boss.i;
-  document.getElementById('boss-wk').textContent = `Boss n°${wn} sur ${bossList.length}`;
-  document.getElementById('boss-nm').textContent = boss.n;
-  document.getElementById('boss-diff').textContent = boss.d;
-  document.getElementById('boss-diff').style.cssText = `background:${col}20;color:${col};border:1px solid ${col}40;padding:2px 9px;border-radius:14px;font-size:.63rem;font-weight:700;`;
-  document.getElementById('boss-lore').textContent = boss.l;
-  const attr = ATTRIBUTES.find(a => a.id === boss.a);
-  document.getElementById('boss-rew').textContent = `🏆 +${boss.r} PD · ${attr ? attr.emoji + ' +PA ' + attr.name : ''}`;
 
-  const clEl = document.getElementById('boss-cl');
-  clEl.innerHTML = '';
+  const card = document.createElement('div');
+  card.className = 'boss-card anim';
+  card.id = 'boss-card-today';
+
+  // Header
+  const glow = document.createElement('div'); glow.className = 'boss-glow';
+  const header = document.createElement('div'); header.className = 'boss-header';
+  const ico = document.createElement('div'); ico.className = 'boss-ico'; ico.textContent = boss.i;
+  const meta = document.createElement('div'); meta.className = 'boss-meta';
+  const wkLabel = document.createElement('div'); wkLabel.className = 'boss-week'; wkLabel.textContent = `Semaine ${wn}`;
+  const nm = document.createElement('div'); nm.className = 'boss-name'; nm.textContent = boss.n;
+  const diffRow = document.createElement('div'); diffRow.style.cssText = 'margin-top:4px;display:flex;align-items:center;gap:6px;';
+  const diffBadge = document.createElement('span'); diffBadge.className = 'boss-diff';
+  diffBadge.textContent = boss.d;
+  diffBadge.style.cssText = `background:${col}20;color:${col};border:1px solid ${col}40;`;
+  const resetBtn = document.createElement('button');
+  resetBtn.className = 'qb rst'; resetBtn.style.cssText = 'font-size:.62rem;padding:2px 7px;';
+  resetBtn.textContent = '↺ Reset';
+  resetBtn.addEventListener('click', () => confirmReset('boss'));
+  diffRow.appendChild(diffBadge); diffRow.appendChild(resetBtn);
+  meta.appendChild(wkLabel); meta.appendChild(nm); meta.appendChild(diffRow);
+  header.appendChild(ico); header.appendChild(meta);
+
+  // Lore
+  const lore = document.createElement('div'); lore.className = 'boss-lore'; lore.textContent = boss.l;
+
+  // Checklist
+  const clWrap = document.createElement('div'); clWrap.className = 'boss-cl-wrap';
+  const clTitle = document.createElement('div'); clTitle.className = 'boss-cl-title'; clTitle.textContent = '⚔️ Checklist';
+  const clEl = document.createElement('div'); clEl.className = 'boss-cl';
   (boss.s || []).forEach((step, i) => {
     const checked = bd.checks.includes(i);
-    const div = document.createElement('div');
-    div.className = 'boss-ci' + (checked ? ' checked' : '');
-    const cb = document.createElement('input');
-    cb.type = 'checkbox';
-    cb.id = 'bc' + i;
-    cb.checked = checked;
+    const div = document.createElement('div'); div.className = 'boss-ci' + (checked ? ' checked' : '');
+    const cb = document.createElement('input'); cb.type = 'checkbox'; cb.id = 'bct' + i; cb.checked = checked;
     if (bd.declared) cb.disabled = true;
-    cb.addEventListener('change', () => toggleBossCheck(i, key));
-    const lbl = document.createElement('label');
-    lbl.htmlFor = 'bc' + i;
-    lbl.textContent = step;
-    div.appendChild(cb);
-    div.appendChild(lbl);
-    clEl.appendChild(div);
+    cb.addEventListener('change', () => toggleBossCheckToday(i, key));
+    const lbl = document.createElement('label'); lbl.htmlFor = 'bct' + i; lbl.textContent = step;
+    div.appendChild(cb); div.appendChild(lbl); clEl.appendChild(div);
   });
+  clWrap.appendChild(clTitle); clWrap.appendChild(clEl);
 
+  // Reward
+  const rew = document.createElement('div');
+  rew.style.cssText = 'margin-top:6px;font-size:.72rem;color:#fbbf24;font-weight:600;';
+  const attr = ATTRIBUTES.find(a => a.id === boss.a);
+  rew.textContent = `🏆 +${boss.r} PD · ${attr ? attr.emoji + ' +PA ' + attr.name : ''}`;
+
+  // HP bar
   const done = bd.checks.length, total = (boss.s || []).length;
   const hp = Math.max(0, 100 - Math.round(done / Math.max(total, 1) * 100));
-  document.getElementById('boss-hp-pct').textContent = hp + '%';
-  setTimeout(() => { document.getElementById('boss-hp-fill').style.width = hp + '%'; }, 200);
+  const hpSection = document.createElement('div'); hpSection.className = 'boss-hp-section';
+  const hpLbl = document.createElement('div'); hpLbl.className = 'boss-hp-lbl';
+  hpLbl.innerHTML = `<span>HP du Boss</span><span id="boss-hp-pct-today">${hp}%</span>`;
+  const hpTrack = document.createElement('div'); hpTrack.className = 'boss-hp-track';
+  const hpFill = document.createElement('div'); hpFill.className = 'boss-hp-fill'; hpFill.id = 'boss-hp-fill-today';
+  hpTrack.appendChild(hpFill); hpSection.appendChild(hpLbl); hpSection.appendChild(hpTrack);
 
-  const res = document.getElementById('boss-result');
-  res.innerHTML = '';
+  // Result
+  const res = document.createElement('div'); res.id = 'boss-result-today';
+
+  card.appendChild(glow);
+  card.appendChild(header);
+  card.appendChild(lore);
+  card.appendChild(clWrap);
+  card.appendChild(rew);
+  card.appendChild(hpSection);
+  card.appendChild(res);
+  container.appendChild(card);
+
+  // Animate HP
+  setTimeout(() => {
+    const f = document.getElementById('boss-hp-fill-today');
+    if (f) f.style.width = hp + '%';
+  }, 200);
+
+  renderBossTodayResult(bd, boss, hp, key, res);
+}
+
+function renderBossTodayResult(bd, boss, hp, key, resEl) {
+  resEl.innerHTML = '';
   if (bd.declared === 'won') {
-    res.innerHTML = `<div class="boss-won">⚔️ BOSS VAINCU — +${boss.r} PD !</div>`;
+    resEl.innerHTML = `<div class="boss-won">⚔️ BOSS VAINCU — +${boss.r} PD !</div>`;
   } else if (bd.declared === 'failed') {
-    res.innerHTML = `<div class="boss-failed">💀 Boss echoue cette semaine.</div>`;
+    resEl.innerHTML = `<div class="boss-failed">💀 Boss echoue cette semaine.</div>`;
   } else if (hp === 0) {
-    const btns = document.createElement('div');
-    btns.className = 'boss-btns';
-    const winBtn = document.createElement('button');
-    winBtn.className = 'boss-btn win';
-    winBtn.textContent = '✅ Boss vaincu';
-    winBtn.addEventListener('click', () => declareBoss('won', key, boss.r));
-    const loseBtn = document.createElement('button');
-    loseBtn.className = 'boss-btn lose';
-    loseBtn.textContent = '❌ Echoue';
-    loseBtn.addEventListener('click', () => declareBoss('failed', key));
-    btns.appendChild(winBtn);
-    btns.appendChild(loseBtn);
-    res.appendChild(btns);
+    const btns = document.createElement('div'); btns.className = 'boss-btns';
+    const winBtn = document.createElement('button'); winBtn.className = 'boss-btn win'; winBtn.textContent = '✅ Boss vaincu';
+    winBtn.addEventListener('click', () => declareBossToday('won', key, boss.r));
+    const loseBtn = document.createElement('button'); loseBtn.className = 'boss-btn lose'; loseBtn.textContent = '❌ Echoue';
+    loseBtn.addEventListener('click', () => declareBossToday('failed', key));
+    btns.appendChild(winBtn); btns.appendChild(loseBtn); resEl.appendChild(btns);
   } else {
-    res.innerHTML = `<div style="font-size:.67rem;color:#a78bfa;margin-top:5px;text-align:center;">${done}/${total} etapes — ${hp}% HP</div>`;
+    resEl.innerHTML = `<div style="font-size:.67rem;color:#a78bfa;margin-top:5px;text-align:center;">${bd.checks.length}/${(boss.s||[]).length} etapes — ${hp}% HP</div>`;
   }
 }
-function toggleBossCheck(idx, key) {
+
+function toggleBossCheckToday(idx, key) {
   const s = S.boss();
   if (!s[key]) s[key] = { checks: [], declared: null };
   const p = s[key].checks.indexOf(idx);
   if (p > -1) s[key].checks.splice(p, 1);
   else s[key].checks.push(idx);
   S.saveBoss(s);
-  renderBoss(toDay());
+  renderBossToday();
 }
-function declareBoss(result, key, reward) {
+
+function declareBossToday(result, key, reward) {
   const s = S.boss();
   if (!s[key]) s[key] = { checks: [], declared: null };
   s[key].declared = result;
   if (reward) s[key].reward = reward;
   S.saveBoss(s);
-  renderBoss(toDay());
+  renderBossToday();
   renderXP();
   if (result === 'failed') {
     const m = S.malus();
@@ -1247,7 +1209,7 @@ function declareBoss(result, key, reward) {
 }
 
 // ══════════════════════════════════════════════
-// QUESTS — FIX iPad : rendu synchrone direct
+// QUÊTES — Fix iPad : rendu synchrone + display forcé
 // ══════════════════════════════════════════════
 function getQKey(today) { const wn = getWN(today), yr = new Date().getFullYear(); return `qw${wn}_${yr}`; }
 function getQIdx(key) {
@@ -1270,15 +1232,23 @@ function getQIdx(key) {
   S.saveQuests(s);
   return idx;
 }
+
 function renderQuests(today) {
   const el = document.getElementById('quest-list');
   if (!el) return;
+
+  // Force display
+  const section = document.getElementById('quest-section');
+  if (section) { section.style.display = 'block'; section.style.visibility = 'visible'; }
+
   const key = getQKey(today), s = S.quests();
   if (!s[key]) s[key] = {};
   const idx = getQIdx(key);
   const questList = getQuests();
-  // Clear and use DocumentFragment for reliable iPad rendering
+
+  // Vider proprement
   while (el.firstChild) el.removeChild(el.firstChild);
+
   if (!idx.length) {
     const empty = document.createElement('div');
     empty.style.cssText = 'font-size:.78rem;color:var(--muted);text-align:center;padding:1.5rem;';
@@ -1286,18 +1256,20 @@ function renderQuests(today) {
     el.appendChild(empty);
     return;
   }
-  const frag = document.createDocumentFragment();
+
   idx.forEach((qIdx, slot) => {
     const q = questList[qIdx];
     if (!q) return;
     const qd = s[key][slot] || { state: 'pending' };
     const isDone = qd.state === 'done', isFail = qd.state === 'failed';
     const attr = ATTRIBUTES.find(a => a.id === q.a);
+
     const div = document.createElement('div');
     div.className = 'quest-item' + (isDone ? ' q-done' : isFail ? ' q-fail' : '');
+    div.style.display = 'block';
 
-    const hdr = document.createElement('div');
-    hdr.className = 'quest-hdr';
+    // Header
+    const hdr = document.createElement('div'); hdr.className = 'quest-hdr';
     const ico = document.createElement('div'); ico.className = 'quest-ico'; ico.textContent = q.i;
     const nm = document.createElement('div'); nm.className = 'quest-nm'; nm.textContent = q.n;
     const badge = document.createElement('div');
@@ -1308,37 +1280,34 @@ function renderQuests(today) {
     const desc = document.createElement('div'); desc.className = 'quest-desc'; desc.textContent = q.d;
 
     const attrDiv = document.createElement('div');
-    attrDiv.style.cssText = 'font-size:.6rem;color:var(--muted);margin-bottom:5px;';
+    attrDiv.style.cssText = 'font-size:.6rem;color:var(--muted);margin-bottom:5px;display:block;';
     if (attr) attrDiv.textContent = attr.emoji + ' +PA ' + attr.name;
 
     const ftr = document.createElement('div'); ftr.className = 'quest-ftr';
-    const rew = document.createElement('div');
-    rew.className = 'quest-rew';
-    rew.textContent = `🏆 +${q.r} PD${isDone ? ' ✅' : isFail ? ' ❌' : ''}`;
+    const rewEl = document.createElement('div');
+    rewEl.className = 'quest-rew';
+    rewEl.textContent = `🏆 +${q.r} PD${isDone ? ' ✅' : isFail ? ' ❌' : ''}`;
     const acts = document.createElement('div'); acts.className = 'quest-acts';
 
     if (!isDone && !isFail) {
-      const okBtn = document.createElement('button');
-      okBtn.className = 'qb ok'; okBtn.textContent = '✅';
+      const okBtn = document.createElement('button'); okBtn.className = 'qb ok'; okBtn.textContent = '✅';
       okBtn.addEventListener('click', () => valQ(key, slot, q.r));
-      const koBtn = document.createElement('button');
-      koBtn.className = 'qb ko'; koBtn.textContent = '❌';
+      const koBtn = document.createElement('button'); koBtn.className = 'qb ko'; koBtn.textContent = '❌';
       koBtn.addEventListener('click', () => failQ(key, slot));
       acts.appendChild(okBtn); acts.appendChild(koBtn);
     }
-    const rstBtn = document.createElement('button');
-    rstBtn.className = 'qb rst'; rstBtn.textContent = '↺';
+    const rstBtn = document.createElement('button'); rstBtn.className = 'qb rst'; rstBtn.textContent = '↺';
     rstBtn.addEventListener('click', () => resetQ(key, slot));
     acts.appendChild(rstBtn);
 
-    ftr.appendChild(rew); ftr.appendChild(acts);
+    ftr.appendChild(rewEl); ftr.appendChild(acts);
     div.appendChild(hdr); div.appendChild(desc);
     if (attr) div.appendChild(attrDiv);
     div.appendChild(ftr);
-    frag.appendChild(div);
+    el.appendChild(div);
   });
-  el.appendChild(frag);
 }
+
 function valQ(key, slot, r) { const s = S.quests(); if (!s[key]) s[key] = {}; s[key][slot] = { state: 'done', reward: r }; S.saveQuests(s); renderQuests(toDay()); renderXP(); }
 function failQ(key, slot) { const s = S.quests(); if (!s[key]) s[key] = {}; s[key][slot] = { state: 'failed' }; S.saveQuests(s); renderQuests(toDay()); }
 function resetQ(key, slot) { const s = S.quests(); if (!s[key]) s[key] = {}; delete s[key][slot]; S.saveQuests(s); renderQuests(toDay()); renderXP(); }
@@ -1458,52 +1427,60 @@ function cycleSkill(name) {
 }
 
 // ══════════════════════════════════════════════
-// BOSS CALENDAR
+// BOSS CALENDAR — onglet Boss
+// Affiche tous les boss avec leur semaine assignée
 // ══════════════════════════════════════════════
 function renderBossCalendar() {
   const yr = new Date().getFullYear();
-  const saved = S.boss(), bossList = getBosses();
+  const saved = S.boss();
+  const bossList = getBosses();
+  const currentWN = getCurrentWeekNumber();
   const container = document.getElementById('bosscal-content');
   container.innerHTML = '';
 
   const hdr = document.createElement('div');
   hdr.style.cssText = 'display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem;';
-  hdr.innerHTML = `<div><div style="font-size:1rem;font-weight:700;">👹 Calendrier des Boss</div><div style="font-size:.72rem;color:var(--muted);margin-top:2px;">${bossList.length} boss — sélectionne la semaine dans l'onglet Aujourd'hui</div></div>`;
+  hdr.innerHTML = `<div><div style="font-size:1rem;font-weight:700;">👹 Calendrier des Boss</div><div style="font-size:.72rem;color:var(--muted);margin-top:2px;">${bossList.length} boss — la semaine est fixée à la création</div></div>`;
   const addDiv = document.createElement('div');
   addDiv.className = 'edit-actions';
   const addBtn = document.createElement('button');
-  addBtn.className = 'btn-add';
-  addBtn.textContent = '➕ Boss';
+  addBtn.className = 'btn-add'; addBtn.textContent = '➕ Boss';
   addBtn.addEventListener('click', () => openEditModal('addboss'));
   addDiv.appendChild(addBtn);
   hdr.appendChild(addDiv);
   container.appendChild(hdr);
 
+  // Trier par semaine
+  const sorted = [...bossList].map((b, i) => ({ ...b, _origIdx: i })).sort((a, b) => Number(a.week || 0) - Number(b.week || 0));
+
   const list = document.createElement('div');
   list.style.cssText = 'display:flex;flex-direction:column;gap:8px;';
-  const activeBossWn = getActiveBossWeek();
 
-  bossList.forEach((boss, realIdx) => {
-    const wn = realIdx + 1; // Semaine = position + 1
-    const key = `w${wn}_${yr}`;
+  sorted.forEach(boss => {
+    const realIdx = boss._origIdx;
+    const wn = Number(boss.week) || 0;
+    const key = getBossStorageKey(wn);
     const bdata = saved[key];
-    const isSel = wn === activeBossWn;
+    const isCurrent = wn === currentWN;
+
     const dc = { 'Normale': '#22c55e', 'Difficile': '#f97316', 'Extreme': '#ef4444', 'Legendaire': '#fbbf24' };
     const col = dc[boss.d] || '#8b5cf6';
+
     let statusTxt = '', statusCol = 'var(--muted)';
     if (bdata && bdata.declared === 'won') { statusTxt = '✅ Vaincu'; statusCol = '#4ade80'; }
     else if (bdata && bdata.declared === 'failed') { statusTxt = '❌ Echoue'; statusCol = '#f87171'; }
-    else if (isSel) { statusTxt = '👁️ Affiché'; statusCol = '#a78bfa'; }
-    else { statusTxt = '–'; statusCol = 'var(--muted)'; }
+    else if (isCurrent) { statusTxt = '🗡️ En cours'; statusCol = '#a78bfa'; }
+    else if (wn < currentWN) { statusTxt = '⏳ Passé'; statusCol = 'var(--muted)'; }
+    else { statusTxt = '🔒 A venir'; statusCol = 'var(--muted)'; }
 
     const row = document.createElement('div');
-    row.style.cssText = `background:${isSel ? 'var(--surface3)' : 'var(--surface2)'};border:1px solid ${isSel ? col + '44' : 'var(--border)'};border-radius:12px;padding:.8rem;display:flex;align-items:center;gap:10px;cursor:pointer;transition:border-color .2s;`;
+    row.style.cssText = `background:${isCurrent ? 'var(--surface3)' : 'var(--surface2)'};border:1px solid ${isCurrent ? col + '44' : 'var(--border)'};border-radius:12px;padding:.8rem;display:flex;align-items:center;gap:10px;`;
     row.innerHTML = `
       <div style="font-size:1.4rem;flex-shrink:0;">${boss.i}</div>
       <div style="flex:1;">
         <div style="display:flex;align-items:center;gap:6px;margin-bottom:2px;">
-          <span style="font-size:.7rem;font-family:'DM Mono',monospace;color:var(--muted);width:52px;">N°${wn}</span>
-          <span style="font-size:.78rem;font-weight:700;${isSel ? 'color:' + col + ';' : ''}">${boss.n}</span>
+          <span style="font-size:.7rem;font-family:'DM Mono',monospace;color:${isCurrent ? col : 'var(--muted)'};width:58px;flex-shrink:0;">Sem. ${wn}</span>
+          <span style="font-size:.78rem;font-weight:700;${isCurrent ? 'color:' + col + ';' : ''}">${boss.n}</span>
         </div>
         <div style="display:flex;align-items:center;gap:6px;">
           <span style="font-size:.6rem;background:${col}22;color:${col};border:1px solid ${col}38;padding:1px 7px;border-radius:10px;font-weight:700;">${boss.d}</span>
@@ -1515,18 +1492,14 @@ function renderBossCalendar() {
         <button class="btn-edit-item boss-cal-edit">✏️</button>
         <button class="btn-del-item boss-cal-del">🗑</button>
       </div>`;
-
-    // Click on row selects this boss week
-    row.addEventListener('click', e => {
-      if (!e.target.closest('button')) {
-        setBossWeek(wn);
-        switchTab('today');
-      }
-    });
     row.querySelector('.boss-cal-edit').addEventListener('click', e => { e.stopPropagation(); openEditModal('editboss', realIdx); });
     row.querySelector('.boss-cal-del').addEventListener('click', e => { e.stopPropagation(); deleteBoss(realIdx); });
     list.appendChild(row);
   });
+
+  if (!bossList.length) {
+    list.innerHTML = `<div style="font-size:.78rem;color:var(--muted);text-align:center;padding:2rem;">Aucun boss. Crée-en un avec le bouton ➕</div>`;
+  }
   container.appendChild(list);
 }
 
@@ -1551,29 +1524,24 @@ function renderQuestList() {
   const hdr = document.createElement('div');
   hdr.style.cssText = 'display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem;';
   hdr.innerHTML = `<div style="font-size:.72rem;color:var(--muted);">${getQuests().length} quetes disponibles</div>`;
-  const addDiv = document.createElement('div');
-  addDiv.className = 'edit-actions';
-  const addBtn = document.createElement('button');
-  addBtn.className = 'btn-add'; addBtn.textContent = '➕ Quete';
+  const addDiv = document.createElement('div'); addDiv.className = 'edit-actions';
+  const addBtn = document.createElement('button'); addBtn.className = 'btn-add'; addBtn.textContent = '➕ Quete';
   addBtn.addEventListener('click', () => openEditModal('addquest'));
-  addDiv.appendChild(addBtn);
-  hdr.appendChild(addDiv);
+  addDiv.appendChild(addBtn); hdr.appendChild(addDiv);
   container.appendChild(hdr);
 
-  const attrOrder = ['physique', 'spiritualite', 'nutrition', 'social', 'discipline', 'mental', 'intelligence', 'execution'];
+  const attrOrder = ['physique','spiritualite','nutrition','social','discipline','mental','intelligence','execution'];
   for (const attrId of attrOrder) {
     const qs = groups[attrId] || [];
     if (!qs.length) continue;
-    const attr = attrMap[attrId];
-    if (!attr) continue;
+    const attr = attrMap[attrId]; if (!attr) continue;
     const section = document.createElement('div');
     section.style.cssText = 'background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1rem;margin-bottom:10px;';
     const secHdr = document.createElement('div');
     secHdr.style.cssText = 'display:flex;align-items:center;gap:8px;margin-bottom:.8rem;';
     secHdr.innerHTML = `<span style="font-size:1.2rem;">${attr.emoji}</span><span style="font-size:.82rem;font-weight:700;color:${attr.color};">${attr.name}</span><span style="font-size:.65rem;color:var(--muted);margin-left:auto;">${qs.length} quetes</span>`;
     section.appendChild(secHdr);
-    const qList = document.createElement('div');
-    qList.style.cssText = 'display:flex;flex-direction:column;gap:6px;';
+    const qList = document.createElement('div'); qList.style.cssText = 'display:flex;flex-direction:column;gap:6px;';
     for (const q of qs) {
       const col = diffColors[q.diff];
       const row = document.createElement('div');
@@ -1634,11 +1602,11 @@ function renderGuide() {
         <tr><td>99 → 100</td><td><span class="guide-chip pa-chip">7 408 PA</span></td><td>Maitrise absolue</td></tr>
       </table>
       <div style="margin-top:.8rem;padding:.65rem .8rem;background:var(--surface2);border-radius:8px;font-size:.7rem;color:var(--text2);">
-        📊 Tes PA totaux : <strong>${totalPA.toLocaleString()} PA</strong> sur ${ATTRIBUTES.reduce((a, b) => a + b.subs.length, 0)} sous-attributs
+        📊 Tes PA totaux : <strong>${totalPA.toLocaleString()} PA</strong>
       </div>
     </div>
-    <div class="guide-section"><h3>⚔️ Sélection des Boss</h3>
-      <p style="font-size:.75rem;color:var(--text2);line-height:1.65;">Le système de boss est maintenant <strong>100% manuel</strong>. Utilise le sélecteur de semaine sur l'onglet <strong>Aujourd'hui</strong> pour choisir quel boss tu veux affronter. Les boss sont numérotés de 1 à ${getBosses().length}. Ton choix est sauvegardé automatiquement.</p>
+    <div class="guide-section"><h3>⚔️ Système Boss</h3>
+      <p style="font-size:.75rem;color:var(--text2);line-height:1.65;">Chaque boss a une <strong>semaine fixe</strong> que tu choisis à la création. Le boss de la semaine en cours s'affiche automatiquement sur l'onglet Aujourd'hui. Si aucun boss n'est assigné à la semaine actuelle, un message te l'indique. Tu peux créer plusieurs boss pour la même semaine.</p>
     </div>`;
 }
 
@@ -1663,12 +1631,25 @@ function renderHistFilter() {
 function renderHistory() {
   renderHistFilter();
   const items = [];
+  // Boss history — compatibilité ancien et nouveau format de clé
   Object.entries(S.boss()).forEach(([key, b]) => {
-    const wn = parseInt(key.replace(/[^0-9]/g, ''));
-    const bossList = getBosses();
-    const bd = bossList[wn - 1]; // direct index
-    if (!bd) return;
-    items.push({ type: 'boss', icon: bd.i, name: bd.n, sub: `Boss n°${wn} · ${bd.d}`, state: b.declared || 'pending', date: `N°${wn}` });
+    // Essayer de trouver le boss par clé
+    // Nouveau format : boss_wN_yr
+    // Ancien format : wN_yr
+    let boss = null;
+    const newMatch = key.match(/^boss_w(\d+)_/);
+    const oldMatch = key.match(/^w(\d+)_/);
+    const wn = newMatch ? parseInt(newMatch[1]) : (oldMatch ? parseInt(oldMatch[1]) : null);
+    if (wn !== null) {
+      boss = getBossForWeek(wn);
+      if (!boss) {
+        // Fallback: chercher par index (ancien système)
+        const bossList = getBosses();
+        boss = bossList[wn - 1];
+      }
+    }
+    if (!boss) return;
+    items.push({ type: 'boss', icon: boss.i, name: boss.n, sub: `Sem. ${wn} · ${boss.d}`, state: b.declared || 'pending', date: `Sem. ${wn}` });
   });
   Object.entries(S.quests()).forEach(([key, week]) => {
     const wn = parseInt(key.replace(/[^0-9]/g, ''));
@@ -1865,7 +1846,7 @@ function toggleEditMode() {
 }
 
 // ══════════════════════════════════════════════
-// MODAL EDIT
+// MODAL EDIT — boss avec champ "semaine"
 // ══════════════════════════════════════════════
 function openEditModal(type, idxOrData) {
   editModalCtx = { type, idx: typeof idxOrData === 'number' ? idxOrData : null, data: typeof idxOrData === 'object' ? idxOrData : null };
@@ -1881,11 +1862,13 @@ function openEditModal(type, idxOrData) {
   const idx = editModalCtx.idx;
 
   if (type === 'addboss' || type === 'editboss') {
-    const d = type === 'editboss' ? getBosses()[idx] : { n: '', i: '👹', d: 'Difficile', l: '', r: 500, a: 'discipline', s: [] };
+    const defaultWeek = getCurrentWeekNumber();
+    const d = type === 'editboss' ? getBosses()[idx] : { n: '', i: '👹', d: 'Difficile', l: '', r: 500, a: 'discipline', s: [], week: defaultWeek };
     if (!d) { closeEditModal(); return; }
     body.innerHTML = `
       <div class="m-field"><label>Emoji</label><input id="mf-icon" value="${escAttr(d.i || '👹')}"></div>
       <div class="m-field"><label>Nom</label><input id="mf-name" value="${escAttr(d.n || '')}"></div>
+      <div class="m-field"><label>Semaine (numéro ISO, ex: 1, 12, 36…)</label><input id="mf-week" type="number" min="1" max="52" value="${d.week || defaultWeek}"></div>
       <div class="m-field"><label>Difficulte</label><select id="mf-diff">${['Normale', 'Difficile', 'Extreme', 'Legendaire'].map(x => `<option ${d.d === x ? 'selected' : ''}>${x}</option>`).join('')}</select></div>
       <div class="m-field"><label>Lore / Description</label><textarea id="mf-lore" rows="3">${escAttr(d.l || '')}</textarea></div>
       <div class="m-field"><label>Recompense PD</label><input id="mf-reward" type="number" value="${d.r || 500}"></div>
@@ -1942,13 +1925,18 @@ function saveEditModal() {
   const g = id => { const el = document.getElementById(id); return el ? el.value : ''; };
   if (type === 'addboss' || type === 'editboss') {
     const steps = g('mf-steps').split('\n').map(s => s.trim()).filter(Boolean);
-    const nb = { n: g('mf-name'), i: g('mf-icon') || '👹', d: g('mf-diff'), l: g('mf-lore'), r: parseInt(g('mf-reward')) || 500, a: g('mf-attr'), s: steps.length ? steps : ['Completer le defi'] };
+    const weekVal = parseInt(g('mf-week')) || getCurrentWeekNumber();
+    const nb = {
+      n: g('mf-name'), i: g('mf-icon') || '👹', d: g('mf-diff'), l: g('mf-lore'),
+      r: parseInt(g('mf-reward')) || 500, a: g('mf-attr'),
+      s: steps.length ? steps : ['Completer le defi'],
+      week: weekVal
+    };
     if (!nb.n) { alert('Nom requis'); return; }
     let list = JSON.parse(JSON.stringify(getBosses()));
     if (type === 'editboss' && idx !== null) list[idx] = nb; else list.push(nb);
     S.saveCustomBosses(list);
-    updateBossWeekUI();
-    closeEditModal(); renderBossCalendar(); renderBoss(toDay());
+    closeEditModal(); renderBossCalendar(); renderBossToday();
   } else if (type === 'addquest' || type === 'editquest') {
     const nq = { i: g('mf-icon') || '🎯', n: g('mf-name'), d: g('mf-desc'), diff: g('mf-diff'), r: parseInt(g('mf-reward')) || 150, a: g('mf-attr') };
     if (!nq.n) { alert('Nom requis'); return; }
@@ -1992,14 +1980,8 @@ function deleteBoss(idx) {
     const list = JSON.parse(JSON.stringify(getBosses()));
     list.splice(idx, 1);
     S.saveCustomBosses(list);
-    // Adjust selected week if needed
-    if (selectedBossWeek > list.length) {
-      selectedBossWeek = Math.max(1, list.length);
-      S.saveBossWeek(selectedBossWeek);
-    }
-    updateBossWeekUI();
     renderBossCalendar();
-    renderBoss(toDay());
+    renderBossToday();
   });
 }
 function deleteQuest(idx) { showConfirmDialog('Supprimer cette quete ?', '', () => { const list = JSON.parse(JSON.stringify(getQuests())); list.splice(idx, 1); S.saveCustomQuests(list); renderQuestList(); }); }
@@ -2031,7 +2013,7 @@ function executeConfirm() { const cb = _confirmCb; closeConfirm(); if (cb) cb();
 // ══════════════════════════════════════════════
 function showResetMenu() {
   const opts = [
-    { l: 'Reset boss actuel', f: () => confirmReset('boss') },
+    { l: 'Reset boss semaine actuelle', f: () => confirmReset('boss') },
     { l: 'Reset quetes semaine', f: () => confirmReset('quests') },
     { l: 'Reset boutique', f: () => confirmReset('transactions') },
     { l: 'Reset TOUT', f: () => confirmReset('all') }
@@ -2054,12 +2036,16 @@ function showResetMenu() {
   setTimeout(() => document.addEventListener('click', () => { menu.remove(); }, { once: true }), 100);
 }
 function confirmReset(type) {
-  const labels = { boss: 'boss actuel', quests: 'quetes de la semaine', attributes: 'attributs RPG', transactions: 'historique boutique', all: 'TOUT le systeme' };
+  const labels = { boss: 'boss semaine actuelle', quests: 'quetes de la semaine', attributes: 'attributs RPG', transactions: 'historique boutique', all: 'TOUT le systeme' };
   showConfirmDialog(`Reset ${labels[type] || type} ?`, 'Irreversible.', () => doReset(type));
 }
 function doReset(type) {
-  const t = toDay(), wn = getActiveBossWeek(), yr = new Date().getFullYear();
-  if (type === 'boss') { const b = S.boss(); delete b[`w${wn}_${yr}`]; S.saveBoss(b); renderBoss(t); }
+  const t = toDay(), yr = new Date().getFullYear();
+  if (type === 'boss') {
+    const wn = getCurrentWeekNumber();
+    const key = getBossStorageKey(wn);
+    const b = S.boss(); delete b[key]; S.saveBoss(b); renderBossToday();
+  }
   if (type === 'quests') { const q = S.quests(); const qwn = getWN(t); delete q[`qw${qwn}_${yr}`]; S.saveQuests(q); renderQuests(t); }
   if (type === 'transactions') { S.saveTx([]); renderShop(); }
   if (type === 'all') { ['ht_boss', 'ht_q4', 'ht_m4', 'ht_tx'].forEach(k => localStorage.removeItem(k)); }
@@ -2172,8 +2158,7 @@ function renderHeatmap() {
   while (true) {
     const id = d.getDay() === 0 ? 6 : d.getDay() - 1;
     if (id === 0) { col = document.createElement('div'); col.className = 'heatmap-col'; ce.appendChild(col); const m = d.getMonth(); if (d.getFullYear() === year && !mp[m]) mp[m] = wc; wc++; }
-    const cell = document.createElement('div');
-    cell.className = 'heatmap-cell';
+    const cell = document.createElement('div'); cell.className = 'heatmap-cell';
     const ds = d.toISOString().substring(0, 10);
     if (d.getFullYear() === year) {
       const dd = allData[ds] || {}, cnt = HABITS.filter(h => dd[h]).length;
@@ -2255,9 +2240,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('reset-menu-btn').addEventListener('click', e => { e.stopPropagation(); showResetMenu(); });
   document.getElementById('logout-btn').addEventListener('click', logout);
 
-  document.getElementById('boss-reset-btn').addEventListener('click', () => confirmReset('boss'));
   document.getElementById('reset-quests-btn').addEventListener('click', () => confirmReset('quests'));
-
   document.getElementById('add-quest-today-btn').addEventListener('click', () => openEditModal('addquest'));
   document.getElementById('add-skill-btn').addEventListener('click', () => openEditModal('addskill'));
   document.getElementById('add-bonus-btn').addEventListener('click', () => openEditModal('addbonus'));
