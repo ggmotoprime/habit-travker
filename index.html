@@ -2,7 +2,7 @@
 <html lang="fr" data-theme="dark">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Solo Leveling</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -326,6 +326,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
 .anim{animation:fadeUp .38s ease both;}
 @media(max-width:500px){.stats-grid{grid-template-columns:repeat(2,1fr);}.charts-row,.hero-row,.bw-row{grid-template-columns:1fr;}.shop-grid,.badges-grid,.attr-subs,.skills-grid{grid-template-columns:1fr;}}
+@media(max-width:768px){.hero-row{grid-template-columns:140px 1fr;}.tab-btn{font-size:.65rem;padding:.38rem .55rem;}}
 </style></head><body>
 <div id="tooltip"></div>
 <div class="overlay" id="confirm-overlay">
@@ -933,10 +934,14 @@ function toggleTheme() {
 function showDash() {
   document.getElementById('loading').style.display = 'none';
   document.getElementById('dashboard').style.display = 'block';
+  // Render in sequence - small delay ensures DOM is ready on all browsers/iPads
   renderToday();
-  renderBoss(toDay());
-  renderQuests(toDay());
   renderRanksPanel();
+  // Defer boss + quests slightly so ring chart doesn't block
+  setTimeout(() => {
+    renderBoss(toDay());
+    renderQuests(toDay());
+  }, 50);
 }
 
 // ══════════════════════════════════════════════
@@ -1141,14 +1146,18 @@ function declareBoss(result, key, reward) {
 function getQKey(today) { const wn = getWN(today), yr = new Date().getFullYear(); return `qw${wn}_${yr}`; }
 function getQIdx(key) {
   const s = S.quests();
-  if (s[key] && s[key]._i) return s[key]._i;
-  const wn = parseInt(key.replace(/[^0-9]/g, ''));
+  if (s[key] && Array.isArray(s[key]._i) && s[key]._i.length > 0) return s[key]._i;
+  const wn = parseInt(key.replace(/[^0-9]/g, '')) || 1;
   const questList = getQuests();
+  if (!questList.length) return [];
+  const count = Math.min(QPW, questList.length);
   const idx = [];
-  let i = (wn * 7 + 3) % questList.length;
-  while (idx.length < Math.min(QPW, questList.length)) {
+  let i = ((wn * 7 + 3) % questList.length + questList.length) % questList.length;
+  let safety = 0;
+  while (idx.length < count && safety < questList.length * 3) {
     if (!idx.includes(i)) idx.push(i);
     i = (i + 4) % questList.length;
+    safety++;
   }
   if (!s[key]) s[key] = {};
   s[key]._i = idx;
@@ -1156,12 +1165,17 @@ function getQIdx(key) {
   return idx;
 }
 function renderQuests(today) {
+  const el = document.getElementById('quest-list');
+  if (!el) return; // safety for iPad timing
   const key = getQKey(today), s = S.quests();
   if (!s[key]) s[key] = {};
   const idx = getQIdx(key);
   const questList = getQuests();
-  const el = document.getElementById('quest-list');
   el.innerHTML = '';
+  if (!idx.length) {
+    el.innerHTML = `<div style="font-size:.78rem;color:var(--muted);text-align:center;padding:1.5rem;">Aucune quete disponible</div>`;
+    return;
+  }
   idx.forEach((qIdx, slot) => {
     const q = questList[qIdx];
     if (!q) return;
@@ -1374,6 +1388,7 @@ function renderBossCalendar() {
     const row = document.createElement('div');
     row.style.cssText = `background:${isCur ? 'var(--surface3)' : 'var(--surface2)'};border:1px solid ${isCur ? col + '44' : 'var(--border)'};border-radius:12px;padding:.8rem;display:flex;align-items:center;gap:10px;`;
     row.draggable = true;
+    row.dataset.bossIdx = realIdx;
     row.innerHTML = `
       <div class="drag-handle">⠿</div>
       <div style="font-size:1.4rem;flex-shrink:0;">${boss.i}</div>
@@ -1401,6 +1416,7 @@ function renderBossCalendar() {
     row.addEventListener('dragleave', () => row.classList.remove('drag-over'));
     row.addEventListener('drop', e => { e.preventDefault(); row.classList.remove('drag-over'); bossRDrop(realIdx); });
     row.addEventListener('dragend', () => { row.classList.remove('dragging'); });
+    setupTouchDrag(row, realIdx);
     list.appendChild(row);
   }
   container.appendChild(list);
@@ -1413,6 +1429,49 @@ function bossRDrop(targetIdx) {
   S.saveCustomBosses(list);
   dragSrcIdx = null;
   renderBossCalendar();
+}
+
+// Touch drag-drop support (iPad/mobile)
+let _touchDragSrc = null, _touchDragEl = null, _touchClone = null;
+function setupTouchDrag(el, idx) {
+  el.addEventListener('touchstart', e => {
+    if (!editMode) return;
+    _touchDragSrc = idx;
+    _touchDragEl = el;
+    const touch = e.touches[0];
+    _touchClone = el.cloneNode(true);
+    _touchClone.style.cssText = `position:fixed;opacity:.7;pointer-events:none;z-index:999;width:${el.offsetWidth}px;left:${touch.clientX - el.offsetWidth/2}px;top:${touch.clientY - 30}px;border:2px dashed var(--accent);`;
+    document.body.appendChild(_touchClone);
+    el.style.opacity = '.3';
+    e.preventDefault();
+  }, { passive: false });
+  el.addEventListener('touchmove', e => {
+    if (!_touchClone) return;
+    const touch = e.touches[0];
+    _touchClone.style.left = (touch.clientX - _touchClone.offsetWidth/2) + 'px';
+    _touchClone.style.top = (touch.clientY - 30) + 'px';
+    e.preventDefault();
+  }, { passive: false });
+  el.addEventListener('touchend', e => {
+    if (!_touchClone) return;
+    const touch = e.changedTouches[0];
+    if (_touchClone) { _touchClone.remove(); _touchClone = null; }
+    if (_touchDragEl) _touchDragEl.style.opacity = '';
+    // Find target element under touch point
+    const els = document.querySelectorAll('#bosscal-content [data-boss-idx]');
+    let targetIdx = null;
+    els.forEach(row => {
+      const r = row.getBoundingClientRect();
+      if (touch.clientX >= r.left && touch.clientX <= r.right && touch.clientY >= r.top && touch.clientY <= r.bottom) {
+        targetIdx = parseInt(row.dataset.bossIdx);
+      }
+    });
+    if (targetIdx !== null && _touchDragSrc !== null && targetIdx !== _touchDragSrc) {
+      dragSrcIdx = _touchDragSrc;
+      bossRDrop(targetIdx);
+    }
+    _touchDragSrc = null; _touchDragEl = null;
+  }, { passive: false });
 }
 
 // ══════════════════════════════════════════════
@@ -1893,6 +1952,7 @@ function showConfirmDialog(title, desc, cb) {
   document.getElementById('confirm-overlay').classList.add('open');
 }
 function closeConfirm() { document.getElementById('confirm-overlay').classList.remove('open'); _confirmCb = null; }
+function executeConfirm() { const cb = _confirmCb; closeConfirm(); if (cb) cb(); }
 
 // ══════════════════════════════════════════════
 // RESET
@@ -2152,7 +2212,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('modal-save-btn').addEventListener('click', saveEditModal);
 
   // Confirm dialog
-  document.getElementById('confirm-yes').addEventListener('click', () => { closeConfirm(); if (_confirmCb) _confirmCb(); });
+  document.getElementById('confirm-yes').addEventListener('click', executeConfirm);
   document.getElementById('confirm-no').addEventListener('click', closeConfirm);
 
   // Close modals on overlay click
