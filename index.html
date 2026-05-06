@@ -32,7 +32,6 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 .tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:600;}
 .tab-content{display:none;padding:1rem 1rem 6rem;max-width:860px;margin:0 auto;}
 .tab-content.active{display:block;}
-/* EDIT MODE */
 .edit-bar{display:flex;align-items:center;justify-content:space-between;padding:.4rem 1rem;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:45px;z-index:49;}
 .edit-dot{width:7px;height:7px;border-radius:50%;background:var(--muted);transition:all .3s;}
 .edit-dot.on{background:#f97316;box-shadow:0 0 8px #f9731688;animation:pulse-dot 1.5s infinite;}
@@ -48,9 +47,6 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 .edit-mode .btn-edit-item,.edit-mode .btn-del-item{display:inline-flex;}
 .drag-handle{width:16px;cursor:grab;color:var(--muted);flex-shrink:0;display:none;font-size:.9rem;}
 .edit-mode .drag-handle{display:block;}
-.dragging{opacity:.35;border-style:dashed !important;}
-.drag-over{border-color:var(--accent) !important;background:rgba(74,222,128,.05) !important;}
-/* MODAL */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:700;align-items:center;justify-content:center;padding:1rem;}
 .modal-overlay.open{display:flex;}
 .modal-box{background:var(--surface);border:1px solid var(--border2);border-radius:18px;padding:1.5rem;max-width:460px;width:100%;max-height:90vh;overflow-y:auto;}
@@ -64,7 +60,6 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 .modal-acts{display:flex;gap:8px;margin-top:1rem;}
 .btn-save{flex:1;background:linear-gradient(135deg,#22c55e,#16a34a);color:#000;border:none;border-radius:10px;padding:.6rem;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:700;font-size:.82rem;}
 .btn-cancel-m{flex:1;background:var(--surface2);border:1px solid var(--border2);color:var(--text2);border-radius:10px;padding:.6rem;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.82rem;}
-/* SHARED */
 .top-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem;flex-wrap:wrap;gap:8px;padding-top:.6rem;}
 .top-right{display:flex;gap:5px;align-items:center;flex-wrap:wrap;}
 .icon-btn{background:var(--surface2);border:1px solid var(--border2);color:var(--text2);border-radius:9px;font-size:.73rem;padding:.36rem .65rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .18s;}
@@ -105,6 +100,16 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 .rank-row.cur{background:var(--surface3);}
 .rr-bar{height:3px;border-radius:2px;margin-top:4px;background:var(--surface3);overflow:hidden;}
 .rr-fill{height:100%;border-radius:2px;}
+/* BOSS WEEK SELECTOR */
+.boss-week-selector{display:flex;align-items:center;gap:8px;margin-bottom:10px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:.7rem 1rem;}
+.boss-week-selector label{font-size:.7rem;color:var(--muted);white-space:nowrap;}
+.boss-week-nav{display:flex;align-items:center;gap:6px;flex:1;}
+.bwn-btn{background:var(--surface2);border:1px solid var(--border2);color:var(--text2);border-radius:8px;font-size:.82rem;padding:.2rem .55rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;line-height:1;}
+.bwn-btn:hover{background:var(--surface3);color:var(--text);}
+.bwn-input{background:var(--surface2);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-family:'DM Mono',monospace;font-size:.82rem;font-weight:700;padding:.2rem .5rem;width:52px;text-align:center;outline:none;transition:border-color .2s;}
+.bwn-input:focus{border-color:var(--accent);}
+.bwn-max{font-size:.65rem;color:var(--muted);}
+/* BOSS CARD */
 .boss-card{background:linear-gradient(145deg,#09071a,#070d18,#0a0f16);border:1px solid rgba(139,92,246,.3);border-radius:18px;padding:1.3rem;margin-bottom:10px;position:relative;overflow:hidden;}
 [data-theme="light"] .boss-card{background:linear-gradient(145deg,#f5f0ff,#f0f4ff);border-color:rgba(109,40,217,.25);}
 .boss-glow{position:absolute;top:-80px;right:-80px;width:220px;height:220px;background:radial-gradient(circle,rgba(139,92,246,.12),transparent 70%);pointer-events:none;}
@@ -278,7 +283,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 .comp-delta{font-size:.68rem;margin-top:2px;}
 .comp-delta.up{color:#22c55e;}.comp-delta.down{color:#ef4444;}.comp-delta.flat{color:var(--muted);}
 .filter-row{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:9px;}
-.filter-btn{background:var(--surface2);border:1px solid var(--border2);color:var(--text2);border-radius:16px;font-size:.68rem;padding:.27rem .65rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;}
+.filter-btn{background:var(--surface2);border:1px solid var(--border2);color:var(--text2);border-radius:16px;font-size:.68rem;padding:.27rem .65rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15px;}
 .filter-btn.active{background:var(--accent);border-color:var(--accent);color:#000;font-weight:600;}
 .heatmap-wrap{overflow-x:auto;padding-bottom:4px;}
 .heatmap-header{display:flex;gap:3px;margin-bottom:3px;padding-left:22px;}
@@ -325,6 +330,8 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 #tooltip{position:fixed;background:var(--surface3);border:1px solid var(--border2);border-radius:10px;padding:7px 11px;font-size:.7rem;pointer-events:none;z-index:999;display:none;color:var(--text);white-space:nowrap;line-height:1.7;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
 .anim{animation:fadeUp .38s ease both;}
+/* FIX iPad : quest-list min-height pour forcer le rendu */
+#quest-list{min-height:10px;}
 @media(max-width:500px){.stats-grid{grid-template-columns:repeat(2,1fr);}.charts-row,.hero-row,.bw-row{grid-template-columns:1fr;}.shop-grid,.badges-grid,.attr-subs,.skills-grid{grid-template-columns:1fr;}}
 @media(max-width:768px){.hero-row{grid-template-columns:140px 1fr;}.tab-btn{font-size:.65rem;padding:.38rem .55rem;}}
 </style></head><body>
@@ -410,6 +417,17 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
       <div class="xp-meta"><span id="xp-cur"></span><span id="xp-nxt"></span></div>
       <div class="xp-breakdown" id="xp-breakdown"></div>
       <div class="ranks-panel" id="ranks-panel"></div>
+    </div>
+    <!-- BOSS WEEK SELECTOR -->
+    <div class="boss-week-selector anim">
+      <label>⚔️ Semaine boss :</label>
+      <div class="boss-week-nav">
+        <button class="bwn-btn" id="bwn-prev">◀</button>
+        <input class="bwn-input" type="number" id="bwn-input" min="1" value="1">
+        <button class="bwn-btn" id="bwn-next">▶</button>
+        <span class="bwn-max" id="bwn-max-label"></span>
+      </div>
+      <button class="icon-btn" id="bwn-today-btn" style="font-size:.65rem;white-space:nowrap;">Sem. actuelle</button>
     </div>
     <div class="boss-card anim" id="boss-card">
       <div class="boss-glow"></div>
@@ -718,6 +736,9 @@ const S = {
   saveCustomMaluses: v => localStorage.setItem('ht_cmal', JSON.stringify(v)),
   customSkillCats: () => JSON.parse(localStorage.getItem('ht_csk') || 'null'),
   saveCustomSkillCats: v => localStorage.setItem('ht_csk', JSON.stringify(v)),
+  // Persist selected boss week
+  bossWeek: () => parseInt(localStorage.getItem('ht_bw') || '0') || 0,
+  saveBossWeek: v => localStorage.setItem('ht_bw', String(v)),
 };
 
 function getBosses() { return S.customBosses() || BOSSES_DEFAULT; }
@@ -751,7 +772,9 @@ function paRemain(pa) {
 }
 const ST = 0.7, DS = 7, QPW = 5;
 let allData = {}, donutCh = null, ringCh = null, curFilter = 'Tout', curDbId = '', weekOff = 0, histFil = 'all', skillCatFilter = 'Tout';
-let editMode = false, editModalCtx = null, dragSrcIdx = null, _confirmCb = null;
+let editMode = false, editModalCtx = null, _confirmCb = null;
+// Selected boss week number (1-based, manual selection)
+let selectedBossWeek = 0; // 0 means use current week
 
 function toDay() { return new Date().toISOString().substring(0, 10); }
 function scoreDay(d) { const x = allData[d] || {}; return HABITS.filter(h => x[h]).length; }
@@ -769,6 +792,67 @@ function getWS(today, off = 0) {
 function getRank(xp) { return RANKS.find(r => xp >= r.min && xp < r.max) || RANKS[RANKS.length - 1]; }
 function getRankIdx(xp) { return RANKS.indexOf(getRank(xp)); }
 function escAttr(str) { return String(str).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#39;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+// ══════════════════════════════════════════════
+// BOSS WEEK SELECTOR — Manuel, sans rotation auto
+// ══════════════════════════════════════════════
+function getCurrentRealWeek() {
+  return getWN(toDay());
+}
+
+function getActiveBossWeek() {
+  // Returns the selected boss week number (1-based)
+  if (selectedBossWeek > 0) return selectedBossWeek;
+  return getCurrentRealWeek();
+}
+
+function updateBossWeekUI() {
+  const bossList = getBosses();
+  const total = bossList.length;
+  const wn = getActiveBossWeek();
+  const input = document.getElementById('bwn-input');
+  if (input) input.value = wn;
+  const maxLabel = document.getElementById('bwn-max-label');
+  if (maxLabel) maxLabel.textContent = `/ ${total} boss`;
+}
+
+function setBossWeek(wn) {
+  const bossList = getBosses();
+  const total = bossList.length;
+  if (total === 0) return;
+  wn = Math.max(1, Math.min(wn, total));
+  selectedBossWeek = wn;
+  S.saveBossWeek(wn);
+  updateBossWeekUI();
+  renderBoss(toDay());
+}
+
+function initBossWeekSelector() {
+  const saved = S.bossWeek();
+  selectedBossWeek = saved > 0 ? saved : getCurrentRealWeek();
+  updateBossWeekUI();
+
+  document.getElementById('bwn-prev').addEventListener('click', () => {
+    setBossWeek(getActiveBossWeek() - 1);
+  });
+  document.getElementById('bwn-next').addEventListener('click', () => {
+    setBossWeek(getActiveBossWeek() + 1);
+  });
+  document.getElementById('bwn-input').addEventListener('change', e => {
+    const v = parseInt(e.target.value);
+    if (!isNaN(v)) setBossWeek(v);
+  });
+  document.getElementById('bwn-input').addEventListener('input', e => {
+    const v = parseInt(e.target.value);
+    if (!isNaN(v) && v > 0) setBossWeek(v);
+  });
+  document.getElementById('bwn-today-btn').addEventListener('click', () => {
+    selectedBossWeek = getCurrentRealWeek();
+    S.saveBossWeek(selectedBossWeek);
+    updateBossWeekUI();
+    renderBoss(toDay());
+  });
+}
 
 // ══════════════════════════════════════════════
 // XP & PA
@@ -835,7 +919,7 @@ function computeAttrPA() {
 }
 
 // ══════════════════════════════════════════════
-// TABS — FIX PRINCIPAL
+// TABS
 // ══════════════════════════════════════════════
 function switchTab(name) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === name));
@@ -936,15 +1020,13 @@ function toggleTheme() {
 function showDash() {
   document.getElementById('loading').style.display = 'none';
   document.getElementById('dashboard').style.display = 'block';
+  // Init boss week selector first
+  initBossWeekSelector();
+  // Render all today elements synchronously — no timeout needed
   renderToday();
   renderRanksPanel();
-  // iPad Safari needs rAF + delay to ensure DOM paint is complete before populating lists
-  requestAnimationFrame(() => {
-    setTimeout(() => {
-      renderBoss(toDay());
-      renderQuests(toDay());
-    }, 100);
-  });
+  renderBoss(toDay());
+  renderQuests(toDay());
 }
 
 // ══════════════════════════════════════════════
@@ -1048,12 +1130,34 @@ function renderRanksPanel() {
 }
 
 // ══════════════════════════════════════════════
-// BOSS
+// BOSS — sélection manuelle par numéro de semaine
+// La clé de stockage reste basée sur le numéro de semaine choisi
+// Le boss affiché = bossList[wn - 1] (index direct, sans modulo rotation)
 // ══════════════════════════════════════════════
 function renderBoss(today) {
-  const wn = getWN(today), yr = new Date().getFullYear(), key = `w${wn}_${yr}`;
+  const yr = new Date().getFullYear();
+  const wn = getActiveBossWeek();
+  const key = `w${wn}_${yr}`;
   const bossList = getBosses();
-  const boss = bossList[(wn - 1) % bossList.length];
+  // Direct index: semaine 1 = boss index 0, semaine 2 = boss index 1, etc.
+  // Si wn dépasse le nombre de boss, on arrête (pas de répétition)
+  if (wn < 1 || wn > bossList.length) {
+    const bcard = document.getElementById('boss-card');
+    if (bcard) {
+      document.getElementById('boss-icon').textContent = '🔒';
+      document.getElementById('boss-wk').textContent = `Semaine ${wn}`;
+      document.getElementById('boss-nm').textContent = wn > bossList.length ? 'Aucun boss pour cette semaine' : 'Boss indisponible';
+      document.getElementById('boss-diff').textContent = '';
+      document.getElementById('boss-lore').textContent = wn > bossList.length ? `Il n'y a que ${bossList.length} boss configurés.` : '';
+      document.getElementById('boss-cl').innerHTML = '';
+      document.getElementById('boss-rew').textContent = '';
+      document.getElementById('boss-hp-pct').textContent = '—';
+      document.getElementById('boss-hp-fill').style.width = '0%';
+      document.getElementById('boss-result').innerHTML = '';
+    }
+    return;
+  }
+  const boss = bossList[wn - 1];
   if (!boss) return;
   const saved = S.boss();
   if (!saved[key]) saved[key] = { checks: [], declared: null, reward: boss.r };
@@ -1061,7 +1165,7 @@ function renderBoss(today) {
   const dc = { 'Normale': '#22c55e', 'Difficile': '#f97316', 'Extreme': '#ef4444', 'Legendaire': '#fbbf24' };
   const col = dc[boss.d] || '#8b5cf6';
   document.getElementById('boss-icon').textContent = boss.i;
-  document.getElementById('boss-wk').textContent = `Semaine ${wn} · Boss`;
+  document.getElementById('boss-wk').textContent = `Boss n°${wn} sur ${bossList.length}`;
   document.getElementById('boss-nm').textContent = boss.n;
   document.getElementById('boss-diff').textContent = boss.d;
   document.getElementById('boss-diff').style.cssText = `background:${col}20;color:${col};border:1px solid ${col}40;padding:2px 9px;border-radius:14px;font-size:.63rem;font-weight:700;`;
@@ -1069,7 +1173,6 @@ function renderBoss(today) {
   const attr = ATTRIBUTES.find(a => a.id === boss.a);
   document.getElementById('boss-rew').textContent = `🏆 +${boss.r} PD · ${attr ? attr.emoji + ' +PA ' + attr.name : ''}`;
 
-  // Checklist — utilisation de data-attributes pour éviter les bugs de quotes
   const clEl = document.getElementById('boss-cl');
   clEl.innerHTML = '';
   (boss.s || []).forEach((step, i) => {
@@ -1144,7 +1247,7 @@ function declareBoss(result, key, reward) {
 }
 
 // ══════════════════════════════════════════════
-// QUESTS
+// QUESTS — FIX iPad : rendu synchrone direct
 // ══════════════════════════════════════════════
 function getQKey(today) { const wn = getWN(today), yr = new Date().getFullYear(); return `qw${wn}_${yr}`; }
 function getQIdx(key) {
@@ -1169,16 +1272,21 @@ function getQIdx(key) {
 }
 function renderQuests(today) {
   const el = document.getElementById('quest-list');
-  if (!el) return; // safety for iPad timing
+  if (!el) return;
   const key = getQKey(today), s = S.quests();
   if (!s[key]) s[key] = {};
   const idx = getQIdx(key);
   const questList = getQuests();
-  el.innerHTML = '';
+  // Clear and use DocumentFragment for reliable iPad rendering
+  while (el.firstChild) el.removeChild(el.firstChild);
   if (!idx.length) {
-    el.innerHTML = `<div style="font-size:.78rem;color:var(--muted);text-align:center;padding:1.5rem;">Aucune quete disponible</div>`;
+    const empty = document.createElement('div');
+    empty.style.cssText = 'font-size:.78rem;color:var(--muted);text-align:center;padding:1.5rem;';
+    empty.textContent = 'Aucune quete disponible';
+    el.appendChild(empty);
     return;
   }
+  const frag = document.createDocumentFragment();
   idx.forEach((qIdx, slot) => {
     const q = questList[qIdx];
     if (!q) return;
@@ -1187,19 +1295,28 @@ function renderQuests(today) {
     const attr = ATTRIBUTES.find(a => a.id === q.a);
     const div = document.createElement('div');
     div.className = 'quest-item' + (isDone ? ' q-done' : isFail ? ' q-fail' : '');
-    div.innerHTML = `
-      <div class="quest-hdr">
-        <div class="quest-ico">${q.i}</div>
-        <div class="quest-nm">${q.n}</div>
-        <div class="quest-badge ${q.diff}">${q.diff === 'easy' ? 'Facile' : q.diff === 'medium' ? 'Moyen' : 'Difficile'}</div>
-      </div>
-      <div class="quest-desc">${q.d}</div>
-      ${attr ? `<div style="font-size:.6rem;color:var(--muted);margin-bottom:5px;">${attr.emoji} +PA ${attr.name}</div>` : ''}
-      <div class="quest-ftr">
-        <div class="quest-rew">🏆 +${q.r} PD${isDone ? ' ✅' : isFail ? ' ❌' : ''}</div>
-        <div class="quest-acts"></div>
-      </div>`;
-    const acts = div.querySelector('.quest-acts');
+
+    const hdr = document.createElement('div');
+    hdr.className = 'quest-hdr';
+    const ico = document.createElement('div'); ico.className = 'quest-ico'; ico.textContent = q.i;
+    const nm = document.createElement('div'); nm.className = 'quest-nm'; nm.textContent = q.n;
+    const badge = document.createElement('div');
+    badge.className = 'quest-badge ' + q.diff;
+    badge.textContent = q.diff === 'easy' ? 'Facile' : q.diff === 'medium' ? 'Moyen' : 'Difficile';
+    hdr.appendChild(ico); hdr.appendChild(nm); hdr.appendChild(badge);
+
+    const desc = document.createElement('div'); desc.className = 'quest-desc'; desc.textContent = q.d;
+
+    const attrDiv = document.createElement('div');
+    attrDiv.style.cssText = 'font-size:.6rem;color:var(--muted);margin-bottom:5px;';
+    if (attr) attrDiv.textContent = attr.emoji + ' +PA ' + attr.name;
+
+    const ftr = document.createElement('div'); ftr.className = 'quest-ftr';
+    const rew = document.createElement('div');
+    rew.className = 'quest-rew';
+    rew.textContent = `🏆 +${q.r} PD${isDone ? ' ✅' : isFail ? ' ❌' : ''}`;
+    const acts = document.createElement('div'); acts.className = 'quest-acts';
+
     if (!isDone && !isFail) {
       const okBtn = document.createElement('button');
       okBtn.className = 'qb ok'; okBtn.textContent = '✅';
@@ -1213,8 +1330,14 @@ function renderQuests(today) {
     rstBtn.className = 'qb rst'; rstBtn.textContent = '↺';
     rstBtn.addEventListener('click', () => resetQ(key, slot));
     acts.appendChild(rstBtn);
-    el.appendChild(div);
+
+    ftr.appendChild(rew); ftr.appendChild(acts);
+    div.appendChild(hdr); div.appendChild(desc);
+    if (attr) div.appendChild(attrDiv);
+    div.appendChild(ftr);
+    frag.appendChild(div);
   });
+  el.appendChild(frag);
 }
 function valQ(key, slot, r) { const s = S.quests(); if (!s[key]) s[key] = {}; s[key][slot] = { state: 'done', reward: r }; S.saveQuests(s); renderQuests(toDay()); renderXP(); }
 function failQ(key, slot) { const s = S.quests(); if (!s[key]) s[key] = {}; s[key][slot] = { state: 'failed' }; S.saveQuests(s); renderQuests(toDay()); }
@@ -1256,7 +1379,7 @@ function renderAttr() {
 }
 
 // ══════════════════════════════════════════════
-// SKILLS — FIX: utiliser DOM au lieu de onclick inline
+// SKILLS
 // ══════════════════════════════════════════════
 function renderSkills() {
   const ss = S.skills();
@@ -1303,7 +1426,6 @@ function filterSkills() {
     const stE = st === 2 ? '✅' : st === 1 ? '⏳' : '○';
     const stL = st === 2 ? 'Maitrise' : st === 1 ? 'En cours' : 'Non commence';
     const stC = st === 2 ? '#4ade80' : st === 1 ? '#eab308' : 'var(--muted)';
-    const catS = s.cat;
     const card = document.createElement('div');
     card.className = 'skill-card ' + cls;
     card.innerHTML = `
@@ -1312,7 +1434,7 @@ function filterSkills() {
         <div style="flex:1;min-width:0;">
           <div style="font-size:.75rem;font-weight:600;line-height:1.3;margin-bottom:3px;">${s.name}</div>
           <div style="display:flex;align-items:center;justify-content:space-between;">
-            <span style="font-size:.58rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;">${catS}</span>
+            <span style="font-size:.58rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;">${s.cat}</span>
             <span style="font-size:.65rem;font-weight:700;color:${stC};">${stE} ${stL}</span>
           </div>
           ${st > 0 ? `<div style="background:var(--surface3);border-radius:3px;height:3px;overflow:hidden;margin-top:5px;"><div style="height:100%;border-radius:3px;background:${st === 2 ? '#4ade80' : '#eab308'};width:${st === 2 ? 100 : 50}%;transition:width .8s;"></div></div>` : ''}
@@ -1323,14 +1445,8 @@ function filterSkills() {
         <button class="btn-del-item skill-del-btn">🗑</button>
       </div>`;
     card.querySelector('.skill-clickable').addEventListener('click', () => cycleSkill(s.name));
-    card.querySelector('.skill-edit-btn').addEventListener('click', e => {
-      e.stopPropagation();
-      openEditModal('editskill', { name: s.name, cat: s.cat });
-    });
-    card.querySelector('.skill-del-btn').addEventListener('click', e => {
-      e.stopPropagation();
-      deleteSkillByName(s.name, s.cat);
-    });
+    card.querySelector('.skill-edit-btn').addEventListener('click', e => { e.stopPropagation(); openEditModal('editskill', { name: s.name, cat: s.cat }); });
+    card.querySelector('.skill-del-btn').addEventListener('click', e => { e.stopPropagation(); deleteSkillByName(s.name, s.cat); });
     grid.appendChild(card);
   });
 }
@@ -1342,18 +1458,17 @@ function cycleSkill(name) {
 }
 
 // ══════════════════════════════════════════════
-// BOSS CALENDAR — FIX: DOM buttons au lieu de onclick inline
+// BOSS CALENDAR
 // ══════════════════════════════════════════════
 function renderBossCalendar() {
-  const today = toDay(), curWN = getWN(today), yr = new Date().getFullYear();
+  const yr = new Date().getFullYear();
   const saved = S.boss(), bossList = getBosses();
   const container = document.getElementById('bosscal-content');
   container.innerHTML = '';
 
-  // Header
   const hdr = document.createElement('div');
   hdr.style.cssText = 'display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem;';
-  hdr.innerHTML = `<div style="font-size:.72rem;color:var(--muted);">Semaine ${curWN} en cours · ${bossList.length} boss configures</div>`;
+  hdr.innerHTML = `<div><div style="font-size:1rem;font-weight:700;">👹 Calendrier des Boss</div><div style="font-size:.72rem;color:var(--muted);margin-top:2px;">${bossList.length} boss — sélectionne la semaine dans l'onglet Aujourd'hui</div></div>`;
   const addDiv = document.createElement('div');
   addDiv.className = 'edit-actions';
   const addBtn = document.createElement('button');
@@ -1366,41 +1481,32 @@ function renderBossCalendar() {
 
   const list = document.createElement('div');
   list.style.cssText = 'display:flex;flex-direction:column;gap:8px;';
+  const activeBossWn = getActiveBossWeek();
 
-  const totalWeeks = Math.max(52, bossList.length);
-  for (let wn = 1; wn <= totalWeeks; wn++) {
-    const boss = bossList[(wn - 1) % bossList.length];
-    if (!boss) continue;
+  bossList.forEach((boss, realIdx) => {
+    const wn = realIdx + 1; // Semaine = position + 1
     const key = `w${wn}_${yr}`;
     const bdata = saved[key];
-    const isCur = wn === curWN, isPast = wn < curWN;
+    const isSel = wn === activeBossWn;
     const dc = { 'Normale': '#22c55e', 'Difficile': '#f97316', 'Extreme': '#ef4444', 'Legendaire': '#fbbf24' };
     const col = dc[boss.d] || '#8b5cf6';
     let statusTxt = '', statusCol = 'var(--muted)';
     if (bdata && bdata.declared === 'won') { statusTxt = '✅ Vaincu'; statusCol = '#4ade80'; }
     else if (bdata && bdata.declared === 'failed') { statusTxt = '❌ Echoue'; statusCol = '#f87171'; }
-    else if (isCur) { statusTxt = '⚔️ En cours'; statusCol = '#a78bfa'; }
-    else if (isPast) { statusTxt = '⏭️ Passe'; statusCol = 'var(--muted)'; }
-    else { statusTxt = '🔒 A venir'; statusCol = 'var(--muted)'; }
-    const jan1 = new Date(yr, 0, 1), monDay = new Date(jan1);
-    monDay.setDate(jan1.getDate() + (wn - 1) * 7 - (jan1.getDay() === 0 ? 6 : jan1.getDay() - 1));
-    const sunDay = new Date(monDay); sunDay.setDate(monDay.getDate() + 6);
-    const fmt = d => d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
-    const realIdx = (wn - 1) % bossList.length;
+    else if (isSel) { statusTxt = '👁️ Affiché'; statusCol = '#a78bfa'; }
+    else { statusTxt = '–'; statusCol = 'var(--muted)'; }
 
     const row = document.createElement('div');
-    row.style.cssText = `background:${isCur ? 'var(--surface3)' : 'var(--surface2)'};border:1px solid ${isCur ? col + '44' : 'var(--border)'};border-radius:12px;padding:.8rem;display:flex;align-items:center;gap:10px;`;
-    row.dataset.bossIdx = realIdx;
+    row.style.cssText = `background:${isSel ? 'var(--surface3)' : 'var(--surface2)'};border:1px solid ${isSel ? col + '44' : 'var(--border)'};border-radius:12px;padding:.8rem;display:flex;align-items:center;gap:10px;cursor:pointer;transition:border-color .2s;`;
     row.innerHTML = `
       <div style="font-size:1.4rem;flex-shrink:0;">${boss.i}</div>
       <div style="flex:1;">
         <div style="display:flex;align-items:center;gap:6px;margin-bottom:2px;">
-          <span style="font-size:.7rem;font-family:'DM Mono',monospace;color:var(--muted);width:52px;">Sem. ${wn}</span>
-          <span style="font-size:.78rem;font-weight:700;${isCur ? 'color:' + col + ';' : ''}">${boss.n}</span>
+          <span style="font-size:.7rem;font-family:'DM Mono',monospace;color:var(--muted);width:52px;">N°${wn}</span>
+          <span style="font-size:.78rem;font-weight:700;${isSel ? 'color:' + col + ';' : ''}">${boss.n}</span>
         </div>
         <div style="display:flex;align-items:center;gap:6px;">
           <span style="font-size:.6rem;background:${col}22;color:${col};border:1px solid ${col}38;padding:1px 7px;border-radius:10px;font-weight:700;">${boss.d}</span>
-          <span style="font-size:.6rem;color:var(--muted);">${fmt(monDay)} → ${fmt(sunDay)}</span>
           <span style="font-size:.63rem;font-family:'DM Mono',monospace;color:#fbbf24;">+${boss.r} PD</span>
         </div>
       </div>
@@ -1410,18 +1516,22 @@ function renderBossCalendar() {
         <button class="btn-del-item boss-cal-del">🗑</button>
       </div>`;
 
-    row.querySelector('.boss-cal-edit').addEventListener('click', () => openEditModal('editboss', realIdx));
-    row.querySelector('.boss-cal-del').addEventListener('click', () => deleteBoss(realIdx));
+    // Click on row selects this boss week
+    row.addEventListener('click', e => {
+      if (!e.target.closest('button')) {
+        setBossWeek(wn);
+        switchTab('today');
+      }
+    });
+    row.querySelector('.boss-cal-edit').addEventListener('click', e => { e.stopPropagation(); openEditModal('editboss', realIdx); });
+    row.querySelector('.boss-cal-del').addEventListener('click', e => { e.stopPropagation(); deleteBoss(realIdx); });
     list.appendChild(row);
-  }
+  });
   container.appendChild(list);
 }
-function bossRDrop(targetIdx) {} // kept for compat, unused
-
-
 
 // ══════════════════════════════════════════════
-// QUEST LIST — FIX: DOM buttons
+// QUEST LIST
 // ══════════════════════════════════════════════
 function renderQuestList() {
   const diffColors = { easy: '#22c55e', medium: '#ca8a04', hard: '#ef4444' };
@@ -1526,6 +1636,9 @@ function renderGuide() {
       <div style="margin-top:.8rem;padding:.65rem .8rem;background:var(--surface2);border-radius:8px;font-size:.7rem;color:var(--text2);">
         📊 Tes PA totaux : <strong>${totalPA.toLocaleString()} PA</strong> sur ${ATTRIBUTES.reduce((a, b) => a + b.subs.length, 0)} sous-attributs
       </div>
+    </div>
+    <div class="guide-section"><h3>⚔️ Sélection des Boss</h3>
+      <p style="font-size:.75rem;color:var(--text2);line-height:1.65;">Le système de boss est maintenant <strong>100% manuel</strong>. Utilise le sélecteur de semaine sur l'onglet <strong>Aujourd'hui</strong> pour choisir quel boss tu veux affronter. Les boss sont numérotés de 1 à ${getBosses().length}. Ton choix est sauvegardé automatiquement.</p>
     </div>`;
 }
 
@@ -1552,9 +1665,10 @@ function renderHistory() {
   const items = [];
   Object.entries(S.boss()).forEach(([key, b]) => {
     const wn = parseInt(key.replace(/[^0-9]/g, ''));
-    const bd = getBosses()[(wn - 1) % getBosses().length];
+    const bossList = getBosses();
+    const bd = bossList[wn - 1]; // direct index
     if (!bd) return;
-    items.push({ type: 'boss', icon: bd.i, name: bd.n, sub: `Semaine ${wn} · ${bd.d}`, state: b.declared || 'pending', date: `Sem. ${wn}` });
+    items.push({ type: 'boss', icon: bd.i, name: bd.n, sub: `Boss n°${wn} · ${bd.d}`, state: b.declared || 'pending', date: `N°${wn}` });
   });
   Object.entries(S.quests()).forEach(([key, week]) => {
     const wn = parseInt(key.replace(/[^0-9]/g, ''));
@@ -1662,14 +1776,13 @@ function renderBadgesPage() {
 }
 
 // ══════════════════════════════════════════════
-// SHOP — FIX: DOM buttons
+// SHOP
 // ══════════════════════════════════════════════
 function renderShop() {
   const avail = computePD(), xp = computeXP(), ri = getRankIdx(xp);
   document.getElementById('pd-val').textContent = avail.toLocaleString() + ' PD';
   document.getElementById('pd-rank').textContent = `Rang : ${getRank(xp).e} ${getRank(xp).n}`;
 
-  // Bonuses
   const shopGrid = document.getElementById('shop-grid');
   shopGrid.innerHTML = '';
   getBonuses().forEach((b, i) => {
@@ -1694,7 +1807,6 @@ function renderShop() {
     shopGrid.appendChild(card);
   });
 
-  // Maluses
   const malusGrid = document.getElementById('malus-grid');
   malusGrid.innerHTML = '';
   getMaluses().forEach((m, i) => {
@@ -1715,7 +1827,6 @@ function renderShop() {
     malusGrid.appendChild(card);
   });
 
-  // TX log
   const txs = S.tx();
   const el = document.getElementById('tx-log');
   if (!txs.length) { el.innerHTML = `<div style="font-size:.76rem;color:var(--muted);text-align:center;padding:1rem;">Aucune transaction</div>`; return; }
@@ -1749,7 +1860,6 @@ function toggleEditMode() {
   document.getElementById('edit-toggle-btn').classList.toggle('active', editMode);
   document.getElementById('edit-mode-label').textContent = editMode ? '✏️ Mode edition actif' : 'Mode normal';
   document.getElementById('edit-mode-label').style.color = editMode ? '#f97316' : 'var(--muted)';
-  // Re-render active tab to show/hide edit buttons
   const activeTab = document.querySelector('.tab-btn.active');
   if (activeTab) switchTab(activeTab.dataset.tab);
 }
@@ -1773,10 +1883,6 @@ function openEditModal(type, idxOrData) {
   if (type === 'addboss' || type === 'editboss') {
     const d = type === 'editboss' ? getBosses()[idx] : { n: '', i: '👹', d: 'Difficile', l: '', r: 500, a: 'discipline', s: [] };
     if (!d) { closeEditModal(); return; }
-    const totalBosses = getBosses().length;
-    const posOptions = Array.from({length: totalBosses + (type === 'addboss' ? 1 : 0)}, (_, i) => i + 1)
-      .map(p => `<option value="${p}" ${type === 'editboss' && idx + 1 === p ? 'selected' : type === 'addboss' && p === totalBosses + 1 ? 'selected' : ''}>${p === 1 ? '1 (Semaine 1, 53, 105…)' : `${p} (Sem. ${p}, ${p+52}…)`}</option>`)
-      .join('');
     body.innerHTML = `
       <div class="m-field"><label>Emoji</label><input id="mf-icon" value="${escAttr(d.i || '👹')}"></div>
       <div class="m-field"><label>Nom</label><input id="mf-name" value="${escAttr(d.n || '')}"></div>
@@ -1784,7 +1890,6 @@ function openEditModal(type, idxOrData) {
       <div class="m-field"><label>Lore / Description</label><textarea id="mf-lore" rows="3">${escAttr(d.l || '')}</textarea></div>
       <div class="m-field"><label>Recompense PD</label><input id="mf-reward" type="number" value="${d.r || 500}"></div>
       <div class="m-field"><label>Attribut</label><select id="mf-attr">${['discipline', 'physique', 'nutrition', 'spiritualite', 'intelligence', 'mental', 'social', 'execution'].map(a => `<option value="${a}" ${d.a === a ? 'selected' : ''}>${a}</option>`).join('')}</select></div>
-      ${type === 'editboss' ? `<div class="m-field"><label>Position dans la rotation (semaine assignée)</label><select id="mf-pos">${posOptions}</select><div style="font-size:.62rem;color:var(--muted);margin-top:3px;">La position détermine quelle semaine ce boss apparaît en premier</div></div>` : ''}
       <div class="m-field"><label>Etapes checklist (une par ligne)</label><textarea id="mf-steps" rows="6">${(d.s || []).join('\n')}</textarea></div>`;
   } else if (type === 'addquest' || type === 'editquest') {
     const d = type === 'editquest' ? getQuests()[idx] : { i: '🎯', n: '', d: '', diff: 'medium', r: 150, a: 'execution' };
@@ -1840,18 +1945,10 @@ function saveEditModal() {
     const nb = { n: g('mf-name'), i: g('mf-icon') || '👹', d: g('mf-diff'), l: g('mf-lore'), r: parseInt(g('mf-reward')) || 500, a: g('mf-attr'), s: steps.length ? steps : ['Completer le defi'] };
     if (!nb.n) { alert('Nom requis'); return; }
     let list = JSON.parse(JSON.stringify(getBosses()));
-    if (type === 'editboss' && idx !== null) {
-      list[idx] = nb;
-      // Handle position change
-      const newPos = parseInt(g('mf-pos')) - 1; // 0-based
-      if (!isNaN(newPos) && newPos !== idx && newPos >= 0 && newPos < list.length) {
-        const [item] = list.splice(idx, 1);
-        list.splice(newPos, 0, item);
-      }
-    } else {
-      list.push(nb);
-    }
-    S.saveCustomBosses(list); closeEditModal(); renderBossCalendar(); renderBoss(toDay());
+    if (type === 'editboss' && idx !== null) list[idx] = nb; else list.push(nb);
+    S.saveCustomBosses(list);
+    updateBossWeekUI();
+    closeEditModal(); renderBossCalendar(); renderBoss(toDay());
   } else if (type === 'addquest' || type === 'editquest') {
     const nq = { i: g('mf-icon') || '🎯', n: g('mf-name'), d: g('mf-desc'), diff: g('mf-diff'), r: parseInt(g('mf-reward')) || 150, a: g('mf-attr') };
     if (!nq.n) { alert('Nom requis'); return; }
@@ -1890,7 +1987,21 @@ function saveEditModal() {
 // ══════════════════════════════════════════════
 // DELETE
 // ══════════════════════════════════════════════
-function deleteBoss(idx) { showConfirmDialog('Supprimer ce boss ?', 'Irreversible.', () => { const list = JSON.parse(JSON.stringify(getBosses())); list.splice(idx, 1); S.saveCustomBosses(list); renderBossCalendar(); renderBoss(toDay()); }); }
+function deleteBoss(idx) {
+  showConfirmDialog('Supprimer ce boss ?', 'Irreversible.', () => {
+    const list = JSON.parse(JSON.stringify(getBosses()));
+    list.splice(idx, 1);
+    S.saveCustomBosses(list);
+    // Adjust selected week if needed
+    if (selectedBossWeek > list.length) {
+      selectedBossWeek = Math.max(1, list.length);
+      S.saveBossWeek(selectedBossWeek);
+    }
+    updateBossWeekUI();
+    renderBossCalendar();
+    renderBoss(toDay());
+  });
+}
 function deleteQuest(idx) { showConfirmDialog('Supprimer cette quete ?', '', () => { const list = JSON.parse(JSON.stringify(getQuests())); list.splice(idx, 1); S.saveCustomQuests(list); renderQuestList(); }); }
 function deleteBonus(idx) { showConfirmDialog('Supprimer ce bonus ?', '', () => { const list = JSON.parse(JSON.stringify(getBonuses())); list.splice(idx, 1); S.saveCustomBonuses(list); renderShop(); }); }
 function deleteMalus(idx) { showConfirmDialog('Supprimer ce malus ?', '', () => { const list = JSON.parse(JSON.stringify(getMaluses())); list.splice(idx, 1); S.saveCustomMaluses(list); renderShop(); }); }
@@ -1920,7 +2031,7 @@ function executeConfirm() { const cb = _confirmCb; closeConfirm(); if (cb) cb();
 // ══════════════════════════════════════════════
 function showResetMenu() {
   const opts = [
-    { l: 'Reset boss semaine', f: () => confirmReset('boss') },
+    { l: 'Reset boss actuel', f: () => confirmReset('boss') },
     { l: 'Reset quetes semaine', f: () => confirmReset('quests') },
     { l: 'Reset boutique', f: () => confirmReset('transactions') },
     { l: 'Reset TOUT', f: () => confirmReset('all') }
@@ -1943,13 +2054,13 @@ function showResetMenu() {
   setTimeout(() => document.addEventListener('click', () => { menu.remove(); }, { once: true }), 100);
 }
 function confirmReset(type) {
-  const labels = { boss: 'boss de la semaine', quests: 'quetes de la semaine', attributes: 'attributs RPG', transactions: 'historique boutique', all: 'TOUT le systeme' };
+  const labels = { boss: 'boss actuel', quests: 'quetes de la semaine', attributes: 'attributs RPG', transactions: 'historique boutique', all: 'TOUT le systeme' };
   showConfirmDialog(`Reset ${labels[type] || type} ?`, 'Irreversible.', () => doReset(type));
 }
 function doReset(type) {
-  const t = toDay(), wn = getWN(t), yr = new Date().getFullYear();
+  const t = toDay(), wn = getActiveBossWeek(), yr = new Date().getFullYear();
   if (type === 'boss') { const b = S.boss(); delete b[`w${wn}_${yr}`]; S.saveBoss(b); renderBoss(t); }
-  if (type === 'quests') { const q = S.quests(); delete q[`qw${wn}_${yr}`]; S.saveQuests(q); renderQuests(t); }
+  if (type === 'quests') { const q = S.quests(); const qwn = getWN(t); delete q[`qw${qwn}_${yr}`]; S.saveQuests(q); renderQuests(t); }
   if (type === 'transactions') { S.saveTx([]); renderShop(); }
   if (type === 'all') { ['ht_boss', 'ht_q4', 'ht_m4', 'ht_tx'].forEach(k => localStorage.removeItem(k)); }
   renderXP(); renderToday();
@@ -2125,72 +2236,52 @@ function renderDonut() {
 }
 
 // ══════════════════════════════════════════════
-// EVENT LISTENERS — tout centralisé ici
+// EVENT LISTENERS
 // ══════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {
-  // Thème
   const t = localStorage.getItem('ht_theme');
   if (t) document.documentElement.setAttribute('data-theme', t);
 
-  // Config connect
   document.getElementById('connect-btn').addEventListener('click', connect);
   document.getElementById('db-input').addEventListener('keydown', e => { if (e.key === 'Enter') connect(); });
 
-  // Tabs — délégation sur la tab-bar
   document.querySelector('.tab-bar').addEventListener('click', e => {
     const btn = e.target.closest('.tab-btn');
     if (btn && btn.dataset.tab) switchTab(btn.dataset.tab);
   });
 
-  // Top bar
   document.getElementById('refresh-btn').addEventListener('click', refresh);
   document.getElementById('theme-btn').addEventListener('click', toggleTheme);
   document.getElementById('reset-menu-btn').addEventListener('click', e => { e.stopPropagation(); showResetMenu(); });
   document.getElementById('logout-btn').addEventListener('click', logout);
 
-  // Boss reset
   document.getElementById('boss-reset-btn').addEventListener('click', () => confirmReset('boss'));
   document.getElementById('reset-quests-btn').addEventListener('click', () => confirmReset('quests'));
 
-  // Add buttons (always-visible in edit mode)
   document.getElementById('add-quest-today-btn').addEventListener('click', () => openEditModal('addquest'));
   document.getElementById('add-skill-btn').addEventListener('click', () => openEditModal('addskill'));
   document.getElementById('add-bonus-btn').addEventListener('click', () => openEditModal('addbonus'));
   document.getElementById('add-malus-btn').addEventListener('click', () => openEditModal('addmalus'));
 
-  // Attr reset
   document.getElementById('reset-attr-btn').addEventListener('click', () => confirmReset('attributes'));
-
-  // Ranks toggle
   document.getElementById('ranks-btn').addEventListener('click', toggleRanks);
-
-  // Edit mode toggle
   document.getElementById('edit-toggle-btn').addEventListener('click', toggleEditMode);
 
-  // Modal buttons
   document.getElementById('modal-close-btn').addEventListener('click', closeEditModal);
   document.getElementById('modal-cancel-btn').addEventListener('click', closeEditModal);
   document.getElementById('modal-save-btn').addEventListener('click', saveEditModal);
 
-  // Confirm dialog
   document.getElementById('confirm-yes').addEventListener('click', executeConfirm);
   document.getElementById('confirm-no').addEventListener('click', closeConfirm);
 
-  // Close modals on overlay click
   document.getElementById('edit-modal').addEventListener('click', e => { if (e.target === document.getElementById('edit-modal')) closeEditModal(); });
   document.getElementById('confirm-overlay').addEventListener('click', e => { if (e.target === document.getElementById('confirm-overlay')) closeConfirm(); });
 
-  // Week nav
   document.getElementById('week-prev').addEventListener('click', () => { weekOff--; renderWeekScores(toDay()); });
   document.getElementById('week-next').addEventListener('click', () => { weekOff++; renderWeekScores(toDay()); });
 
-  // Year sel
   document.getElementById('year-sel').addEventListener('change', renderHeatmap);
-
-  // Skills search
   document.getElementById('skills-search').addEventListener('input', filterSkills);
-
-  // Shop
   document.getElementById('clear-tx-btn').addEventListener('click', () => confirmReset('transactions'));
 
   // Auto-connect
