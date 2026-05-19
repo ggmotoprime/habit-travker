@@ -32,6 +32,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 .tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:600;}
 .tab-content{display:none;padding:1rem 1rem 6rem;max-width:860px;margin:0 auto;}
 .tab-content.active{display:block;}
+/* EDIT MODE */
 .edit-bar{display:flex;align-items:center;justify-content:space-between;padding:.4rem 1rem;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:45px;z-index:49;}
 .edit-dot{width:7px;height:7px;border-radius:50%;background:var(--muted);transition:all .3s;}
 .edit-dot.on{background:#f97316;box-shadow:0 0 8px #f9731688;animation:pulse-dot 1.5s infinite;}
@@ -47,6 +48,9 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 .edit-mode .btn-edit-item,.edit-mode .btn-del-item{display:inline-flex;}
 .drag-handle{width:16px;cursor:grab;color:var(--muted);flex-shrink:0;display:none;font-size:.9rem;}
 .edit-mode .drag-handle{display:block;}
+.dragging{opacity:.35;border-style:dashed !important;}
+.drag-over{border-color:var(--accent) !important;background:rgba(74,222,128,.05) !important;}
+/* MODAL */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:700;align-items:center;justify-content:center;padding:1rem;}
 .modal-overlay.open{display:flex;}
 .modal-box{background:var(--surface);border:1px solid var(--border2);border-radius:18px;padding:1.5rem;max-width:460px;width:100%;max-height:90vh;overflow-y:auto;}
@@ -60,6 +64,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 .modal-acts{display:flex;gap:8px;margin-top:1rem;}
 .btn-save{flex:1;background:linear-gradient(135deg,#22c55e,#16a34a);color:#000;border:none;border-radius:10px;padding:.6rem;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:700;font-size:.82rem;}
 .btn-cancel-m{flex:1;background:var(--surface2);border:1px solid var(--border2);color:var(--text2);border-radius:10px;padding:.6rem;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.82rem;}
+/* SHARED */
 .top-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem;flex-wrap:wrap;gap:8px;padding-top:.6rem;}
 .top-right{display:flex;gap:5px;align-items:center;flex-wrap:wrap;}
 .icon-btn{background:var(--surface2);border:1px solid var(--border2);color:var(--text2);border-radius:9px;font-size:.73rem;padding:.36rem .65rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .18s;}
@@ -100,14 +105,6 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 .rank-row.cur{background:var(--surface3);}
 .rr-bar{height:3px;border-radius:2px;margin-top:4px;background:var(--surface3);overflow:hidden;}
 .rr-fill{height:100%;border-radius:2px;}
-.boss-week-selector{display:flex;align-items:center;gap:8px;margin-bottom:10px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:.7rem 1rem;}
-.boss-week-selector label{font-size:.7rem;color:var(--muted);white-space:nowrap;}
-.boss-week-nav{display:flex;align-items:center;gap:6px;flex:1;}
-.bwn-btn{background:var(--surface2);border:1px solid var(--border2);color:var(--text2);border-radius:8px;font-size:.82rem;padding:.2rem .55rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;line-height:1;}
-.bwn-btn:hover{background:var(--surface3);color:var(--text);}
-.bwn-input{background:var(--surface2);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-family:'DM Mono',monospace;font-size:.82rem;font-weight:700;padding:.2rem .5rem;width:52px;text-align:center;outline:none;transition:border-color .2s;}
-.bwn-input:focus{border-color:var(--accent);}
-.bwn-max{font-size:.65rem;color:var(--muted);}
 .boss-card{background:linear-gradient(145deg,#09071a,#070d18,#0a0f16);border:1px solid rgba(139,92,246,.3);border-radius:18px;padding:1.3rem;margin-bottom:10px;position:relative;overflow:hidden;}
 [data-theme="light"] .boss-card{background:linear-gradient(145deg,#f5f0ff,#f0f4ff);border-color:rgba(109,40,217,.25);}
 .boss-glow{position:absolute;top:-80px;right:-80px;width:220px;height:220px;background:radial-gradient(circle,rgba(139,92,246,.12),transparent 70%);pointer-events:none;}
@@ -281,7 +278,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 .comp-delta{font-size:.68rem;margin-top:2px;}
 .comp-delta.up{color:#22c55e;}.comp-delta.down{color:#ef4444;}.comp-delta.flat{color:var(--muted);}
 .filter-row{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:9px;}
-.filter-btn{background:var(--surface2);border:1px solid var(--border2);color:var(--text2);border-radius:16px;font-size:.68rem;padding:.27rem .65rem;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.filter-btn{background:var(--surface2);border:1px solid var(--border2);color:var(--text2);border-radius:16px;font-size:.68rem;padding:.27rem .65rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;}
 .filter-btn.active{background:var(--accent);border-color:var(--accent);color:#000;font-weight:600;}
 .heatmap-wrap{overflow-x:auto;padding-bottom:4px;}
 .heatmap-header{display:flex;gap:3px;margin-bottom:3px;padding-left:22px;}
@@ -328,9 +325,6 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 #tooltip{position:fixed;background:var(--surface3);border:1px solid var(--border2);border-radius:10px;padding:7px 11px;font-size:.7rem;pointer-events:none;z-index:999;display:none;color:var(--text);white-space:nowrap;line-height:1.7;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
 .anim{animation:fadeUp .38s ease both;}
-#quest-list{min-height:10px;}
-/* Info box for token input */
-.info-box{background:rgba(96,165,250,.07);border:1px solid rgba(96,165,250,.2);border-radius:10px;padding:.65rem .9rem;font-size:.73rem;color:#93c5fd;margin-bottom:1rem;line-height:1.6;text-align:left;}
 @media(max-width:500px){.stats-grid{grid-template-columns:repeat(2,1fr);}.charts-row,.hero-row,.bw-row{grid-template-columns:1fr;}.shop-grid,.badges-grid,.attr-subs,.skills-grid{grid-template-columns:1fr;}}
 @media(max-width:768px){.hero-row{grid-template-columns:140px 1fr;}.tab-btn{font-size:.65rem;padding:.38rem .55rem;}}
 </style></head><body>
@@ -358,12 +352,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 <div id="config-panel">
   <div class="config-logo">⚡</div>
   <h1>Solo Leveling</h1>
-  <p class="sub">Connecte ta base Notion pour tracker tes habitudes.</p>
-  <div class="info-box">
-    💡 Tu as besoin de ton <strong>Token d'intégration Notion</strong> (commence par <code>secret_</code>) et de l'<strong>ID de ta base de données</strong>.<br><br>
-    Obtiens le token sur <strong>notion.so/my-integrations</strong>, puis partage ta DB avec l'intégration.
-  </div>
-  <div class="field"><label>Token d'intégration Notion</label><input type="password" id="token-input" placeholder="secret_xxxxxxxxxxxx"></div>
+  <p class="sub">Connecte ton Database ID Notion pour tracker tes habitudes.</p>
   <div class="field"><label>Database ID Notion</label><input type="text" id="db-input" placeholder="34d0614c879780b38b64dc3312a5f63c"></div>
   <button class="btn-primary" id="connect-btn">Connecter →</button>
   <div id="error-msg"></div>
@@ -422,16 +411,6 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
       <div class="xp-breakdown" id="xp-breakdown"></div>
       <div class="ranks-panel" id="ranks-panel"></div>
     </div>
-    <div class="boss-week-selector anim">
-      <label>⚔️ Semaine boss :</label>
-      <div class="boss-week-nav">
-        <button class="bwn-btn" id="bwn-prev">◀</button>
-        <input class="bwn-input" type="number" id="bwn-input" min="1" value="1">
-        <button class="bwn-btn" id="bwn-next">▶</button>
-        <span class="bwn-max" id="bwn-max-label"></span>
-      </div>
-      <button class="icon-btn" id="bwn-today-btn" style="font-size:.65rem;white-space:nowrap;">Sem. actuelle</button>
-    </div>
     <div class="boss-card anim" id="boss-card">
       <div class="boss-glow"></div>
       <div class="boss-header">
@@ -487,11 +466,15 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
     </div>
   </div>
   <div class="tab-content" id="tab-guide"><div style="padding-top:.8rem;" id="guide-content"></div></div>
-  <div class="tab-content" id="tab-bosscal"><div style="padding-top:.8rem;" id="bosscal-content"></div></div>
-  <div class="tab-content" id="tab-questlist"><div style="padding-top:.8rem;" id="questlist-content"></div></div>
+  <div class="tab-content" id="tab-bosscal">
+    <div style="padding-top:.8rem;" id="bosscal-content"></div>
+  </div>
+  <div class="tab-content" id="tab-questlist">
+    <div style="padding-top:.8rem;" id="questlist-content"></div>
+  </div>
   <div class="tab-content" id="tab-history">
     <div style="padding-top:.8rem;">
-      <div style="font-size:1rem;font-weight:700;margin-bottom:.8rem;">📋 Historique Boss & Quêtes</div>
+      <div style="font-size:1rem;font-weight:700;margin-bottom:.8rem;">📋 Historique Boss &amp; Quêtes</div>
       <div class="hist-filter" id="hist-filter"></div>
       <div id="hist-list"></div>
     </div>
@@ -622,21 +605,21 @@ const ATTRIBUTES = [
 ];
 
 const BOSSES_DEFAULT = [
-  {n:'L Ascete du Silence',i:'🔕',d:'Difficile',c:'#8b5cf6',l:'Aucune musique, YouTube, podcast. 7 jours.',s:['Aucune musique lundi','Aucune musique mardi','Aucune musique mercredi','Aucune musique jeudi','Aucune musique vendredi','Aucune video semaine','Aucun podcast semaine'],r:600,a:'mental'},
-  {n:'Le Reveil du Guerrier',i:'🌅',d:'Extreme',c:'#f97316',l:'5h du matin, 7 jours.',s:['5h00 lundi','5h00 mardi','5h00 mercredi','5h00 jeudi','5h00 vendredi','5h00 samedi','5h00 dimanche'],r:800,a:'discipline'},
-  {n:'Le Marcheur de l Infini',i:'🦶',d:'Extreme',c:'#22c55e',l:'200 000 pas en 7 jours.',s:['28k pas lundi','28k pas mardi','28k pas mercredi','28k pas jeudi','28k pas vendredi','28k pas samedi','28k pas dimanche'],r:950,a:'physique'},
-  {n:'Le Bain de Glace',i:'🧊',d:'Difficile',c:'#06b6d4',l:'Douche froide chaque matin. 7 jours.',s:['Douche froide lundi','Douche froide mardi','Douche froide mercredi','Douche froide jeudi','Douche froide vendredi','Douche froide samedi','Douche froide dimanche'],r:500,a:'mental'},
-  {n:'Le Conquerant des Echecs',i:'♟️',d:'Legendaire',c:'#fbbf24',l:'+100 Elo en une semaine.',s:['Analyser 1 partie/jour','5 parties min/jour','Gagner 3 consecutives','+100 Elo net'],r:1000,a:'intelligence'},
-  {n:'L Ermite Numerique',i:'📵',d:'Legendaire',c:'#ef4444',l:'Telephone eteint a 20h. 7 jours.',s:['Eteint 20h lundi','Eteint 20h mardi','Eteint 20h mercredi','Eteint 20h jeudi','Eteint 20h vendredi','Eteint 20h samedi','Eteint 20h dimanche'],r:700,a:'discipline'},
-  {n:'Le Double Effort',i:'💥',d:'Extreme',c:'#f43f5e',l:'2 seances de sport par jour, 7 jours.',s:['2 seances lundi','2 seances mardi','2 seances mercredi','2 seances jeudi','2 seances vendredi','2 seances samedi','2 seances dimanche'],r:900,a:'physique'},
-  {n:'La Recitation Totale',i:'📖',d:'Legendaire',c:'#a78bfa',l:'3 nouvelles sourates memorisees.',s:['Memoriser sourate 1 j1-2','Reciter sourate 1 sans regarder','Memoriser sourate 2 j3-4','Reciter sourate 2 sans regarder','Memoriser sourate 3 j5-6','Reciter les 3 dimanche'],r:1000,a:'spiritualite'},
-  {n:'Le Centurion',i:'💪',d:'Extreme',c:'#3b82f6',l:'100 pompes d affilee dimanche.',s:['Max pompes lundi','Battre record mercredi','S approcher 100 vendredi','100 pompes dimanche'],r:750,a:'physique'},
-  {n:'Le Journal du Sage',i:'✍️',d:'Normale',c:'#14b8a6',l:'1 page de journal chaque soir.',s:['Page lundi','Page mardi','Page mercredi','Page jeudi','Page vendredi','Page samedi','Page dimanche'],r:400,a:'intelligence'},
-  {n:'L Abstinent Total',i:'🚫',d:'Difficile',c:'#f97316',l:'Zero nourriture transformee. 7 jours.',s:['Zero junk lundi','Zero junk mardi','Zero junk mercredi','Zero junk jeudi','Zero junk vendredi','Zero junk samedi','Zero junk dimanche'],r:600,a:'nutrition'},
-  {n:'L Invisible Social',i:'🗣️',d:'Difficile',c:'#ec4899',l:'1 inconnu par jour. 7 jours.',s:['Inconnu lundi','Inconnu mardi','Inconnu mercredi','Inconnu jeudi','Inconnu vendredi','Inconnu samedi','Inconnu dimanche'],r:650,a:'social'},
-  {n:'Le Moine du Lever',i:'🌙',d:'Extreme',c:'#8b5cf6',l:'Fajr + 20min dhikr avant tout ecran. 7j.',s:['Fajr+dhikr lundi','Fajr+dhikr mardi','Fajr+dhikr mercredi','Fajr+dhikr jeudi','Fajr+dhikr vendredi','Fajr+dhikr samedi','Fajr+dhikr dimanche'],r:800,a:'spiritualite'},
-  {n:'Le Polyglotte',i:'🌍',d:'Difficile',c:'#eab308',l:'100 mots arabes/jour + test final.',s:['100 mots lundi','100 mots mardi','100 mots mercredi','100 mots jeudi','100 mots vendredi','100 mots samedi','Test 80% dimanche'],r:700,a:'intelligence'},
-  {n:'La Diete Mentale',i:'🧘',d:'Difficile',c:'#06b6d4',l:'10min meditation + 30min sans telephone. 7j.',s:['Meditation lundi','Meditation mardi','Meditation mercredi','Meditation jeudi','Meditation vendredi','Meditation samedi','Meditation dimanche'],r:500,a:'mental'},
+  {n:'L Ascete du Silence',i:'🔕',d:'Difficile',l:'Aucune musique, YouTube, podcast. 7 jours.',s:['Aucune musique lundi','Aucune musique mardi','Aucune musique mercredi','Aucune musique jeudi','Aucune musique vendredi','Aucune video semaine','Aucun podcast semaine'],r:600,a:'mental',week:1},
+  {n:'Le Reveil du Guerrier',i:'🌅',d:'Extreme',l:'5h du matin, 7 jours.',s:['5h00 lundi','5h00 mardi','5h00 mercredi','5h00 jeudi','5h00 vendredi','5h00 samedi','5h00 dimanche'],r:800,a:'discipline',week:2},
+  {n:'Le Marcheur de l Infini',i:'🦶',d:'Extreme',l:'200 000 pas en 7 jours.',s:['28k pas lundi','28k pas mardi','28k pas mercredi','28k pas jeudi','28k pas vendredi','28k pas samedi','28k pas dimanche'],r:950,a:'physique',week:3},
+  {n:'Le Bain de Glace',i:'🧊',d:'Difficile',l:'Douche froide chaque matin. 7 jours.',s:['Douche froide lundi','Douche froide mardi','Douche froide mercredi','Douche froide jeudi','Douche froide vendredi','Douche froide samedi','Douche froide dimanche'],r:500,a:'mental',week:4},
+  {n:'Le Conquerant des Echecs',i:'♟️',d:'Legendaire',l:'+100 Elo en une semaine.',s:['Analyser 1 partie/jour','5 parties min/jour','Gagner 3 consecutives','+100 Elo net'],r:1000,a:'intelligence',week:5},
+  {n:'L Ermite Numerique',i:'📵',d:'Legendaire',l:'Telephone eteint a 20h. 7 jours.',s:['Eteint 20h lundi','Eteint 20h mardi','Eteint 20h mercredi','Eteint 20h jeudi','Eteint 20h vendredi','Eteint 20h samedi','Eteint 20h dimanche'],r:700,a:'discipline',week:6},
+  {n:'Le Double Effort',i:'💥',d:'Extreme',l:'2 seances de sport par jour, 7 jours.',s:['2 seances lundi','2 seances mardi','2 seances mercredi','2 seances jeudi','2 seances vendredi','2 seances samedi','2 seances dimanche'],r:900,a:'physique',week:7},
+  {n:'La Recitation Totale',i:'📖',d:'Legendaire',l:'3 nouvelles sourates memorisees.',s:['Memoriser sourate 1 j1-2','Reciter sourate 1 sans regarder','Memoriser sourate 2 j3-4','Reciter sourate 2 sans regarder','Memoriser sourate 3 j5-6','Reciter les 3 dimanche'],r:1000,a:'spiritualite',week:8},
+  {n:'Le Centurion',i:'💪',d:'Extreme',l:'100 pompes d affilee dimanche.',s:['Max pompes lundi','Battre record mercredi','S approcher 100 vendredi','100 pompes dimanche'],r:750,a:'physique',week:9},
+  {n:'Le Journal du Sage',i:'✍️',d:'Normale',l:'1 page de journal chaque soir.',s:['Page lundi','Page mardi','Page mercredi','Page jeudi','Page vendredi','Page samedi','Page dimanche'],r:400,a:'intelligence',week:10},
+  {n:'L Abstinent Total',i:'🚫',d:'Difficile',l:'Zero nourriture transformee. 7 jours.',s:['Zero junk lundi','Zero junk mardi','Zero junk mercredi','Zero junk jeudi','Zero junk vendredi','Zero junk samedi','Zero junk dimanche'],r:600,a:'nutrition',week:11},
+  {n:'L Invisible Social',i:'🗣️',d:'Difficile',l:'1 inconnu par jour. 7 jours.',s:['Inconnu lundi','Inconnu mardi','Inconnu mercredi','Inconnu jeudi','Inconnu vendredi','Inconnu samedi','Inconnu dimanche'],r:650,a:'social',week:12},
+  {n:'Le Moine du Lever',i:'🌙',d:'Extreme',l:'Fajr + 20min dhikr avant tout ecran. 7j.',s:['Fajr+dhikr lundi','Fajr+dhikr mardi','Fajr+dhikr mercredi','Fajr+dhikr jeudi','Fajr+dhikr vendredi','Fajr+dhikr samedi','Fajr+dhikr dimanche'],r:800,a:'spiritualite',week:13},
+  {n:'Le Polyglotte',i:'🌍',d:'Difficile',l:'100 mots arabes/jour + test final.',s:['100 mots lundi','100 mots mardi','100 mots mercredi','100 mots jeudi','100 mots vendredi','100 mots samedi','Test 80% dimanche'],r:700,a:'intelligence',week:14},
+  {n:'La Diete Mentale',i:'🧘',d:'Difficile',l:'10min meditation + 30min sans telephone. 7j.',s:['Meditation lundi','Meditation mardi','Meditation mercredi','Meditation jeudi','Meditation vendredi','Meditation samedi','Meditation dimanche'],r:500,a:'mental',week:15},
 ];
 
 const QUESTS_DEFAULT = [
@@ -715,30 +698,26 @@ const SKILLS_DATA_DEFAULT = [
 const S = {
   db: () => localStorage.getItem('ht_db'),
   saveDb: v => localStorage.setItem('ht_db', v),
-  token: () => localStorage.getItem('ht_token'),
-  saveToken: v => localStorage.setItem('ht_token', v),
-  boss: () => { try { return JSON.parse(localStorage.getItem('ht_boss') || '{}'); } catch(e) { return {}; } },
+  boss: () => JSON.parse(localStorage.getItem('ht_boss') || '{}'),
   saveBoss: v => localStorage.setItem('ht_boss', JSON.stringify(v)),
-  quests: () => { try { return JSON.parse(localStorage.getItem('ht_q4') || '{}'); } catch(e) { return {}; } },
+  quests: () => JSON.parse(localStorage.getItem('ht_q4') || '{}'),
   saveQuests: v => localStorage.setItem('ht_q4', JSON.stringify(v)),
-  malus: () => { try { return JSON.parse(localStorage.getItem('ht_m4') || '[]'); } catch(e) { return []; } },
+  malus: () => JSON.parse(localStorage.getItem('ht_m4') || '[]'),
   saveMalus: v => localStorage.setItem('ht_m4', JSON.stringify(v)),
-  tx: () => { try { return JSON.parse(localStorage.getItem('ht_tx') || '[]'); } catch(e) { return []; } },
+  tx: () => JSON.parse(localStorage.getItem('ht_tx') || '[]'),
   saveTx: v => localStorage.setItem('ht_tx', JSON.stringify(v)),
-  skills: () => { try { return JSON.parse(localStorage.getItem('ht_skills') || '{}'); } catch(e) { return {}; } },
+  skills: () => JSON.parse(localStorage.getItem('ht_skills') || '{}'),
   saveSkills: v => localStorage.setItem('ht_skills', JSON.stringify(v)),
-  customBosses: () => { try { return JSON.parse(localStorage.getItem('ht_cb') || 'null'); } catch(e) { return null; } },
+  customBosses: () => JSON.parse(localStorage.getItem('ht_cb') || 'null'),
   saveCustomBosses: v => localStorage.setItem('ht_cb', JSON.stringify(v)),
-  customQuests: () => { try { return JSON.parse(localStorage.getItem('ht_cq') || 'null'); } catch(e) { return null; } },
+  customQuests: () => JSON.parse(localStorage.getItem('ht_cq') || 'null'),
   saveCustomQuests: v => localStorage.setItem('ht_cq', JSON.stringify(v)),
-  customBonuses: () => { try { return JSON.parse(localStorage.getItem('ht_cbon') || 'null'); } catch(e) { return null; } },
+  customBonuses: () => JSON.parse(localStorage.getItem('ht_cbon') || 'null'),
   saveCustomBonuses: v => localStorage.setItem('ht_cbon', JSON.stringify(v)),
-  customMaluses: () => { try { return JSON.parse(localStorage.getItem('ht_cmal') || 'null'); } catch(e) { return null; } },
+  customMaluses: () => JSON.parse(localStorage.getItem('ht_cmal') || 'null'),
   saveCustomMaluses: v => localStorage.setItem('ht_cmal', JSON.stringify(v)),
-  customSkillCats: () => { try { return JSON.parse(localStorage.getItem('ht_csk') || 'null'); } catch(e) { return null; } },
+  customSkillCats: () => JSON.parse(localStorage.getItem('ht_csk') || 'null'),
   saveCustomSkillCats: v => localStorage.setItem('ht_csk', JSON.stringify(v)),
-  bossWeek: () => { const v = parseInt(localStorage.getItem('ht_bw') || '0'); return isNaN(v) ? 0 : v; },
-  saveBossWeek: v => localStorage.setItem('ht_bw', String(v)),
 };
 
 function getBosses() { return S.customBosses() || BOSSES_DEFAULT; }
@@ -770,21 +749,19 @@ function paRemain(pa) {
   for (let i = 1; i < l; i++) r -= levelCost(i);
   return levelCost(l) - r;
 }
-
 const ST = 0.7, DS = 7, QPW = 5;
-let allData = {}, donutCh = null, ringCh = null, curFilter = 'Tout', curDbId = '', curToken = '', weekOff = 0, histFil = 'all', skillCatFilter = 'Tout';
+let allData = {}, donutCh = null, ringCh = null, curFilter = 'Tout', curDbId = '', weekOff = 0, histFil = 'all', skillCatFilter = 'Tout';
 let editMode = false, editModalCtx = null, _confirmCb = null;
-let selectedBossWeek = 0;
 
 function toDay() { return new Date().toISOString().substring(0, 10); }
 function scoreDay(d) { const x = allData[d] || {}; return HABITS.filter(h => x[h]).length; }
 function isPerfect(d) { return scoreDay(d) === HABITS.length; }
+function hasStreak(d) { return scoreDay(d) / HABITS.length >= ST; }
 function getWN(date) {
   const d = new Date(date + 'T12:00:00'), j = new Date(d.getFullYear(), 0, 1);
   return Math.ceil(((d - j) / 86400000 + j.getDay() + 1) / 7);
 }
-function getWS(today, off) {
-  off = off || 0;
+function getWS(today, off = 0) {
   const d = new Date(today + 'T12:00:00'), dow = d.getDay();
   d.setDate(d.getDate() - (dow === 0 ? 6 : dow - 1) + off * 7);
   return d.toISOString().substring(0, 10);
@@ -792,50 +769,6 @@ function getWS(today, off) {
 function getRank(xp) { return RANKS.find(r => xp >= r.min && xp < r.max) || RANKS[RANKS.length - 1]; }
 function getRankIdx(xp) { return RANKS.indexOf(getRank(xp)); }
 function escAttr(str) { return String(str).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#39;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-
-// ══════════════════════════════════════════════
-// BOSS WEEK SELECTOR
-// ══════════════════════════════════════════════
-function getCurrentRealWeek() { return getWN(toDay()); }
-function getActiveBossWeek() { return selectedBossWeek > 0 ? selectedBossWeek : getCurrentRealWeek(); }
-
-function updateBossWeekUI() {
-  const total = getBosses().length;
-  const wn = getActiveBossWeek();
-  const input = document.getElementById('bwn-input');
-  if (input) input.value = wn;
-  const maxLabel = document.getElementById('bwn-max-label');
-  if (maxLabel) maxLabel.textContent = '/ ' + total + ' boss';
-}
-
-function setBossWeek(wn) {
-  const total = getBosses().length;
-  if (total === 0) return;
-  wn = Math.max(1, Math.min(wn, total));
-  selectedBossWeek = wn;
-  S.saveBossWeek(wn);
-  updateBossWeekUI();
-  renderBoss(toDay());
-}
-
-function initBossWeekSelector() {
-  const saved = S.bossWeek();
-  selectedBossWeek = saved > 0 ? saved : getCurrentRealWeek();
-  updateBossWeekUI();
-
-  document.getElementById('bwn-prev').addEventListener('click', () => setBossWeek(getActiveBossWeek() - 1));
-  document.getElementById('bwn-next').addEventListener('click', () => setBossWeek(getActiveBossWeek() + 1));
-  document.getElementById('bwn-input').addEventListener('change', function() {
-    const v = parseInt(this.value);
-    if (!isNaN(v)) setBossWeek(v);
-  });
-  document.getElementById('bwn-today-btn').addEventListener('click', () => {
-    selectedBossWeek = getCurrentRealWeek();
-    S.saveBossWeek(selectedBossWeek);
-    updateBossWeekUI();
-    renderBoss(toDay());
-  });
-}
 
 // ══════════════════════════════════════════════
 // XP & PA
@@ -851,13 +784,10 @@ function computeXP() {
     if (run === 30) xp += 1000;
     if (run === 100) xp += 5000;
   }
-  Object.values(S.boss()).forEach(b => { if (b && b.declared === 'won' && b.reward) xp += b.reward; });
-  Object.values(S.quests()).forEach(w => {
-    if (!w || typeof w !== 'object') return;
-    Object.values(w).forEach(q => { if (q && q.state === 'done' && q.reward) xp += q.reward; });
-  });
-  S.malus().forEach(m => { if (m && m.amount) xp -= m.amount; });
-  S.tx().forEach(t => { xp -= (t.amount || t.c || 0); });
+  Object.values(S.boss()).forEach(b => { if (b.declared === 'won' && b.reward) xp += b.reward; });
+  xp += computeQuestXP();
+  S.malus().forEach(m => { xp -= m.amount; });
+  S.tx().forEach(t => { xp -= t.amount || t.c || 0; });
   return Math.max(0, xp);
 }
 function computePD() { return computeXP(); }
@@ -873,32 +803,16 @@ function computeStreak(today) {
 
 function computeSubPA() {
   const pa = {};
-  ATTRIBUTES.forEach(a => a.subs.forEach(s => { pa[s.id] = 0; }));
+  ATTRIBUTES.forEach(a => a.subs.forEach(s => pa[s.id] = 0));
   const dates = Object.keys(allData).sort();
-  let run = 0;
-  let s7Done = false, s30Done = false;
-  let runStart = null;
-
+  let run = 0, s7 = {}, s30 = {};
   for (const d of dates) {
-    const day = allData[d] || {};
-    const sc = scoreDay(d);
-    if (isPerfect(d)) {
-      run++;
-      if (run === 7 && !s7Done) {
-        pa.disc_noscroll += 8; pa.disc_constance += 6; pa.men_impulse += 8;
-        pa.men_stabilite += 4; pa.exe_vitesse += 10; pa.exe_constance += 8;
-        s7Done = true;
-      }
-      if (run === 30 && !s30Done) {
-        pa.disc_constance += 15; pa.men_stabilite += 10;
-        pa.exe_constance += 15; pa.exe_vitesse += 20;
-        s30Done = true;
-      }
-    } else {
-      run = 0; s7Done = false; s30Done = false;
-    }
+    const day = allData[d] || {}; const sc = scoreDay(d);
+    if (isPerfect(d)) { run++; } else { run = 0; s7 = {}; s30 = {}; }
     if (day['No Scroll']) { pa.disc_noscroll += 3; pa.men_ennui += 2; pa.men_impulse += 1; }
     if (isPerfect(d)) { pa.disc_routine += 3; pa.disc_exec += 2; pa.disc_constance += 1; pa.men_impulse += 2; pa.men_stabilite += 1; pa.exe_prio += 3; pa.exe_vitesse += 5; }
+    if (run === 7 && !s7.d) { pa.disc_noscroll += 8; pa.disc_constance += 6; pa.men_impulse += 8; pa.men_stabilite += 4; pa.exe_vitesse += 10; pa.exe_constance += 8; s7.d = true; }
+    if (run === 30 && !s30.d) { pa.disc_constance += 15; pa.men_stabilite += 10; pa.exe_constance += 15; pa.exe_vitesse += 20; s30.d = true; }
     pa.disc_constance += 1;
     if (sc >= DS) pa.exe_constance += 1;
     if (day['Sport']) { pa.phy_force += 1; pa.phy_endurance += 1; }
@@ -913,7 +827,6 @@ function computeSubPA() {
   }
   return pa;
 }
-
 function computeAttrPA() {
   const sub = computeSubPA();
   const attr = {};
@@ -929,6 +842,7 @@ function switchTab(name) {
   document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
   const target = document.getElementById('tab-' + name);
   if (target) target.classList.add('active');
+
   if (name === 'attr') renderAttr();
   if (name === 'skills') renderSkills();
   if (name === 'guide') renderGuide();
@@ -950,129 +864,86 @@ function switchTab(name) {
 }
 
 // ══════════════════════════════════════════════
-// NOTION API — direct fetch with CORS proxy
+// NOTION API
 // ══════════════════════════════════════════════
-// Notion blocks direct browser requests. We use a public CORS proxy.
-// Users must provide their integration token.
-const CORS_PROXY = 'https://corsproxy.io/?';
-
-async function fetchNotionPage(dbId, token, cursor) {
-  const url = CORS_PROXY + encodeURIComponent('https://api.notion.com/v1/databases/' + dbId + '/query');
-  const body = { page_size: 100 };
-  if (cursor) body.start_cursor = cursor;
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + token,
-      'Notion-Version': '2022-06-28',
-    },
-    body: JSON.stringify(body),
-  });
-  if (!res.ok) {
-    let errMsg = 'Erreur ' + res.status;
-    try { const e = await res.json(); errMsg = e.message || errMsg; } catch(ex) {}
-    throw new Error(errMsg);
-  }
-  return res.json();
-}
-
-async function fetchAll(dbId, token) {
+async function fetchAll(dbId) {
   let results = [], cursor;
   for (let i = 0; i < 20; i++) {
-    const data = await fetchNotionPage(dbId, token, cursor);
-    results = results.concat(data.results || []);
+    const res = await fetch('/api/notion', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ dbId, cursor })
+    });
+    if (!res.ok) { const e = await res.json().catch(() => ({})); throw new Error(e.error || `Erreur ${res.status}`); }
+    const data = await res.json();
+    results = results.concat(data.results);
     if (!data.has_more) break;
     cursor = data.next_cursor;
   }
   return results;
 }
-
 function parsePages(pages) {
   const out = {};
   for (const page of pages) {
-    const props = page.properties || {};
-    const dv = props['Date'] && props['Date'].date ? props['Date'].date.start : null;
+    const props = page.properties, dv = props['Date']?.date?.start;
     if (!dv) continue;
     const date = dv.substring(0, 10);
     if (!out[date]) { out[date] = {}; for (const h of HABITS) out[date][h] = false; }
-    for (const nk of NOTION_KEYS) {
-      const dn = NOTION_NAMES[nk];
-      if (props[nk] && props[nk].checkbox === true) out[date][dn] = true;
-    }
+    for (const nk of NOTION_KEYS) { const dn = NOTION_NAMES[nk]; if (props[nk]?.checkbox === true) out[date][dn] = true; }
   }
   return out;
 }
-
 async function connect() {
-  const token = document.getElementById('token-input').value.trim();
-  const rawDb = document.getElementById('db-input').value.trim();
-  const dbId = rawDb.replace(/-/g, '').substring(0, 32);
+  const dbId = document.getElementById('db-input').value.trim().replace(/-/g, '').substring(0, 32);
   const err = document.getElementById('error-msg');
   err.style.display = 'none';
-
-  if (!token) { err.textContent = 'Entre ton token d\'intégration Notion (secret_...).'; err.style.display = 'block'; return; }
   if (!dbId) { err.textContent = 'Entre ton Database ID.'; err.style.display = 'block'; return; }
-  if (!token.startsWith('secret_') && !token.startsWith('ntn_')) {
-    err.textContent = '⚠️ Le token doit commencer par "secret_" ou "ntn_". Vérifie ton intégration Notion.';
-    err.style.display = 'block'; return;
-  }
-
   document.getElementById('config-panel').style.display = 'none';
   document.getElementById('loading').style.display = 'flex';
-
   try {
-    const pages = await fetchAll(dbId, token);
+    const pages = await fetchAll(dbId);
     allData = parsePages(pages);
     curDbId = dbId;
-    curToken = token;
     S.saveDb(dbId);
-    S.saveToken(token);
     showDash();
-  } catch(e) {
+  } catch (e) {
     document.getElementById('config-panel').style.display = 'block';
     document.getElementById('loading').style.display = 'none';
-    err.textContent = '❌ ' + e.message + ' — Vérifie que l\'intégration est partagée avec ta base de données.';
+    err.textContent = '❌ ' + e.message;
     err.style.display = 'block';
   }
 }
-
 async function refresh() {
   const btn = document.getElementById('refresh-btn');
   btn.classList.add('spinning');
   btn.disabled = true;
   try {
-    const pages = await fetchAll(curDbId, curToken);
+    const pages = await fetchAll(curDbId);
     allData = parsePages(pages);
     renderToday();
     renderBoss(toDay());
     renderQuests(toDay());
-  } catch(e) { alert('Impossible de rafraichir : ' + e.message); }
+  } catch (e) { alert('Impossible : ' + e.message); }
   finally { btn.classList.remove('spinning'); btn.disabled = false; }
 }
-
-function logout() {
-  localStorage.removeItem('ht_db');
-  localStorage.removeItem('ht_token');
-  location.reload();
-}
-
+function logout() { localStorage.removeItem('ht_db'); location.reload(); }
 function toggleTheme() {
-  const h = document.documentElement;
-  const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  const h = document.documentElement, n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
   h.setAttribute('data-theme', n);
   localStorage.setItem('ht_theme', n);
   renderToday();
 }
-
 function showDash() {
   document.getElementById('loading').style.display = 'none';
   document.getElementById('dashboard').style.display = 'block';
-  initBossWeekSelector();
   renderToday();
   renderRanksPanel();
-  renderBoss(toDay());
-  renderQuests(toDay());
+  requestAnimationFrame(() => {
+    setTimeout(() => {
+      renderBoss(toDay());
+      renderQuests(toDay());
+    }, 100);
+  });
 }
 
 // ══════════════════════════════════════════════
@@ -1080,144 +951,155 @@ function showDash() {
 // ══════════════════════════════════════════════
 function renderToday() {
   const t = toDay();
-  const dateEl = document.getElementById('today-date-sub');
-  if (dateEl) dateEl.textContent = new Date(t + 'T12:00:00').toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  document.getElementById('today-date-sub').textContent = new Date(t + 'T12:00:00').toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
   renderAutoMsg(t);
   renderRing(t);
   renderTodayChips(t);
   renderThreshold(t);
   renderXP();
 }
-
 function renderAutoMsg(t) {
   const s = scoreDay(t), p = Math.round(s / HABITS.length * 100);
   const last7 = Object.keys(allData).sort().slice(-7);
   const weak = HABITS.filter(h => last7.filter(d => allData[d] && allData[d][h]).length / Math.max(last7.length, 1) < 0.4);
-  let msg = p === 100 ? '<strong>Journee parfaite 🔥</strong> — 10/10.' : p >= 70 ? '<strong>Solide.</strong> ' + s + '/10.' : p >= 40 ? '<strong>Bonne base.</strong> Encore ' + (HABITS.length - s) + ' a finir.' : s === 0 ? '<strong>La journee t attend.</strong>' : '<strong>' + s + '/10.</strong> Tu peux tout renverser.';
-  if (weak.length && p < 100) msg += ' ⚠️ <em>' + weak[0] + '</em> est ton point faible.';
-  const el = document.getElementById('auto-msg');
-  if (el) el.innerHTML = msg;
+  let msg = p === 100 ? `<strong>Journee parfaite 🔥</strong> — 10/10.` : p >= 70 ? `<strong>Solide.</strong> ${s}/10.` : p >= 40 ? `<strong>Bonne base.</strong> Encore ${HABITS.length - s} a finir.` : s === 0 ? `<strong>La journee t attend.</strong>` : `<strong>${s}/10.</strong> Tu peux tout renverser.`;
+  if (weak.length && p < 100) msg += ` ⚠️ <em>${weak[0]}</em> est ton point faible.`;
+  document.getElementById('auto-msg').innerHTML = msg;
 }
-
 function renderRing(t) {
   const c = scoreDay(t), p = Math.round(c / HABITS.length * 100);
   const col = p === 100 ? '#22c55e' : p >= 70 ? '#eab308' : p >= 40 ? '#f97316' : '#ef4444';
-  const pctEl = document.getElementById('ring-pct');
-  const detEl = document.getElementById('ring-detail');
-  const subEl = document.getElementById('ring-sub');
-  if (pctEl) { pctEl.textContent = p + '%'; pctEl.style.color = col; }
-  if (detEl) detEl.textContent = c + ' / ' + HABITS.length;
-  if (subEl) subEl.textContent = c < HABITS.length ? 'Encore ' + (HABITS.length - c) + ' a faire' : 'Complet 🎉';
-  if (ringCh) { ringCh.destroy(); ringCh = null; }
-  const canvas = document.getElementById('ring-chart');
-  if (!canvas) return;
-  ringCh = new Chart(canvas.getContext('2d'), {
+  document.getElementById('ring-pct').textContent = p + '%';
+  document.getElementById('ring-pct').style.color = col;
+  document.getElementById('ring-detail').textContent = `${c} / ${HABITS.length}`;
+  document.getElementById('ring-sub').textContent = c < HABITS.length ? `Encore ${HABITS.length - c} a faire` : `Complet 🎉`;
+  if (ringCh) ringCh.destroy();
+  ringCh = new Chart(document.getElementById('ring-chart').getContext('2d'), {
     type: 'doughnut',
     data: { datasets: [{ data: [c, HABITS.length - c], backgroundColor: [col, 'rgba(128,128,128,0.08)'], borderWidth: 0, hoverOffset: 0 }] },
     options: { cutout: '82%', plugins: { legend: { display: false }, tooltip: { enabled: false } }, animation: { duration: 900, easing: 'easeOutQuart' } }
   });
 }
-
 function renderTodayChips(t) {
   const d = allData[t] || {};
-  const el = document.getElementById('today-chips');
-  if (!el) return;
-  el.innerHTML = HABITS.map((h, i) => {
+  document.getElementById('today-chips').innerHTML = HABITS.map((h, i) => {
     const done = d[h] === true;
-    return '<div class="habit-chip' + (done ? ' done' : '') + '" style="' + (done ? 'border-color:' + COLORS[i] + '30;background:' + COLORS[i] + '08;' : '') + '"><div class="h-dot" style="' + (done ? 'background:' + COLORS[i] + ';border-color:transparent;' : 'border-color:' + COLORS[i] + '50;') + '"></div><span style="' + (done ? 'color:' + COLORS[i] + ';font-weight:600;font-size:.73rem;' : '') + '">' + h + '</span></div>';
+    return `<div class="habit-chip${done ? ' done' : ''}" style="${done ? `border-color:${COLORS[i]}30;background:${COLORS[i]}08;` : ''}">
+      <div class="h-dot" style="${done ? `background:${COLORS[i]};border-color:transparent;` : `border-color:${COLORS[i]}50;`}"></div>
+      <span style="${done ? `color:${COLORS[i]};font-weight:600;font-size:.73rem;` : ''}">${h}</span></div>`;
   }).join('');
 }
-
 function renderThreshold(t) {
   const s = scoreDay(t), b = document.getElementById('threshold-banner');
-  if (!b) return;
   let c, tx;
-  if (s >= HABITS.length) { c = 'success'; tx = '🏆 Journee parfaite — ' + s + '/' + HABITS.length + ' !'; }
-  else if (s >= DS) { c = 'success'; tx = '✅ Journee reussie — ' + s + '/' + HABITS.length; }
-  else { c = s >= 4 ? 'warn' : 'fail'; tx = (s >= 4 ? '⚡' : '❌') + ' ' + s + '/' + HABITS.length + ' — Seuil : ' + DS + '/10'; }
+  if (s >= HABITS.length) { c = 'success'; tx = `🏆 Journee parfaite — ${s}/${HABITS.length} !`; }
+  else if (s >= DS) { c = 'success'; tx = `✅ Journee reussie — ${s}/${HABITS.length}`; }
+  else { c = s >= 4 ? 'warn' : 'fail'; tx = `${s >= 4 ? '⚡' : '❌'} ${s}/${HABITS.length} — Seuil : ${DS}/10`; }
   b.className = 'threshold ' + c;
   b.textContent = tx;
 }
-
 function renderXP() {
   const xp = computeXP();
   const rank = getRank(xp);
   const next = RANKS[RANKS.indexOf(rank) + 1];
   const prog = next ? Math.round((xp - rank.min) / (next.min - rank.min) * 100) : 100;
-  const lvlEl = document.getElementById('xp-level');
-  const pillEl = document.getElementById('rank-pill');
-  const curEl = document.getElementById('xp-cur');
-  const nxtEl = document.getElementById('xp-nxt');
-  const barEl = document.getElementById('xp-bar');
-  const brkEl = document.getElementById('xp-breakdown');
-  if (lvlEl) lvlEl.textContent = rank.e + ' ' + rank.n;
-  if (pillEl) { pillEl.textContent = rank.e + ' ' + rank.n; pillEl.style.cssText = 'background:' + rank.c + '20;color:' + rank.c + ';border:1px solid ' + rank.c + '40;padding:3px 10px;border-radius:14px;font-size:.68rem;font-weight:700;'; }
-  if (curEl) curEl.textContent = xp.toLocaleString() + ' PD';
-  if (nxtEl) nxtEl.textContent = next ? '→ ' + next.min.toLocaleString() + ' PD' : 'MAX';
-  if (barEl) {
-    setTimeout(() => {
-      barEl.style.width = prog + '%';
-      barEl.style.background = 'linear-gradient(90deg,' + rank.c + ',' + (next ? next.c : rank.c) + ')';
-    }, 100);
-  }
+  document.getElementById('xp-level').textContent = `${rank.e} ${rank.n}`;
+  document.getElementById('rank-pill').textContent = `${rank.e} ${rank.n}`;
+  document.getElementById('rank-pill').style.cssText = `background:${rank.c}20;color:${rank.c};border:1px solid ${rank.c}40;padding:3px 10px;border-radius:14px;font-size:.68rem;font-weight:700;`;
+  document.getElementById('xp-cur').textContent = `${xp.toLocaleString()} PD`;
+  document.getElementById('xp-nxt').textContent = next ? `→ ${next.min.toLocaleString()} PD` : 'MAX';
+  setTimeout(() => {
+    document.getElementById('xp-bar').style.width = prog + '%';
+    document.getElementById('xp-bar').style.background = `linear-gradient(90deg,${rank.c},${next ? next.c : rank.c})`;
+  }, 100);
   const dates = Object.keys(allData);
   const bXP = dates.reduce((a, d) => { const s = scoreDay(d); let x = s * 10; if (isPerfect(d)) x += 150; return a + x; }, 0);
-  const boXP = Object.values(S.boss()).filter(b => b && b.declared === 'won').reduce((a, b) => a + (b.reward || 0), 0);
-  const qXP = Object.values(S.quests()).reduce((a, w) => {
-    if (!w || typeof w !== 'object') return a;
-    return a + Object.values(w).reduce((b, q) => b + (q && q.state === 'done' ? (q.reward || 0) : 0), 0);
-  }, 0);
-  const mXP = S.malus().reduce((a, m) => a + (m && m.amount ? m.amount : 0), 0);
+  const boXP = Object.values(S.boss()).filter(b => b.declared === 'won').reduce((a, b) => a + (b.reward || 0), 0);
+  const qXP = computeQuestXP();
+  const mXP = S.malus().reduce((a, m) => a + m.amount, 0);
   const tXP = S.tx().reduce((a, t) => a + (t.amount || t.c || 0), 0);
-  if (brkEl) brkEl.innerHTML = 'Habitudes <strong>+' + bXP.toLocaleString() + '</strong> · Boss <strong>+' + boXP.toLocaleString() + '</strong> · Quetes <strong>+' + qXP.toLocaleString() + '</strong>' + (mXP ? ' · Malus <strong style="color:#f87171">-' + mXP.toLocaleString() + '</strong>' : '') + (tXP ? ' · Boutique <strong style="color:#f97316">-' + tXP.toLocaleString() + '</strong>' : '');
+  document.getElementById('xp-breakdown').innerHTML = `Habitudes <strong>+${bXP.toLocaleString()}</strong> · Boss <strong>+${boXP.toLocaleString()}</strong> · Quetes <strong>+${qXP.toLocaleString()}</strong>${mXP ? ` · Malus <strong style="color:#f87171">-${mXP.toLocaleString()}</strong>` : ''}${tXP ? ` · Boutique <strong style="color:#f97316">-${tXP.toLocaleString()}</strong>` : ''}`;
 }
-
 let ranksOpen = false;
 function toggleRanks() {
   ranksOpen = !ranksOpen;
-  const panel = document.getElementById('ranks-panel');
-  const btn = document.getElementById('ranks-btn');
-  if (panel) panel.classList.toggle('open', ranksOpen);
-  if (btn) btn.textContent = ranksOpen ? 'Masquer ▴' : 'Rangs ▾';
+  document.getElementById('ranks-panel').classList.toggle('open', ranksOpen);
+  document.getElementById('ranks-btn').textContent = ranksOpen ? 'Masquer ▴' : 'Rangs ▾';
   if (ranksOpen) renderRanksPanel();
 }
-
 function renderRanksPanel() {
   const xp = computeXP();
-  const panel = document.getElementById('ranks-panel');
-  if (!panel) return;
-  panel.innerHTML = RANKS.map(r => {
+  document.getElementById('ranks-panel').innerHTML = RANKS.map(r => {
     const isCur = xp >= r.min && xp < r.max, reached = xp >= r.min;
     const prog = r.max === Infinity ? 100 : Math.min(100, Math.round((xp - r.min) / (r.max - r.min) * 100));
-    return '<div class="rank-row' + (isCur ? ' cur' : '') + '"><div style="font-size:1.2rem;">' + r.e + '</div><div style="flex:1;"><div style="display:flex;align-items:center;justify-content:space-between;"><div style="font-size:.77rem;font-weight:700;color:' + r.c + ';">' + r.n + (isCur ? ' ← Ton rang' : '') + '</div><div style="font-size:.63rem;font-family:\'DM Mono\',monospace;color:var(--muted);">' + r.min.toLocaleString() + ' PD</div></div><div style="font-size:.62rem;color:var(--muted);margin-top:1px;">' + r.d + '</div>' + (isCur ? '<div class="rr-bar"><div class="rr-fill" style="width:' + prog + '%;background:' + r.c + ';"></div></div>' : reached ? '<div style="font-size:.6rem;color:#22c55e;margin-top:2px;">✅ Atteint</div>' : '<div style="font-size:.6rem;color:var(--muted);margin-top:2px;">🔒 ' + (r.min - xp).toLocaleString() + ' PD manquants</div>') + '</div></div>';
+    return `<div class="rank-row${isCur ? ' cur' : ''}">
+      <div style="font-size:1.2rem;">${r.e}</div>
+      <div style="flex:1;">
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <div style="font-size:.77rem;font-weight:700;color:${r.c};">${r.n}${isCur ? ' ← Ton rang' : ''}</div>
+          <div style="font-size:.63rem;font-family:'DM Mono',monospace;color:var(--muted);">${r.min.toLocaleString()} PD</div>
+        </div>
+        <div style="font-size:.62rem;color:var(--muted);margin-top:1px;">${r.d}</div>
+        ${isCur ? `<div class="rr-bar"><div class="rr-fill" style="width:${prog}%;background:${r.c};"></div></div>` : reached ? `<div style="font-size:.6rem;color:#22c55e;margin-top:2px;">✅ Atteint</div>` : `<div style="font-size:.6rem;color:var(--muted);margin-top:2px;">🔒 ${(r.min - xp).toLocaleString()} PD manquants</div>`}
+      </div>
+    </div>`;
   }).join('');
 }
 
 // ══════════════════════════════════════════════
 // BOSS
 // ══════════════════════════════════════════════
-function renderBoss(today) {
-  const yr = new Date().getFullYear();
-  const wn = getActiveBossWeek();
-  const key = 'w' + wn + '_' + yr;
-  const bossList = getBosses();
 
-  if (wn < 1 || wn > bossList.length) {
-    document.getElementById('boss-icon').textContent = '🔒';
-    document.getElementById('boss-wk').textContent = 'Semaine ' + wn;
-    document.getElementById('boss-nm').textContent = wn > bossList.length ? 'Aucun boss pour cette semaine' : 'Boss indisponible';
-    document.getElementById('boss-diff').textContent = '';
-    document.getElementById('boss-lore').textContent = wn > bossList.length ? 'Il n\'y a que ' + bossList.length + ' boss configurés.' : '';
-    document.getElementById('boss-cl').innerHTML = '';
-    document.getElementById('boss-rew').textContent = '';
-    document.getElementById('boss-hp-pct').textContent = '—';
-    document.getElementById('boss-hp-fill').style.width = '0%';
-    document.getElementById('boss-result').innerHTML = '';
+// Retourne le boss associé à une semaine donnée par rotation
+function getBossByWeek(wn) {
+  const list = getBosses();
+  if (!list.length) return null;
+  // Utiliser la rotation : (semaine - 1) % nb_boss
+  return list[(wn - 1) % list.length] || null;
+}
+
+function renderBoss(today) {
+  const wn = getWN(today), yr = new Date().getFullYear(), key = `w${wn}_${yr}`;
+  const boss = getBossByWeek(wn);
+  const bossCard = document.getElementById('boss-card');
+
+  // Toujours reconstruire les éléments fixes du boss-card pour éviter l'état résiduel
+  bossCard.innerHTML = `
+    <div class="boss-glow"></div>
+    <div class="boss-header">
+      <div class="boss-ico" id="boss-icon"></div>
+      <div class="boss-meta">
+        <div class="boss-week" id="boss-wk"></div>
+        <div class="boss-name" id="boss-nm"></div>
+        <div style="margin-top:4px;display:flex;align-items:center;gap:6px;">
+          <span class="boss-diff" id="boss-diff"></span>
+          <button class="qb rst" id="boss-reset-btn" style="font-size:.62rem;padding:2px 7px;">↺ Reset</button>
+        </div>
+      </div>
+    </div>
+    <div class="boss-lore" id="boss-lore"></div>
+    <div class="boss-cl-wrap"><div class="boss-cl-title">⚔️ Checklist</div><div class="boss-cl" id="boss-cl"></div></div>
+    <div style="margin-top:6px;font-size:.72rem;color:#fbbf24;font-weight:600;" id="boss-rew"></div>
+    <div class="boss-hp-section">
+      <div class="boss-hp-lbl"><span>HP du Boss</span><span id="boss-hp-pct">100%</span></div>
+      <div class="boss-hp-track"><div class="boss-hp-fill" id="boss-hp-fill" style="width:100%"></div></div>
+    </div>
+    <div id="boss-result"></div>`;
+
+  // Rebind reset button
+  document.getElementById('boss-reset-btn').addEventListener('click', () => confirmReset('boss'));
+
+  if (!boss) {
+    bossCard.innerHTML = `
+      <div class="boss-glow"></div>
+      <div style="text-align:center;padding:1.5rem 1rem;">
+        <div style="font-size:2rem;margin-bottom:.5rem;">🔒</div>
+        <div style="font-size:.85rem;font-weight:700;color:var(--muted);margin-bottom:.3rem;">Semaine ${wn} — Pas de boss</div>
+        <div style="font-size:.72rem;color:var(--muted);">Assigne un boss à cette semaine depuis l'onglet 👹 Boss</div>
+      </div>`;
     return;
   }
 
-  const boss = bossList[wn - 1];
-  if (!boss) return;
   const saved = S.boss();
   if (!saved[key]) saved[key] = { checks: [], declared: null, reward: boss.r };
   const bd = saved[key];
@@ -1225,18 +1107,18 @@ function renderBoss(today) {
   const col = dc[boss.d] || '#8b5cf6';
 
   document.getElementById('boss-icon').textContent = boss.i;
-  document.getElementById('boss-wk').textContent = 'Boss n°' + wn + ' sur ' + bossList.length;
+  document.getElementById('boss-wk').textContent = `Semaine ${wn} · Boss`;
   document.getElementById('boss-nm').textContent = boss.n;
   document.getElementById('boss-diff').textContent = boss.d;
-  document.getElementById('boss-diff').style.cssText = 'background:' + col + '20;color:' + col + ';border:1px solid ' + col + '40;padding:2px 9px;border-radius:14px;font-size:.63rem;font-weight:700;';
+  document.getElementById('boss-diff').style.cssText = `background:${col}20;color:${col};border:1px solid ${col}40;padding:2px 9px;border-radius:14px;font-size:.63rem;font-weight:700;`;
   document.getElementById('boss-lore').textContent = boss.l;
   const attr = ATTRIBUTES.find(a => a.id === boss.a);
-  document.getElementById('boss-rew').textContent = '🏆 +' + boss.r + ' PD · ' + (attr ? attr.emoji + ' +PA ' + attr.name : '');
+  document.getElementById('boss-rew').textContent = `🏆 +${boss.r} PD · ${attr ? attr.emoji + ' +PA ' + attr.name : ''}`;
 
   const clEl = document.getElementById('boss-cl');
   clEl.innerHTML = '';
   (boss.s || []).forEach((step, i) => {
-    const checked = Array.isArray(bd.checks) && bd.checks.includes(i);
+    const checked = bd.checks.includes(i);
     const div = document.createElement('div');
     div.className = 'boss-ci' + (checked ? ' checked' : '');
     const cb = document.createElement('input');
@@ -1249,45 +1131,42 @@ function renderBoss(today) {
     clEl.appendChild(div);
   });
 
-  const done = Array.isArray(bd.checks) ? bd.checks.length : 0;
-  const total = (boss.s || []).length;
+  const done = bd.checks.length, total = (boss.s || []).length;
   const hp = Math.max(0, 100 - Math.round(done / Math.max(total, 1) * 100));
   document.getElementById('boss-hp-pct').textContent = hp + '%';
-  setTimeout(() => { const fill = document.getElementById('boss-hp-fill'); if (fill) fill.style.width = hp + '%'; }, 200);
+  setTimeout(() => {
+    const fillEl = document.getElementById('boss-hp-fill');
+    if (fillEl) fillEl.style.width = hp + '%';
+  }, 200);
 
   const res = document.getElementById('boss-result');
   res.innerHTML = '';
   if (bd.declared === 'won') {
-    res.innerHTML = '<div class="boss-won">⚔️ BOSS VAINCU — +' + boss.r + ' PD !</div>';
+    res.innerHTML = `<div class="boss-won">⚔️ BOSS VAINCU — +${boss.r} PD !</div>`;
   } else if (bd.declared === 'failed') {
-    res.innerHTML = '<div class="boss-failed">💀 Boss echoue cette semaine.</div>';
+    res.innerHTML = `<div class="boss-failed">💀 Boss echoue cette semaine.</div>`;
   } else if (hp === 0) {
-    const btns = document.createElement('div');
-    btns.className = 'boss-btns';
-    const winBtn = document.createElement('button');
-    winBtn.className = 'boss-btn win'; winBtn.textContent = '✅ Boss vaincu';
+    const btns = document.createElement('div'); btns.className = 'boss-btns';
+    const winBtn = document.createElement('button'); winBtn.className = 'boss-btn win'; winBtn.textContent = '✅ Boss vaincu';
     winBtn.addEventListener('click', () => declareBoss('won', key, boss.r));
-    const loseBtn = document.createElement('button');
-    loseBtn.className = 'boss-btn lose'; loseBtn.textContent = '❌ Echoue';
+    const loseBtn = document.createElement('button'); loseBtn.className = 'boss-btn lose'; loseBtn.textContent = '❌ Echoue';
     loseBtn.addEventListener('click', () => declareBoss('failed', key));
     btns.appendChild(winBtn); btns.appendChild(loseBtn);
     res.appendChild(btns);
   } else {
-    res.innerHTML = '<div style="font-size:.67rem;color:#a78bfa;margin-top:5px;text-align:center;">' + done + '/' + total + ' etapes — ' + hp + '% HP</div>';
+    res.innerHTML = `<div style="font-size:.67rem;color:#a78bfa;margin-top:5px;text-align:center;">${done}/${total} etapes — ${hp}% HP</div>`;
   }
 }
 
 function toggleBossCheck(idx, key) {
   const s = S.boss();
   if (!s[key]) s[key] = { checks: [], declared: null };
-  if (!Array.isArray(s[key].checks)) s[key].checks = [];
   const p = s[key].checks.indexOf(idx);
   if (p > -1) s[key].checks.splice(p, 1);
   else s[key].checks.push(idx);
   S.saveBoss(s);
   renderBoss(toDay());
 }
-
 function declareBoss(result, key, reward) {
   const s = S.boss();
   if (!s[key]) s[key] = { checks: [], declared: null };
@@ -1304,110 +1183,158 @@ function declareBoss(result, key, reward) {
 }
 
 // ══════════════════════════════════════════════
-// QUESTS
+// QUÊTES
 // ══════════════════════════════════════════════
-function getQKey(today) { const wn = getWN(today), yr = new Date().getFullYear(); return 'qw' + wn + '_' + yr; }
 
-function getQIdx(key) {
-  const s = S.quests();
-  if (s[key] && Array.isArray(s[key]._i) && s[key]._i.length > 0) return s[key]._i;
-  const wn = parseInt(key.replace(/[^0-9]/g, '')) || 1;
+function getQKey(today) {
+  const wn = getWN(today), yr = new Date().getFullYear();
+  return `qw${wn}_${yr}`;
+}
+
+function computeQIndices(weekNum) {
   const questList = getQuests();
   if (!questList.length) return [];
   const count = Math.min(QPW, questList.length);
   const idx = [];
-  let i = ((wn * 7 + 3) % questList.length + questList.length) % questList.length;
+  let cursor = ((weekNum * 31 + 7) % questList.length + questList.length) % questList.length;
   let safety = 0;
-  while (idx.length < count && safety < questList.length * 3) {
-    if (!idx.includes(i)) idx.push(i);
-    i = (i + 4) % questList.length;
+  while (idx.length < count && safety < questList.length * 4) {
+    if (!idx.includes(cursor)) idx.push(cursor);
+    cursor = (cursor + Math.floor(questList.length / 5) + 3) % questList.length;
     safety++;
   }
-  if (!s[key]) s[key] = {};
-  s[key]._i = idx;
-  S.saveQuests(s);
-  return idx;
+  for (let j = 0; j < questList.length && idx.length < count; j++) {
+    if (!idx.includes(j)) idx.push(j);
+  }
+  return idx.slice(0, count);
+}
+
+function getQStateKey(weekKey, questName) {
+  return `${weekKey}__${questName}`;
+}
+
+function getQState(weekKey, questName) {
+  const raw = localStorage.getItem(getQStateKey(weekKey, questName));
+  if (!raw) return { state: 'pending' };
+  try { return JSON.parse(raw); } catch { return { state: 'pending' }; }
+}
+
+function saveQState(weekKey, questName, stateObj) {
+  localStorage.setItem(getQStateKey(weekKey, questName), JSON.stringify(stateObj));
+}
+
+function clearQStates(weekKey) {
+  const toRemove = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const k = localStorage.key(i);
+    if (k && k.startsWith(weekKey + '__')) toRemove.push(k);
+  }
+  toRemove.forEach(k => localStorage.removeItem(k));
+  localStorage.removeItem(weekKey);
+}
+
+function computeQuestXP() {
+  let xp = 0;
+  for (let i = 0; i < localStorage.length; i++) {
+    const k = localStorage.key(i);
+    if (k && k.match(/^qw\d+_\d+__/)) {
+      try {
+        const v = JSON.parse(localStorage.getItem(k));
+        if (v && v.state === 'done' && v.reward) xp += v.reward;
+      } catch {}
+    }
+  }
+  // Compatibilité ancien format
+  try {
+    const old = JSON.parse(localStorage.getItem('ht_q4') || '{}');
+    Object.values(old).forEach(w => {
+      if (typeof w === 'object') {
+        Object.values(w).forEach(q => {
+          if (q && q.state === 'done' && q.reward) xp += q.reward;
+        });
+      }
+    });
+  } catch {}
+  return xp;
 }
 
 function renderQuests(today) {
   const el = document.getElementById('quest-list');
   if (!el) return;
-  const key = getQKey(today), s = S.quests();
-  if (!s[key]) s[key] = {};
-  const idx = getQIdx(key);
+
+  const wn = getWN(today);
+  const weekKey = getQKey(today);
   const questList = getQuests();
-  while (el.firstChild) el.removeChild(el.firstChild);
-  if (!idx.length) {
-    const empty = document.createElement('div');
-    empty.style.cssText = 'font-size:.78rem;color:var(--muted);text-align:center;padding:1.5rem;';
-    empty.textContent = 'Aucune quete disponible';
-    el.appendChild(empty);
+  const indices = computeQIndices(wn);
+
+  if (!indices.length || !questList.length) {
+    el.innerHTML = `<div style="font-size:.78rem;color:var(--muted);text-align:center;padding:1.5rem;">Aucune quete disponible</div>`;
     return;
   }
-  const frag = document.createDocumentFragment();
-  idx.forEach((qIdx, slot) => {
+
+  el.innerHTML = '';
+
+  indices.forEach((qIdx) => {
     const q = questList[qIdx];
     if (!q) return;
-    const qd = s[key][slot] || { state: 'pending' };
-    const isDone = qd.state === 'done', isFail = qd.state === 'failed';
+    const qState = getQState(weekKey, q.n);
+    const isDone = qState.state === 'done';
+    const isFail = qState.state === 'failed';
     const attr = ATTRIBUTES.find(a => a.id === q.a);
-    const div = document.createElement('div');
-    div.className = 'quest-item' + (isDone ? ' q-done' : isFail ? ' q-fail' : '');
-    const hdr = document.createElement('div'); hdr.className = 'quest-hdr';
-    const ico = document.createElement('div'); ico.className = 'quest-ico'; ico.textContent = q.i;
-    const nm = document.createElement('div'); nm.className = 'quest-nm'; nm.textContent = q.n;
-    const badge = document.createElement('div');
-    badge.className = 'quest-badge ' + q.diff;
-    badge.textContent = q.diff === 'easy' ? 'Facile' : q.diff === 'medium' ? 'Moyen' : 'Difficile';
-    hdr.appendChild(ico); hdr.appendChild(nm); hdr.appendChild(badge);
-    const desc = document.createElement('div'); desc.className = 'quest-desc'; desc.textContent = q.d;
-    const attrDiv = document.createElement('div');
-    attrDiv.style.cssText = 'font-size:.6rem;color:var(--muted);margin-bottom:5px;';
-    if (attr) attrDiv.textContent = attr.emoji + ' +PA ' + attr.name;
-    const ftr = document.createElement('div'); ftr.className = 'quest-ftr';
-    const rew = document.createElement('div');
-    rew.className = 'quest-rew';
-    rew.textContent = '🏆 +' + q.r + ' PD' + (isDone ? ' ✅' : isFail ? ' ❌' : '');
-    const acts = document.createElement('div'); acts.className = 'quest-acts';
+    const diffLabel = q.diff === 'easy' ? 'Facile' : q.diff === 'medium' ? 'Moyen' : 'Difficile';
+    const statusSuffix = isDone ? ' ✅' : isFail ? ' ❌' : '';
+
+    const item = document.createElement('div');
+    item.className = 'quest-item' + (isDone ? ' q-done' : isFail ? ' q-fail' : '');
+    item.dataset.qname = q.n;
+    item.dataset.weekkey = weekKey;
+    item.dataset.reward = q.r;
+
+    const actsBtns = document.createElement('div');
+    actsBtns.className = 'quest-acts';
+
     if (!isDone && !isFail) {
       const okBtn = document.createElement('button');
-      okBtn.className = 'qb ok'; okBtn.textContent = '✅';
-      okBtn.addEventListener('click', () => valQ(key, slot, q.r));
+      okBtn.className = 'qb ok';
+      okBtn.textContent = '✅';
+      okBtn.addEventListener('click', () => {
+        saveQState(weekKey, q.n, { state: 'done', reward: parseInt(q.r) || 0 });
+        renderQuests(today); renderXP();
+      });
       const koBtn = document.createElement('button');
-      koBtn.className = 'qb ko'; koBtn.textContent = '❌';
-      koBtn.addEventListener('click', () => failQ(key, slot));
-      acts.appendChild(okBtn); acts.appendChild(koBtn);
+      koBtn.className = 'qb ko';
+      koBtn.textContent = '❌';
+      koBtn.addEventListener('click', () => {
+        saveQState(weekKey, q.n, { state: 'failed' });
+        renderQuests(today);
+      });
+      actsBtns.appendChild(okBtn);
+      actsBtns.appendChild(koBtn);
     }
     const rstBtn = document.createElement('button');
-    rstBtn.className = 'qb rst'; rstBtn.textContent = '↺';
-    rstBtn.addEventListener('click', () => resetQ(key, slot));
-    acts.appendChild(rstBtn);
-    ftr.appendChild(rew); ftr.appendChild(acts);
-    div.appendChild(hdr); div.appendChild(desc);
-    if (attr) div.appendChild(attrDiv);
-    div.appendChild(ftr);
-    frag.appendChild(div);
-  });
-  el.appendChild(frag);
-}
+    rstBtn.className = 'qb rst';
+    rstBtn.textContent = '↺';
+    rstBtn.addEventListener('click', () => {
+      localStorage.removeItem(getQStateKey(weekKey, q.n));
+      renderQuests(today); renderXP();
+    });
+    actsBtns.appendChild(rstBtn);
 
-function valQ(key, slot, r) {
-  const s = S.quests();
-  if (!s[key]) s[key] = {};
-  s[key][slot] = { state: 'done', reward: r };
-  S.saveQuests(s); renderQuests(toDay()); renderXP();
-}
-function failQ(key, slot) {
-  const s = S.quests();
-  if (!s[key]) s[key] = {};
-  s[key][slot] = { state: 'failed' };
-  S.saveQuests(s); renderQuests(toDay());
-}
-function resetQ(key, slot) {
-  const s = S.quests();
-  if (!s[key]) s[key] = {};
-  delete s[key][slot];
-  S.saveQuests(s); renderQuests(toDay()); renderXP();
+    item.innerHTML = `
+      <div class="quest-hdr">
+        <div class="quest-ico">${q.i}</div>
+        <div class="quest-nm">${q.n}</div>
+        <div class="quest-badge ${q.diff}">${diffLabel}</div>
+      </div>
+      <div class="quest-desc">${q.d}</div>
+      ${attr ? `<div style="font-size:.6rem;color:var(--muted);margin-bottom:5px;">${attr.emoji} +PA ${attr.name}</div>` : ''}
+      <div class="quest-ftr">
+        <div class="quest-rew">🏆 +${q.r} PD${statusSuffix}</div>
+      </div>`;
+
+    item.querySelector('.quest-ftr').appendChild(actsBtns);
+    el.appendChild(item);
+  });
 }
 
 // ══════════════════════════════════════════════
@@ -1415,17 +1342,33 @@ function resetQ(key, slot) {
 // ══════════════════════════════════════════════
 function renderAttr() {
   const { attr, sub } = computeAttrPA();
-  const grid = document.getElementById('attr-grid');
-  if (!grid) return;
-  grid.innerHTML = ATTRIBUTES.map(a => {
+  document.getElementById('attr-grid').innerHTML = ATTRIBUTES.map(a => {
     const total = attr[a.id] || 0;
     const level = paToLevel(total), prog = levelProg(total), remain = paRemain(total);
     const col = level >= 80 ? '#fbbf24' : level >= 60 ? '#22c55e' : level >= 40 ? '#06b6d4' : level >= 20 ? '#a78bfa' : a.color;
-    return '<div class="attr-card" style="border-color:' + a.color + '18;"><div class="attr-hdr"><div class="attr-emoji">' + a.emoji + '</div><div class="attr-title"><div class="attr-name" style="color:' + a.color + ';">' + a.name + '</div><div class="attr-desc">' + a.desc + '</div></div><div class="attr-lvl" style="background:' + col + '20;color:' + col + ';border:1px solid ' + col + '38;">Niv.' + level + '</div></div><div class="attr-bar-meta"><span>' + total + ' PA</span><span>' + (level >= 100 ? 'MAX ✅' : remain + ' PA → Niv.' + (level + 1) + ' (cout ' + levelCost(level) + ' PA)') + '</span></div><div class="attr-bar-bg"><div class="attr-bar-fill" style="width:' + prog + '%;background:' + col + ';"></div></div><div class="attr-note">Progression vers niveau ' + (level + 1) + ' : ' + prog + '% — exponentielle</div><div class="attr-subs">' + a.subs.map(s => {
-      const sPA = sub[s.id] || 0, sLvl = paToLevel(sPA), sProg = levelProg(sPA), sRem = paRemain(sPA);
-      const sCol = sLvl >= 80 ? '#fbbf24' : sLvl >= 50 ? '#22c55e' : sLvl >= 25 ? '#06b6d4' : a.color;
-      return '<div class="sub-card"><div class="sub-hdr"><div class="sub-nm">' + s.name + '</div><div class="sub-lvl" style="background:' + sCol + '20;color:' + sCol + ';border:1px solid ' + sCol + '35;">Niv.' + sLvl + '</div></div><div class="sub-bar-bg"><div class="sub-bar-fill" style="width:' + sProg + '%;background:' + sCol + ';"></div></div><div class="sub-pa">' + sPA + ' PA · ' + (sLvl >= 100 ? 'MAX' : sRem + ' PA → Niv.' + (sLvl + 1)) + ' · ' + s.desc + '</div></div>';
-    }).join('') + '</div><div class="attr-how"><strong>Progresser :</strong><br>' + a.subs.map(s => '<strong>' + s.name + ':</strong> ' + s.src).join('<br>') + '</div><div class="attr-goal">🎯 <strong>Objectif :</strong> ' + a.goal + '</div></div>';
+    return `<div class="attr-card" style="border-color:${a.color}18;">
+      <div class="attr-hdr">
+        <div class="attr-emoji">${a.emoji}</div>
+        <div class="attr-title"><div class="attr-name" style="color:${a.color};">${a.name}</div><div class="attr-desc">${a.desc}</div></div>
+        <div class="attr-lvl" style="background:${col}20;color:${col};border:1px solid ${col}38;">Niv.${level}</div>
+      </div>
+      <div class="attr-bar-meta"><span>${total} PA</span><span>${level >= 100 ? 'MAX ✅' : remain + ' PA → Niv.' + (level + 1) + ' (cout ' + levelCost(level) + ' PA)'}</span></div>
+      <div class="attr-bar-bg"><div class="attr-bar-fill" style="width:${prog}%;background:${col};"></div></div>
+      <div class="attr-note">Progression vers niveau ${level + 1} : ${prog}% — exponentielle</div>
+      <div class="attr-subs">
+        ${a.subs.map(s => {
+          const sPA = sub[s.id] || 0, sLvl = paToLevel(sPA), sProg = levelProg(sPA), sRem = paRemain(sPA);
+          const sCol = sLvl >= 80 ? '#fbbf24' : sLvl >= 50 ? '#22c55e' : sLvl >= 25 ? '#06b6d4' : a.color;
+          return `<div class="sub-card">
+            <div class="sub-hdr"><div class="sub-nm">${s.name}</div><div class="sub-lvl" style="background:${sCol}20;color:${sCol};border:1px solid ${sCol}35;">Niv.${sLvl}</div></div>
+            <div class="sub-bar-bg"><div class="sub-bar-fill" style="width:${sProg}%;background:${sCol};"></div></div>
+            <div class="sub-pa">${sPA} PA · ${sLvl >= 100 ? 'MAX' : sRem + ' PA → Niv.' + (sLvl + 1)} · ${s.desc}</div>
+          </div>`;
+        }).join('')}
+      </div>
+      <div class="attr-how"><strong>Progresser :</strong><br>${a.subs.map(s => `<strong>${s.name}:</strong> ${s.src}`).join('<br>')}</div>
+      <div class="attr-goal">🎯 <strong>Objectif :</strong> ${a.goal}</div>
+    </div>`;
   }).join('');
 }
 
@@ -1440,36 +1383,36 @@ function renderSkills() {
   const prog = allItems.filter(s => (ss[s.name] || 0) === 1).length;
   const total = allItems.length;
   const pct = Math.round((done + prog * 0.5) / Math.max(total, 1) * 100);
-  const statsEl = document.getElementById('skills-stats');
-  if (statsEl) statsEl.innerHTML = '<div class="skill-stat-card"><div class="skill-stat-val" style="color:#4ade80;">' + done + '</div><div class="skill-stat-lbl">✅ Maitrisees</div></div><div class="skill-stat-card"><div class="skill-stat-val" style="color:#eab308;">' + prog + '</div><div class="skill-stat-lbl">⏳ En cours</div></div><div class="skill-stat-card"><div class="skill-stat-val" style="color:var(--muted);">' + (total - done - prog) + '</div><div class="skill-stat-lbl">🔒 A faire</div></div><div style="grid-column:1/-1;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:.75rem;"><div style="display:flex;justify-content:space-between;font-size:.65rem;color:var(--muted);margin-bottom:5px;"><span>Progression globale</span><span style="font-family:\'DM Mono\',monospace;color:var(--accent);">' + pct + '%</span></div><div style="background:var(--surface2);border-radius:4px;height:6px;overflow:hidden;"><div style="width:' + pct + '%;height:100%;border-radius:4px;background:linear-gradient(90deg,#4ade80,#22c55e);transition:width 1s;"></div></div></div>';
-
+  document.getElementById('skills-stats').innerHTML = `
+    <div class="skill-stat-card"><div class="skill-stat-val" style="color:#4ade80;">${done}</div><div class="skill-stat-lbl">✅ Maitrisees</div></div>
+    <div class="skill-stat-card"><div class="skill-stat-val" style="color:#eab308;">${prog}</div><div class="skill-stat-lbl">⏳ En cours</div></div>
+    <div class="skill-stat-card"><div class="skill-stat-val" style="color:var(--muted);">${total - done - prog}</div><div class="skill-stat-lbl">🔒 A faire</div></div>
+    <div style="grid-column:1/-1;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:.75rem;">
+      <div style="display:flex;justify-content:space-between;font-size:.65rem;color:var(--muted);margin-bottom:5px;"><span>Progression globale</span><span style="font-family:'DM Mono',monospace;color:var(--accent);">${pct}%</span></div>
+      <div style="background:var(--surface2);border-radius:4px;height:6px;overflow:hidden;"><div style="width:${pct}%;height:100%;border-radius:4px;background:linear-gradient(90deg,#4ade80,#22c55e);transition:width 1s;"></div></div>
+    </div>`;
   const cats = ['Tout', ...getSkillCats().map(c => c.cat)];
   const catEl = document.getElementById('skill-cats');
-  if (catEl) {
-    catEl.innerHTML = '';
-    cats.forEach(c => {
-      const btn = document.createElement('button');
-      btn.className = 'skill-cat-btn' + (c === skillCatFilter ? ' active' : '');
-      btn.textContent = c;
-      btn.addEventListener('click', () => { skillCatFilter = c; renderSkills(); });
-      catEl.appendChild(btn);
-    });
-  }
+  catEl.innerHTML = '';
+  cats.forEach(c => {
+    const btn = document.createElement('button');
+    btn.className = 'skill-cat-btn' + (c === skillCatFilter ? ' active' : '');
+    btn.textContent = c;
+    btn.addEventListener('click', () => { skillCatFilter = c; renderSkills(); });
+    catEl.appendChild(btn);
+  });
   filterSkills();
 }
-
 function filterSkills() {
   const ss = S.skills();
-  const searchEl = document.getElementById('skills-search');
-  const q = searchEl ? searchEl.value : '';
+  const q = (document.getElementById('skills-search') || {}).value || '';
   let allItems = [];
   getSkillCats().forEach(cat => { cat.items.forEach(name => { allItems.push({ name, cat: cat.cat, icon: cat.icon }); }); });
-  const items = allItems.filter(s =>
+  const items = allItems.map((s, gi) => ({ ...s, gi })).filter(s =>
     (skillCatFilter === 'Tout' || s.cat === skillCatFilter) &&
     (!q || s.name.toLowerCase().includes(q.toLowerCase()))
   );
   const grid = document.getElementById('skills-grid');
-  if (!grid) return;
   grid.innerHTML = '';
   items.forEach(s => {
     const st = ss[s.name] || 0;
@@ -1477,16 +1420,37 @@ function filterSkills() {
     const stE = st === 2 ? '✅' : st === 1 ? '⏳' : '○';
     const stL = st === 2 ? 'Maitrise' : st === 1 ? 'En cours' : 'Non commence';
     const stC = st === 2 ? '#4ade80' : st === 1 ? '#eab308' : 'var(--muted)';
+    const catS = s.cat;
     const card = document.createElement('div');
     card.className = 'skill-card ' + cls;
-    card.innerHTML = '<div style="display:flex;align-items:flex-start;gap:7px;cursor:pointer;" class="skill-clickable"><div style="font-size:1.1rem;flex-shrink:0;margin-top:1px;">' + s.icon + '</div><div style="flex:1;min-width:0;"><div style="font-size:.75rem;font-weight:600;line-height:1.3;margin-bottom:3px;">' + s.name + '</div><div style="display:flex;align-items:center;justify-content:space-between;"><span style="font-size:.58rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;">' + s.cat + '</span><span style="font-size:.65rem;font-weight:700;color:' + stC + ';">' + stE + ' ' + stL + '</span></div>' + (st > 0 ? '<div style="background:var(--surface3);border-radius:3px;height:3px;overflow:hidden;margin-top:5px;"><div style="height:100%;border-radius:3px;background:' + (st === 2 ? '#4ade80' : '#eab308') + ';width:' + (st === 2 ? 100 : 50) + '%;transition:width .8s;"></div></div>' : '') + '</div></div><div style="position:absolute;top:5px;right:5px;display:flex;gap:2px;"><button class="btn-edit-item skill-edit-btn">✏️</button><button class="btn-del-item skill-del-btn">🗑</button></div>';
+    card.innerHTML = `
+      <div style="display:flex;align-items:flex-start;gap:7px;cursor:pointer;" class="skill-clickable">
+        <div style="font-size:1.1rem;flex-shrink:0;margin-top:1px;">${s.icon}</div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:.75rem;font-weight:600;line-height:1.3;margin-bottom:3px;">${s.name}</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <span style="font-size:.58rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;">${catS}</span>
+            <span style="font-size:.65rem;font-weight:700;color:${stC};">${stE} ${stL}</span>
+          </div>
+          ${st > 0 ? `<div style="background:var(--surface3);border-radius:3px;height:3px;overflow:hidden;margin-top:5px;"><div style="height:100%;border-radius:3px;background:${st === 2 ? '#4ade80' : '#eab308'};width:${st === 2 ? 100 : 50}%;transition:width .8s;"></div></div>` : ''}
+        </div>
+      </div>
+      <div style="position:absolute;top:5px;right:5px;display:flex;gap:2px;">
+        <button class="btn-edit-item skill-edit-btn">✏️</button>
+        <button class="btn-del-item skill-del-btn">🗑</button>
+      </div>`;
     card.querySelector('.skill-clickable').addEventListener('click', () => cycleSkill(s.name));
-    card.querySelector('.skill-edit-btn').addEventListener('click', e => { e.stopPropagation(); openEditModal('editskill', { name: s.name, cat: s.cat }); });
-    card.querySelector('.skill-del-btn').addEventListener('click', e => { e.stopPropagation(); deleteSkillByName(s.name, s.cat); });
+    card.querySelector('.skill-edit-btn').addEventListener('click', e => {
+      e.stopPropagation();
+      openEditModal('editskill', { name: s.name, cat: s.cat });
+    });
+    card.querySelector('.skill-del-btn').addEventListener('click', e => {
+      e.stopPropagation();
+      deleteSkillByName(s.name, s.cat);
+    });
     grid.appendChild(card);
   });
 }
-
 function cycleSkill(name) {
   const ss = S.skills();
   ss[name] = ((ss[name] || 0) + 1) % 3;
@@ -1498,19 +1462,19 @@ function cycleSkill(name) {
 // BOSS CALENDAR
 // ══════════════════════════════════════════════
 function renderBossCalendar() {
-  const yr = new Date().getFullYear();
+  const today = toDay(), curWN = getWN(today), yr = new Date().getFullYear();
   const saved = S.boss(), bossList = getBosses();
   const container = document.getElementById('bosscal-content');
-  if (!container) return;
   container.innerHTML = '';
 
   const hdr = document.createElement('div');
   hdr.style.cssText = 'display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem;';
-  hdr.innerHTML = '<div><div style="font-size:1rem;font-weight:700;">👹 Calendrier des Boss</div><div style="font-size:.72rem;color:var(--muted);margin-top:2px;">' + bossList.length + ' boss — sélectionne la semaine ici ou dans Aujourd\'hui</div></div>';
+  hdr.innerHTML = `<div style="font-size:.72rem;color:var(--muted);">Semaine ${curWN} en cours · ${bossList.length} boss configures</div>`;
   const addDiv = document.createElement('div');
   addDiv.className = 'edit-actions';
   const addBtn = document.createElement('button');
-  addBtn.className = 'btn-add'; addBtn.textContent = '➕ Boss';
+  addBtn.className = 'btn-add';
+  addBtn.textContent = '➕ Boss';
   addBtn.addEventListener('click', () => openEditModal('addboss'));
   addDiv.appendChild(addBtn);
   hdr.appendChild(addDiv);
@@ -1518,32 +1482,55 @@ function renderBossCalendar() {
 
   const list = document.createElement('div');
   list.style.cssText = 'display:flex;flex-direction:column;gap:8px;';
-  const activeBossWn = getActiveBossWeek();
 
-  bossList.forEach((boss, realIdx) => {
-    const wn = realIdx + 1;
-    const key = 'w' + wn + '_' + yr;
+  // Afficher les 52 semaines de l'année + quelques supplémentaires
+  const totalWeeks = Math.max(52, bossList.length + 10);
+  for (let wn = 1; wn <= totalWeeks; wn++) {
+    if (!bossList.length) break;
+    const realIdx = (wn - 1) % bossList.length;
+    const boss = bossList[realIdx];
+    if (!boss) continue;
+    const key = `w${wn}_${yr}`;
     const bdata = saved[key];
-    const isSel = wn === activeBossWn;
+    const isCur = wn === curWN, isPast = wn < curWN;
     const dc = { 'Normale': '#22c55e', 'Difficile': '#f97316', 'Extreme': '#ef4444', 'Legendaire': '#fbbf24' };
     const col = dc[boss.d] || '#8b5cf6';
     let statusTxt = '', statusCol = 'var(--muted)';
     if (bdata && bdata.declared === 'won') { statusTxt = '✅ Vaincu'; statusCol = '#4ade80'; }
     else if (bdata && bdata.declared === 'failed') { statusTxt = '❌ Echoue'; statusCol = '#f87171'; }
-    else if (isSel) { statusTxt = '👁️ Affiché'; statusCol = '#a78bfa'; }
-    else { statusTxt = '–'; }
+    else if (isCur) { statusTxt = '⚔️ En cours'; statusCol = '#a78bfa'; }
+    else if (isPast) { statusTxt = '⏭️ Passe'; statusCol = 'var(--muted)'; }
+    else { statusTxt = '🔒 A venir'; statusCol = 'var(--muted)'; }
+    const jan1 = new Date(yr, 0, 1), monDay = new Date(jan1);
+    monDay.setDate(jan1.getDate() + (wn - 1) * 7 - (jan1.getDay() === 0 ? 6 : jan1.getDay() - 1));
+    const sunDay = new Date(monDay); sunDay.setDate(monDay.getDate() + 6);
+    const fmt = d => d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
 
     const row = document.createElement('div');
-    row.style.cssText = 'background:' + (isSel ? 'var(--surface3)' : 'var(--surface2)') + ';border:1px solid ' + (isSel ? col + '44' : 'var(--border)') + ';border-radius:12px;padding:.8rem;display:flex;align-items:center;gap:10px;cursor:pointer;transition:border-color .2s;';
-    row.innerHTML = '<div style="font-size:1.4rem;flex-shrink:0;">' + boss.i + '</div><div style="flex:1;"><div style="display:flex;align-items:center;gap:6px;margin-bottom:2px;"><span style="font-size:.7rem;font-family:\'DM Mono\',monospace;color:var(--muted);width:52px;">N°' + wn + '</span><span style="font-size:.78rem;font-weight:700;' + (isSel ? 'color:' + col + ';' : '') + '">' + boss.n + '</span></div><div style="display:flex;align-items:center;gap:6px;"><span style="font-size:.6rem;background:' + col + '22;color:' + col + ';border:1px solid ' + col + '38;padding:1px 7px;border-radius:10px;font-weight:700;">' + boss.d + '</span><span style="font-size:.63rem;font-family:\'DM Mono\',monospace;color:#fbbf24;">+' + boss.r + ' PD</span></div></div><div style="font-size:.68rem;font-weight:700;color:' + statusCol + ';flex-shrink:0;">' + statusTxt + '</div><div style="display:flex;gap:4px;flex-shrink:0;"><button class="btn-edit-item boss-cal-edit">✏️</button><button class="btn-del-item boss-cal-del">🗑</button></div>';
+    row.style.cssText = `background:${isCur ? 'var(--surface3)' : 'var(--surface2)'};border:1px solid ${isCur ? col + '44' : 'var(--border)'};border-radius:12px;padding:.8rem;display:flex;align-items:center;gap:10px;`;
+    row.innerHTML = `
+      <div style="font-size:1.4rem;flex-shrink:0;">${boss.i}</div>
+      <div style="flex:1;">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:2px;">
+          <span style="font-size:.7rem;font-family:'DM Mono',monospace;color:var(--muted);width:52px;">Sem. ${wn}</span>
+          <span style="font-size:.78rem;font-weight:700;${isCur ? 'color:' + col + ';' : ''}">${boss.n}</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <span style="font-size:.6rem;background:${col}22;color:${col};border:1px solid ${col}38;padding:1px 7px;border-radius:10px;font-weight:700;">${boss.d}</span>
+          <span style="font-size:.6rem;color:var(--muted);">${fmt(monDay)} → ${fmt(sunDay)}</span>
+          <span style="font-size:.63rem;font-family:'DM Mono',monospace;color:#fbbf24;">+${boss.r} PD</span>
+        </div>
+      </div>
+      <div style="font-size:.68rem;font-weight:700;color:${statusCol};flex-shrink:0;">${statusTxt}</div>
+      <div style="display:flex;gap:4px;flex-shrink:0;">
+        <button class="btn-edit-item boss-cal-edit">✏️</button>
+        <button class="btn-del-item boss-cal-del">🗑</button>
+      </div>`;
 
-    row.addEventListener('click', e => {
-      if (!e.target.closest('button')) { setBossWeek(wn); switchTab('today'); }
-    });
-    row.querySelector('.boss-cal-edit').addEventListener('click', e => { e.stopPropagation(); openEditModal('editboss', realIdx); });
-    row.querySelector('.boss-cal-del').addEventListener('click', e => { e.stopPropagation(); deleteBoss(realIdx); });
+    row.querySelector('.boss-cal-edit').addEventListener('click', () => openEditModal('editboss', realIdx));
+    row.querySelector('.boss-cal-del').addEventListener('click', () => deleteBoss(realIdx));
     list.appendChild(row);
-  });
+  }
   container.appendChild(list);
 }
 
@@ -1553,27 +1540,23 @@ function renderBossCalendar() {
 function renderQuestList() {
   const diffColors = { easy: '#22c55e', medium: '#ca8a04', hard: '#ef4444' };
   const diffLabels = { easy: 'Facile', medium: 'Moyen', hard: 'Difficile' };
-  const attrMap = {};
-  ATTRIBUTES.forEach(a => { attrMap[a.id] = a; });
+  const attrMap = {}; ATTRIBUTES.forEach(a => attrMap[a.id] = a);
   const doneCounts = {};
-  Object.values(S.quests()).forEach(week => {
-    if (!week || typeof week !== 'object') return;
-    const idx = week._i || [];
-    idx.forEach((qIdx, slot) => {
-      const qd = week[slot] || { state: 'pending' };
-      if (qd.state === 'done') doneCounts[qIdx] = (doneCounts[qIdx] || 0) + 1;
-    });
-  });
+  for (let i = 0; i < localStorage.length; i++) {
+    const k = localStorage.key(i);
+    if (k && k.match(/^qw\d+_\d+__/)) {
+      try { const v = JSON.parse(localStorage.getItem(k)); if (v && v.state === 'done') { const qn = k.split('__').slice(1).join('__'); doneCounts[qn] = (doneCounts[qn]||0)+1; } } catch {}
+    }
+  }
   const groups = {};
-  getQuests().forEach((q, i) => { if (!groups[q.a]) groups[q.a] = []; groups[q.a].push({ ...q, idx: i, done: doneCounts[i] || 0 }); });
+  getQuests().forEach((q, i) => { if (!groups[q.a]) groups[q.a] = []; groups[q.a].push({ ...q, idx: i, done: doneCounts[q.n] || 0 }); });
 
   const container = document.getElementById('questlist-content');
-  if (!container) return;
   container.innerHTML = '';
 
   const hdr = document.createElement('div');
   hdr.style.cssText = 'display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem;';
-  hdr.innerHTML = '<div style="font-size:.72rem;color:var(--muted);">' + getQuests().length + ' quetes disponibles</div>';
+  hdr.innerHTML = `<div style="font-size:.72rem;color:var(--muted);">${getQuests().length} quetes disponibles</div>`;
   const addDiv = document.createElement('div');
   addDiv.className = 'edit-actions';
   const addBtn = document.createElement('button');
@@ -1593,15 +1576,26 @@ function renderQuestList() {
     section.style.cssText = 'background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1rem;margin-bottom:10px;';
     const secHdr = document.createElement('div');
     secHdr.style.cssText = 'display:flex;align-items:center;gap:8px;margin-bottom:.8rem;';
-    secHdr.innerHTML = '<span style="font-size:1.2rem;">' + attr.emoji + '</span><span style="font-size:.82rem;font-weight:700;color:' + attr.color + ';">' + attr.name + '</span><span style="font-size:.65rem;color:var(--muted);margin-left:auto;">' + qs.length + ' quetes</span>';
+    secHdr.innerHTML = `<span style="font-size:1.2rem;">${attr.emoji}</span><span style="font-size:.82rem;font-weight:700;color:${attr.color};">${attr.name}</span><span style="font-size:.65rem;color:var(--muted);margin-left:auto;">${qs.length} quetes</span>`;
     section.appendChild(secHdr);
     const qList = document.createElement('div');
     qList.style.cssText = 'display:flex;flex-direction:column;gap:6px;';
     for (const q of qs) {
       const col = diffColors[q.diff];
       const row = document.createElement('div');
-      row.style.cssText = 'background:var(--surface2);border:1px solid ' + (q.done > 0 ? 'rgba(74,222,128,.2)' : 'var(--border)') + ';border-radius:10px;padding:.65rem .8rem;display:flex;align-items:center;gap:8px;';
-      row.innerHTML = '<span style="font-size:1rem;flex-shrink:0;">' + q.i + '</span><div style="flex:1;"><div style="font-size:.76rem;font-weight:600;">' + q.n + '</div><div style="font-size:.65rem;color:var(--text2);">' + q.d + '</div></div><div style="text-align:right;flex-shrink:0;"><div style="font-size:.63rem;background:' + col + '15;color:' + col + ';border:1px solid ' + col + '35;padding:1px 7px;border-radius:8px;font-weight:700;margin-bottom:2px;">' + diffLabels[q.diff] + '</div><div style="font-size:.63rem;color:#fbbf24;font-family:\'DM Mono\',monospace;">+' + q.r + ' PD</div>' + (q.done > 0 ? '<div style="font-size:.6rem;color:#4ade80;">x' + q.done + '</div>' : '') + '</div><div style="display:flex;flex-direction:column;gap:3px;flex-shrink:0;"><button class="btn-edit-item quest-edit-btn">✏️</button><button class="btn-del-item quest-del-btn">🗑</button></div>';
+      row.style.cssText = `background:var(--surface2);border:1px solid ${q.done > 0 ? 'rgba(74,222,128,.2)' : 'var(--border)'};border-radius:10px;padding:.65rem .8rem;display:flex;align-items:center;gap:8px;`;
+      row.innerHTML = `
+        <span style="font-size:1rem;flex-shrink:0;">${q.i}</span>
+        <div style="flex:1;"><div style="font-size:.76rem;font-weight:600;">${q.n}</div><div style="font-size:.65rem;color:var(--text2);">${q.d}</div></div>
+        <div style="text-align:right;flex-shrink:0;">
+          <div style="font-size:.63rem;background:${col}15;color:${col};border:1px solid ${col}35;padding:1px 7px;border-radius:8px;font-weight:700;margin-bottom:2px;">${diffLabels[q.diff]}</div>
+          <div style="font-size:.63rem;color:#fbbf24;font-family:'DM Mono',monospace;">+${q.r} PD</div>
+          ${q.done > 0 ? `<div style="font-size:.6rem;color:#4ade80;">x${q.done}</div>` : ''}
+        </div>
+        <div style="display:flex;flex-direction:column;gap:3px;flex-shrink:0;">
+          <button class="btn-edit-item quest-edit-btn">✏️</button>
+          <button class="btn-del-item quest-del-btn">🗑</button>
+        </div>`;
       row.querySelector('.quest-edit-btn').addEventListener('click', () => openEditModal('editquest', q.idx));
       row.querySelector('.quest-del-btn').addEventListener('click', () => deleteQuest(q.idx));
       qList.appendChild(row);
@@ -1615,12 +1609,40 @@ function renderQuestList() {
 // GUIDE
 // ══════════════════════════════════════════════
 function renderGuide() {
-  const xp = computeXP();
-  const { sub } = computeAttrPA();
+  const xp = computeXP(); const { sub } = computeAttrPA();
   const totalPA = Object.values(sub).reduce((a, b) => a + b, 0);
-  const el = document.getElementById('guide-content');
-  if (!el) return;
-  el.innerHTML = '<div style="font-size:1rem;font-weight:700;margin-bottom:.8rem;">📖 Guide du Systeme</div><div class="guide-section"><h3>🏆 Points de Discipline (PD) — Rang annuel</h3><table class="guide-table"><tr><th>Source</th><th>PD</th></tr><tr><td>1 habitude cochee</td><td><span class="guide-chip pd-chip">+10 PD</span></td></tr><tr><td>Journee parfaite 10/10</td><td><span class="guide-chip pd-chip">+150 PD bonus</span></td></tr><tr><td>Streak 7 jours parfaits</td><td><span class="guide-chip pd-chip">+300 PD</span></td></tr><tr><td>Streak 30 jours parfaits</td><td><span class="guide-chip pd-chip">+1 000 PD</span></td></tr><tr><td>Streak 100 jours parfaits</td><td><span class="guide-chip pd-chip">+5 000 PD</span></td></tr><tr><td>Boss vaincu</td><td><span class="guide-chip pd-chip">+400 a +2000 PD</span></td></tr><tr><td>Quete validee</td><td><span class="guide-chip pd-chip">+80 a +400 PD</span></td></tr><tr><td>Malus / Boutique</td><td><span class="guide-chip" style="background:rgba(248,113,113,.12);color:#f87171;">-PD</span></td></tr></table><div style="margin-top:.8rem;padding:.65rem .8rem;background:var(--surface2);border-radius:8px;font-size:.7rem;color:var(--text2);">📊 Ton solde : <strong>' + xp.toLocaleString() + ' PD</strong> · Rang <strong>' + getRank(xp).e + ' ' + getRank(xp).n + '</strong></div></div><div class="guide-section"><h3>⚔️ Points Attribut (PA) — Progression exponentielle</h3><table class="guide-table"><tr><th>Niveau</th><th>PA requis</th><th>Equivalent</th></tr><tr><td>1 → 2</td><td><span class="guide-chip pa-chip">25 PA</span></td><td>~8 jours d habitude</td></tr><tr><td>5 → 6</td><td><span class="guide-chip pa-chip">72 PA</span></td><td>~24 jours</td></tr><tr><td>10 → 11</td><td><span class="guide-chip pa-chip">157 PA</span></td><td>~2 mois + boss</td></tr><tr><td>20 → 21</td><td><span class="guide-chip pa-chip">446 PA</span></td><td>~6 mois</td></tr><tr><td>50 → 51</td><td><span class="guide-chip pa-chip">1 883 PA</span></td><td>Plusieurs annees</td></tr><tr><td>99 → 100</td><td><span class="guide-chip pa-chip">7 408 PA</span></td><td>Maitrise absolue</td></tr></table><div style="margin-top:.8rem;padding:.65rem .8rem;background:var(--surface2);border-radius:8px;font-size:.7rem;color:var(--text2);">📊 Tes PA totaux : <strong>' + totalPA.toLocaleString() + ' PA</strong> sur ' + ATTRIBUTES.reduce((a, b) => a + b.subs.length, 0) + ' sous-attributs</div></div><div class="guide-section"><h3>⚔️ Sélection des Boss</h3><p style="font-size:.75rem;color:var(--text2);line-height:1.65;">Le système de boss est <strong>100% manuel</strong>. Utilise le sélecteur de semaine sur l\'onglet <strong>Aujourd\'hui</strong> ou clique sur un boss dans l\'onglet <strong>Boss</strong> pour choisir quel boss affronter. Les boss sont numérotés de 1 à ' + getBosses().length + '. Ton choix est sauvegardé automatiquement.</p></div>';
+  document.getElementById('guide-content').innerHTML = `
+    <div style="font-size:1rem;font-weight:700;margin-bottom:.8rem;">📖 Guide du Systeme</div>
+    <div class="guide-section"><h3>🏆 Points de Discipline (PD) — Rang annuel</h3>
+      <table class="guide-table">
+        <tr><th>Source</th><th>PD</th></tr>
+        <tr><td>1 habitude cochee</td><td><span class="guide-chip pd-chip">+10 PD</span></td></tr>
+        <tr><td>Journee parfaite 10/10</td><td><span class="guide-chip pd-chip">+150 PD bonus</span></td></tr>
+        <tr><td>Streak 7 jours parfaits</td><td><span class="guide-chip pd-chip">+300 PD</span></td></tr>
+        <tr><td>Streak 30 jours parfaits</td><td><span class="guide-chip pd-chip">+1 000 PD</span></td></tr>
+        <tr><td>Streak 100 jours parfaits</td><td><span class="guide-chip pd-chip">+5 000 PD</span></td></tr>
+        <tr><td>Boss vaincu</td><td><span class="guide-chip pd-chip">+400 a +2000 PD</span></td></tr>
+        <tr><td>Quete validee</td><td><span class="guide-chip pd-chip">+80 a +400 PD</span></td></tr>
+        <tr><td>Malus / Boutique</td><td><span class="guide-chip" style="background:rgba(248,113,113,.12);color:#f87171;">-PD</span></td></tr>
+      </table>
+      <div style="margin-top:.8rem;padding:.65rem .8rem;background:var(--surface2);border-radius:8px;font-size:.7rem;color:var(--text2);">
+        📊 Ton solde : <strong>${xp.toLocaleString()} PD</strong> · Rang <strong>${getRank(xp).e} ${getRank(xp).n}</strong>
+      </div>
+    </div>
+    <div class="guide-section"><h3>⚔️ Points Attribut (PA) — Progression exponentielle</h3>
+      <table class="guide-table">
+        <tr><th>Niveau</th><th>PA requis</th><th>Equivalent</th></tr>
+        <tr><td>1 → 2</td><td><span class="guide-chip pa-chip">25 PA</span></td><td>~8 jours d habitude</td></tr>
+        <tr><td>5 → 6</td><td><span class="guide-chip pa-chip">72 PA</span></td><td>~24 jours</td></tr>
+        <tr><td>10 → 11</td><td><span class="guide-chip pa-chip">157 PA</span></td><td>~2 mois + boss</td></tr>
+        <tr><td>20 → 21</td><td><span class="guide-chip pa-chip">446 PA</span></td><td>~6 mois</td></tr>
+        <tr><td>50 → 51</td><td><span class="guide-chip pa-chip">1 883 PA</span></td><td>Plusieurs annees</td></tr>
+        <tr><td>99 → 100</td><td><span class="guide-chip pa-chip">7 408 PA</span></td><td>Maitrise absolue</td></tr>
+      </table>
+      <div style="margin-top:.8rem;padding:.65rem .8rem;background:var(--surface2);border-radius:8px;font-size:.7rem;color:var(--text2);">
+        📊 Tes PA totaux : <strong>${totalPA.toLocaleString()} PA</strong> sur ${ATTRIBUTES.reduce((a, b) => a + b.subs.length, 0)} sous-attributs
+      </div>
+    </div>`;
 }
 
 // ══════════════════════════════════════════════
@@ -1632,39 +1654,38 @@ function renderHistFilter() {
     { id: 'won', label: '✅ Valide' }, { id: 'failed', label: '❌ Echoue' }, { id: 'pending', label: '⏳ En cours' }
   ];
   const el = document.getElementById('hist-filter');
-  if (!el) return;
   el.innerHTML = '';
   filters.forEach(f => {
     const btn = document.createElement('button');
     btn.className = 'hf-btn' + (f.id === histFil ? ' active' : '');
     btn.textContent = f.label;
-    btn.addEventListener('click', () => { histFil = f.id; renderHistory(); });
+    btn.addEventListener('click', () => { histFil = f.id; renderHistFilter(); renderHistory(); });
     el.appendChild(btn);
   });
 }
-
 function renderHistory() {
   renderHistFilter();
   const items = [];
   Object.entries(S.boss()).forEach(([key, b]) => {
-    if (!b) return;
     const wn = parseInt(key.replace(/[^0-9]/g, ''));
-    const bossList = getBosses();
-    const bd = bossList[wn - 1];
+    const bd = getBosses()[(wn - 1) % getBosses().length];
     if (!bd) return;
-    items.push({ type: 'boss', icon: bd.i, name: bd.n, sub: 'Boss n°' + wn + ' · ' + bd.d, state: b.declared || 'pending', date: 'N°' + wn });
+    items.push({ type: 'boss', icon: bd.i, name: bd.n, sub: `Semaine ${wn} · ${bd.d}`, state: b.declared || 'pending', date: `Sem. ${wn}` });
   });
-  Object.entries(S.quests()).forEach(([key, week]) => {
-    if (!week || typeof week !== 'object') return;
-    const wn = parseInt(key.replace(/[^0-9]/g, ''));
-    const idx = week._i || [];
-    idx.forEach((qIdx, slot) => {
-      const q = getQuests()[qIdx];
-      if (!q) return;
-      const qd = week[slot] || { state: 'pending' };
-      items.push({ type: 'quest', icon: q.i, name: q.n, sub: 'Quete · Semaine ' + wn, state: qd.state, date: 'Sem. ' + wn });
-    });
-  });
+  for (let i = 0; i < localStorage.length; i++) {
+    const k = localStorage.key(i);
+    if (!k || !k.match(/^qw(\d+)_(\d+)__/)) continue;
+    try {
+      const v = JSON.parse(localStorage.getItem(k));
+      if (!v || v.state === 'pending') continue;
+      const m = k.match(/^qw(\d+)_\d+__(.+)$/);
+      if (!m) continue;
+      const wn = parseInt(m[1]);
+      const qname = m[2];
+      const q = getQuests().find(x => x.n === qname);
+      items.push({ type: 'quest', icon: q ? q.i : '🎯', name: qname, sub: `Quete · Semaine ${wn}`, state: v.state, date: `Sem. ${wn}` });
+    } catch {}
+  }
   const filtered = items.filter(item => {
     if (histFil === 'all') return true;
     if (histFil === 'boss') return item.type === 'boss';
@@ -1675,12 +1696,11 @@ function renderHistory() {
     return true;
   });
   const el = document.getElementById('hist-list');
-  if (!el) return;
-  if (!filtered.length) { el.innerHTML = '<div style="font-size:.78rem;color:var(--muted);text-align:center;padding:2rem;">Aucun element</div>'; return; }
-  el.innerHTML = filtered.slice().reverse().map(item => {
+  if (!filtered.length) { el.innerHTML = `<div style="font-size:.78rem;color:var(--muted);text-align:center;padding:2rem;">Aucun element</div>`; return; }
+  el.innerHTML = filtered.reverse().map(item => {
     const sl = item.state === 'won' || item.state === 'done' ? '✅ Valide' : item.state === 'failed' ? '❌ Echoue' : '⏳ En cours';
     const sc = item.state === 'won' || item.state === 'done' ? 'won' : item.state === 'failed' ? 'failed' : 'pending';
-    return '<div class="hist-item"><div class="hist-ico">' + item.icon + '</div><div class="hist-info"><div class="hist-nm">' + item.name + '</div><div class="hist-sub">' + item.sub + '</div></div><div class="hist-st ' + sc + '">' + sl + '</div><div class="hist-date">' + item.date + '</div></div>';
+    return `<div class="hist-item"><div class="hist-ico">${item.icon}</div><div class="hist-info"><div class="hist-nm">${item.name}</div><div class="hist-sub">${item.sub}</div></div><div class="hist-st ${sc}">${sl}</div><div class="hist-date">${item.date}</div></div>`;
   }).join('');
 }
 
@@ -1694,72 +1714,76 @@ function getBadges() {
   const { streak, best } = computeStreak(today);
   const cc = h => dates.filter(d => allData[d] && allData[d][h]).length;
   const cs = h => { let r = 0, b = 0; for (const d of dates) { r = allData[d] && allData[d][h] ? r + 1 : 0; if (r > b) b = r; } return b; };
-  const bw = Object.values(S.boss()).filter(b => b && b.declared === 'won').length;
-  const bl = Object.values(S.boss()).filter(b => b && b.declared === 'failed').length;
-  const qw = Object.values(S.quests()).reduce((a, w) => { if (!w || typeof w !== 'object') return a; return a + Object.values(w).filter(q => q && q.state === 'done').length; }, 0);
+  const bw = Object.values(S.boss()).filter(b => b.declared === 'won').length;
+  const bl = Object.values(S.boss()).filter(b => b.declared === 'failed').length;
+  let qw = 0;
+  for (let i = 0; i < localStorage.length; i++) {
+    const k = localStorage.key(i);
+    if (k && k.match(/^qw\d+_\d+__/)) { try { const v = JSON.parse(localStorage.getItem(k)); if (v && v.state === 'done') qw++; } catch {} }
+  }
   const sk = S.skills(), skillsDone = Object.values(sk).filter(v => v === 2).length;
   const xp = computeXP(), ri = getRankIdx(xp);
   return [
     { cat: '📅 Regularite' },
-    { e:'🔥',n:'Premier Feu',h:'Streak de 7 jours parfaits',t:'n',ok:best>=7 },
-    { e:'⚡',n:'Momentum 14j',h:'14 jours parfaits consecutifs',t:'n',ok:best>=14 },
-    { e:'🔱',n:'30 Jours',h:'30 jours parfaits consecutifs',t:'n',ok:best>=30 },
-    { e:'👑',n:'Centurion',h:'100 jours parfaits consecutifs',t:'n',ok:best>=100 },
+    { e: '🔥', n: 'Premier Feu', h: 'Streak de 7 jours parfaits', t: 'n', ok: best >= 7 },
+    { e: '⚡', n: 'Momentum 14j', h: '14 jours parfaits consecutifs', t: 'n', ok: best >= 14 },
+    { e: '🔱', n: '30 Jours', h: '30 jours parfaits consecutifs', t: 'n', ok: best >= 30 },
+    { e: '👑', n: 'Centurion', h: '100 jours parfaits consecutifs', t: 'n', ok: best >= 100 },
     { cat: '⭐ Perfection' },
-    { e:'💯',n:'Premier Parfait',h:'Premiere journee 10/10',t:'n',ok:perfect>=1 },
-    { e:'⭐',n:'10 Parfaits',h:'10 journees 10/10',t:'n',ok:perfect>=10 },
-    { e:'🌟',n:'30 Parfaits',h:'30 journees 10/10',t:'n',ok:perfect>=30 },
-    { e:'✨',n:'100 Parfaits',h:'100 journees 10/10',t:'n',ok:perfect>=100 },
+    { e: '💯', n: 'Premier Parfait', h: 'Premiere journee 10/10', t: 'n', ok: perfect >= 1 },
+    { e: '⭐', n: '10 Parfaits', h: '10 journees 10/10', t: 'n', ok: perfect >= 10 },
+    { e: '🌟', n: '30 Parfaits', h: '30 journees 10/10', t: 'n', ok: perfect >= 30 },
+    { e: '✨', n: '100 Parfaits', h: '100 journees 10/10', t: 'n', ok: perfect >= 100 },
     { cat: '📿 Habitudes' },
-    { e:'📖',n:'Devotion',h:'Coran coche 30 fois',t:'n',ok:cc('Coran')>=30 },
-    { e:'🌙',n:'Recitant',h:'Coran coche 100 fois',t:'n',ok:cc('Coran')>=100 },
-    { e:'🤲',n:'Priere Constante',h:'Priere cochee 60 fois',t:'n',ok:cc('Priere')>=60 },
-    { e:'📵',n:'Focus 14j',h:'No Scroll 14j consecutifs',t:'n',ok:cs('No Scroll')>=14 },
-    { e:'🏃',n:'Athlete',h:'Sport 30j consecutifs',t:'n',ok:cs('Sport')>=30 },
-    { e:'♟️',n:'Joueur Echecs',h:'Chess coche 30 fois',t:'n',ok:cc('Chess')>=30 },
+    { e: '📖', n: 'Devotion', h: 'Coran coche 30 fois', t: 'n', ok: cc('Coran') >= 30 },
+    { e: '🌙', n: 'Recitant', h: 'Coran coche 100 fois', t: 'n', ok: cc('Coran') >= 100 },
+    { e: '🤲', n: 'Priere Constante', h: 'Priere cochee 60 fois', t: 'n', ok: cc('Priere') >= 60 },
+    { e: '📵', n: 'Focus 14j', h: 'No Scroll 14j consecutifs', t: 'n', ok: cs('No Scroll') >= 14 },
+    { e: '🏃', n: 'Athlete', h: 'Sport 30j consecutifs', t: 'n', ok: cs('Sport') >= 30 },
+    { e: '♟️', n: 'Joueur Echecs', h: 'Chess coche 30 fois', t: 'n', ok: cc('Chess') >= 30 },
     { cat: '📊 Volume' },
-    { e:'🏅',n:'50 Jours',h:'50 jours trackes',t:'n',ok:dates.length>=50 },
-    { e:'🎖️',n:'100 Jours',h:'100 jours trackes',t:'n',ok:dates.length>=100 },
-    { e:'💎',n:'200 Jours',h:'200 jours trackes',t:'n',ok:dates.length>=200 },
-    { e:'🏆',n:'Legendaire',h:'365 jours trackes',t:'n',ok:dates.length>=365 },
-    { e:'💪',n:'500 Completions',h:'500 habitudes cochees',t:'n',ok:total>=500 },
-    { e:'🦾',n:'1000 Completions',h:'1000 habitudes cochees',t:'n',ok:total>=1000 },
+    { e: '🏅', n: '50 Jours', h: '50 jours trackes', t: 'n', ok: dates.length >= 50 },
+    { e: '🎖️', n: '100 Jours', h: '100 jours trackes', t: 'n', ok: dates.length >= 100 },
+    { e: '💎', n: '200 Jours', h: '200 jours trackes', t: 'n', ok: dates.length >= 200 },
+    { e: '🏆', n: 'Legendaire', h: '365 jours trackes', t: 'n', ok: dates.length >= 365 },
+    { e: '💪', n: '500 Completions', h: '500 habitudes cochees', t: 'n', ok: total >= 500 },
+    { e: '🦾', n: '1000 Completions', h: '1000 habitudes cochees', t: 'n', ok: total >= 1000 },
     { cat: '🏅 Rangs' },
-    { e:'🛡️',n:'Rang D',h:'2 000 PD',t:'b',ok:ri>=1 },
-    { e:'⚔️',n:'Rang C',h:'6 000 PD',t:'b',ok:ri>=2 },
-    { e:'🏹',n:'Rang B',h:'14 000 PD',t:'b',ok:ri>=3 },
-    { e:'🔥',n:'Rang A',h:'28 000 PD',t:'b',ok:ri>=4 },
-    { e:'💎',n:'Rang S',h:'50 000 PD',t:'b',ok:ri>=5 },
+    { e: '🛡️', n: 'Rang D', h: '2 000 PD', t: 'b', ok: ri >= 1 },
+    { e: '⚔️', n: 'Rang C', h: '6 000 PD', t: 'b', ok: ri >= 2 },
+    { e: '🏹', n: 'Rang B', h: '14 000 PD', t: 'b', ok: ri >= 3 },
+    { e: '🔥', n: 'Rang A', h: '28 000 PD', t: 'b', ok: ri >= 4 },
+    { e: '💎', n: 'Rang S', h: '50 000 PD', t: 'b', ok: ri >= 5 },
     { cat: '⚔️ Boss et Quetes' },
-    { e:'⚔️',n:'Premier Boss',h:'Vaincre 1 boss',t:'b',ok:bw>=1 },
-    { e:'🗡️',n:'5 Boss',h:'Vaincre 5 boss',t:'b',ok:bw>=5 },
-    { e:'🔱',n:'10 Boss',h:'Vaincre 10 boss',t:'b',ok:bw>=10 },
-    { e:'🛡️',n:'Invaincu',h:'3 boss sans defaite',t:'b',ok:bw>=3&&bl===0 },
-    { e:'📜',n:'5 Quetes',h:'Valider 5 quetes',t:'b',ok:qw>=5 },
-    { e:'📋',n:'15 Quetes',h:'Valider 15 quetes',t:'b',ok:qw>=15 },
+    { e: '⚔️', n: 'Premier Boss', h: 'Vaincre 1 boss', t: 'b', ok: bw >= 1 },
+    { e: '🗡️', n: '5 Boss', h: 'Vaincre 5 boss', t: 'b', ok: bw >= 5 },
+    { e: '🔱', n: '10 Boss', h: 'Vaincre 10 boss', t: 'b', ok: bw >= 10 },
+    { e: '🛡️', n: 'Invaincu', h: '3 boss sans defaite', t: 'b', ok: bw >= 3 && bl === 0 },
+    { e: '📜', n: '5 Quetes', h: 'Valider 5 quetes', t: 'b', ok: qw >= 5 },
+    { e: '📋', n: '15 Quetes', h: 'Valider 15 quetes', t: 'b', ok: qw >= 15 },
     { cat: '🧠 Skills' },
-    { e:'🌱',n:'Premiers Pas',h:'Maitriser 5 competences',t:'b',ok:skillsDone>=5 },
-    { e:'📚',n:'Apprenant',h:'Maitriser 20 competences',t:'b',ok:skillsDone>=20 },
-    { e:'🎓',n:'Expert',h:'Maitriser 50 competences',t:'b',ok:skillsDone>=50 },
+    { e: '🌱', n: 'Premiers Pas', h: 'Maitriser 5 competences', t: 'b', ok: skillsDone >= 5 },
+    { e: '📚', n: 'Apprenant', h: 'Maitriser 20 competences', t: 'b', ok: skillsDone >= 20 },
+    { e: '🎓', n: 'Expert', h: 'Maitriser 50 competences', t: 'b', ok: skillsDone >= 50 },
   ];
 }
-
 function renderBadgesPage() {
   const badges = getBadges();
-  const el = document.getElementById('badges-page');
-  if (!el) return;
   let html = '', inGrid = false;
   for (const b of badges) {
     if (b.cat) {
       if (inGrid) { html += '</div>'; inGrid = false; }
-      html += '<div class="badge-cat">' + b.cat + '</div><div class="badges-grid">';
+      html += `<div class="badge-cat">${b.cat}</div><div class="badges-grid">`;
       inGrid = true;
     } else {
-      html += '<div class="badge-card' + (b.ok ? (b.t === 'b' ? ' boss-b' : ' earned') : ' locked') + '"><div class="badge-hdr"><div class="badge-emoji">' + b.e + '</div><div class="badge-nm">' + b.n + '</div><div class="badge-st">' + (b.ok ? '✅' : '🔒') + '</div></div><div class="badge-how' + (b.ok ? ' ok' : '') + '">' + (b.ok ? 'Badge obtenu !' : b.h) + '</div></div>';
+      html += `<div class="badge-card${b.ok ? (b.t === 'b' ? ' boss-b' : ' earned') : ' locked'}">
+        <div class="badge-hdr"><div class="badge-emoji">${b.e}</div><div class="badge-nm">${b.n}</div><div class="badge-st">${b.ok ? '✅' : '🔒'}</div></div>
+        <div class="badge-how${b.ok ? ' ok' : ''}">${b.ok ? 'Badge obtenu !' : b.h}</div>
+      </div>`;
     }
   }
   if (inGrid) html += '</div>';
-  el.innerHTML = html;
+  document.getElementById('badges-page').innerHTML = html;
 }
 
 // ══════════════════════════════════════════════
@@ -1767,64 +1791,70 @@ function renderBadgesPage() {
 // ══════════════════════════════════════════════
 function renderShop() {
   const avail = computePD(), xp = computeXP(), ri = getRankIdx(xp);
-  const pdVal = document.getElementById('pd-val');
-  const pdRank = document.getElementById('pd-rank');
-  if (pdVal) pdVal.textContent = avail.toLocaleString() + ' PD';
-  if (pdRank) pdRank.textContent = 'Rang : ' + getRank(xp).e + ' ' + getRank(xp).n;
+  document.getElementById('pd-val').textContent = avail.toLocaleString() + ' PD';
+  document.getElementById('pd-rank').textContent = `Rang : ${getRank(xp).e} ${getRank(xp).n}`;
 
   const shopGrid = document.getElementById('shop-grid');
-  if (shopGrid) {
-    shopGrid.innerHTML = '';
-    getBonuses().forEach((b, i) => {
-      const locked = ri < b.mr || avail < b.c;
-      const lockMsg = ri < b.mr ? 'Rang ' + (RANKS[b.mr] ? RANKS[b.mr].n : 'superieur') + ' requis' : avail < b.c ? (b.c - avail).toLocaleString() + ' PD manquants' : '';
-      const card = document.createElement('div');
-      card.className = 'shop-card' + (locked ? ' locked' : '');
-      card.innerHTML = '<div class="shop-emoji">' + b.e + '</div><div class="shop-nm">' + b.n + '</div><div class="shop-cost">-' + b.c + ' PD</div><div class="shop-cond">' + (b.cond || '') + '</div>' + (locked && lockMsg ? '<div class="shop-lock">🔒 ' + lockMsg + '</div>' : '') + '<div style="position:absolute;top:5px;right:5px;display:flex;gap:2px;"><button class="btn-edit-item shop-edit-btn">✏️</button><button class="btn-del-item shop-del-btn">🗑</button></div>';
-      if (!locked) card.style.cursor = 'pointer';
-      card.addEventListener('click', e => { if (!locked && !e.target.closest('button')) buyBonus(i); });
-      card.querySelector('.shop-edit-btn').addEventListener('click', e => { e.stopPropagation(); openEditModal('editbonus', i); });
-      card.querySelector('.shop-del-btn').addEventListener('click', e => { e.stopPropagation(); deleteBonus(i); });
-      shopGrid.appendChild(card);
-    });
-  }
+  shopGrid.innerHTML = '';
+  getBonuses().forEach((b, i) => {
+    const locked = ri < b.mr || avail < b.c;
+    const lockMsg = ri < b.mr ? `Rang ${RANKS[b.mr] ? RANKS[b.mr].n : 'superieur'} requis` : avail < b.c ? `${(b.c - avail).toLocaleString()} PD manquants` : '';
+    const card = document.createElement('div');
+    card.className = 'shop-card' + (locked ? ' locked' : '');
+    card.innerHTML = `
+      <div class="shop-emoji">${b.e}</div>
+      <div class="shop-nm">${b.n}</div>
+      <div class="shop-cost">-${b.c} PD</div>
+      <div class="shop-cond">${b.cond || ''}</div>
+      ${locked && lockMsg ? `<div class="shop-lock">🔒 ${lockMsg}</div>` : ''}
+      <div style="position:absolute;top:5px;right:5px;display:flex;gap:2px;">
+        <button class="btn-edit-item shop-edit-btn">✏️</button>
+        <button class="btn-del-item shop-del-btn">🗑</button>
+      </div>`;
+    if (!locked) card.style.cursor = 'pointer';
+    card.addEventListener('click', e => { if (!locked && !e.target.closest('button')) buyBonus(i); });
+    card.querySelector('.shop-edit-btn').addEventListener('click', e => { e.stopPropagation(); openEditModal('editbonus', i); });
+    card.querySelector('.shop-del-btn').addEventListener('click', e => { e.stopPropagation(); deleteBonus(i); });
+    shopGrid.appendChild(card);
+  });
 
   const malusGrid = document.getElementById('malus-grid');
-  if (malusGrid) {
-    malusGrid.innerHTML = '';
-    getMaluses().forEach((m, i) => {
-      const card = document.createElement('div');
-      card.className = 'malus-card';
-      card.style.cursor = 'pointer';
-      card.innerHTML = '<div class="malus-emoji">' + m.e + '</div><div class="malus-nm">' + m.n + '</div><div class="malus-cost">-' + m.c + ' PD</div><div style="position:absolute;top:5px;right:5px;display:flex;gap:2px;"><button class="btn-edit-item malus-edit-btn">✏️</button><button class="btn-del-item malus-del-btn">🗑</button></div>';
-      card.addEventListener('click', e => { if (!e.target.closest('button')) applyMalus(i); });
-      card.querySelector('.malus-edit-btn').addEventListener('click', e => { e.stopPropagation(); openEditModal('editmalus', i); });
-      card.querySelector('.malus-del-btn').addEventListener('click', e => { e.stopPropagation(); deleteMalus(i); });
-      malusGrid.appendChild(card);
-    });
-  }
+  malusGrid.innerHTML = '';
+  getMaluses().forEach((m, i) => {
+    const card = document.createElement('div');
+    card.className = 'malus-card';
+    card.style.cursor = 'pointer';
+    card.innerHTML = `
+      <div class="malus-emoji">${m.e}</div>
+      <div class="malus-nm">${m.n}</div>
+      <div class="malus-cost">-${m.c} PD</div>
+      <div style="position:absolute;top:5px;right:5px;display:flex;gap:2px;">
+        <button class="btn-edit-item malus-edit-btn">✏️</button>
+        <button class="btn-del-item malus-del-btn">🗑</button>
+      </div>`;
+    card.addEventListener('click', e => { if (!e.target.closest('button')) applyMalus(i); });
+    card.querySelector('.malus-edit-btn').addEventListener('click', e => { e.stopPropagation(); openEditModal('editmalus', i); });
+    card.querySelector('.malus-del-btn').addEventListener('click', e => { e.stopPropagation(); deleteMalus(i); });
+    malusGrid.appendChild(card);
+  });
 
   const txs = S.tx();
-  const txEl = document.getElementById('tx-log');
-  if (txEl) {
-    if (!txs.length) { txEl.innerHTML = '<div style="font-size:.76rem;color:var(--muted);text-align:center;padding:1rem;">Aucune transaction</div>'; }
-    else txEl.innerHTML = txs.slice(0, 30).map(t => '<div class="tx-item"><span style="font-size:.9rem;">' + (t.e || '💀') + '</span><span class="tx-desc">' + (t.n || t.desc || '') + '</span><span class="tx-amt">-' + (t.c || t.amount || 0) + ' PD</span><span class="tx-date">' + (t.date || '') + '</span></div>').join('');
-  }
+  const el = document.getElementById('tx-log');
+  if (!txs.length) { el.innerHTML = `<div style="font-size:.76rem;color:var(--muted);text-align:center;padding:1rem;">Aucune transaction</div>`; return; }
+  el.innerHTML = txs.slice(0, 30).map(t => `<div class="tx-item"><span style="font-size:.9rem;">${t.e || '💀'}</span><span class="tx-desc">${t.n || t.desc || ''}</span><span class="tx-amt">-${t.c || t.amount || 0} PD</span><span class="tx-date">${t.date || ''}</span></div>`).join('');
 }
-
 function buyBonus(idx) {
   const b = getBonuses()[idx], avail = computePD();
   if (avail < b.c) { alert('PD insuffisants !'); return; }
-  showConfirmDialog('Depenser ' + b.c + ' PD ?', b.e + ' ' + b.n, () => {
+  showConfirmDialog(`Depenser ${b.c} PD ?`, `${b.e} ${b.n}`, () => {
     const tx = S.tx();
     tx.unshift({ id: Date.now(), e: b.e, n: b.n, c: b.c, amount: b.c, date: toDay() });
     S.saveTx(tx); renderShop(); renderXP();
   });
 }
-
 function applyMalus(idx) {
   const m = getMaluses()[idx];
-  showConfirmDialog('Enregistrer un ecart ?', m.e + ' ' + m.n + ' — -' + m.c + ' PD', () => {
+  showConfirmDialog('Enregistrer un ecart ?', `${m.e} ${m.n} — -${m.c} PD`, () => {
     const mal = S.malus();
     mal.push({ key: 'manual_' + Date.now(), amount: m.c, reason: m.n, date: toDay() });
     S.saveMalus(mal); renderShop(); renderXP();
@@ -1849,83 +1879,113 @@ function toggleEditMode() {
 // MODAL EDIT
 // ══════════════════════════════════════════════
 function openEditModal(type, idxOrData) {
-  editModalCtx = { type, idx: typeof idxOrData === 'number' ? idxOrData : null, data: (idxOrData && typeof idxOrData === 'object') ? idxOrData : null };
+  editModalCtx = { type, idx: typeof idxOrData === 'number' ? idxOrData : null, data: typeof idxOrData === 'object' ? idxOrData : null };
   const titles = {
-    addboss:'➕ Nouveau boss', editboss:'✏️ Modifier boss',
-    addquest:'➕ Nouvelle quete', editquest:'✏️ Modifier quete',
-    addbonus:'➕ Nouveau bonus', editbonus:'✏️ Modifier bonus',
-    addmalus:'➕ Nouveau malus', editmalus:'✏️ Modifier malus',
-    addskill:'➕ Nouveau skill', editskill:'✏️ Modifier skill',
+    addboss: '➕ Nouveau boss', editboss: '✏️ Modifier boss',
+    addquest: '➕ Nouvelle quete', editquest: '✏️ Modifier quete',
+    addbonus: '➕ Nouveau bonus', editbonus: '✏️ Modifier bonus',
+    addmalus: '➕ Nouveau malus', editmalus: '✏️ Modifier malus',
+    addskill: '➕ Nouveau skill', editskill: '✏️ Modifier skill',
   };
-  const titleEl = document.getElementById('edit-modal-title');
-  if (titleEl) titleEl.textContent = titles[type] || 'Modifier';
+  document.getElementById('edit-modal-title').textContent = titles[type] || 'Modifier';
   const body = document.getElementById('edit-modal-body');
-  if (!body) return;
   const idx = editModalCtx.idx;
 
   if (type === 'addboss' || type === 'editboss') {
-    const d = type === 'editboss' ? getBosses()[idx] : { n:'',i:'👹',d:'Difficile',l:'',r:500,a:'discipline',s:[] };
+    const d = type === 'editboss' ? getBosses()[idx] : { n: '', i: '👹', d: 'Difficile', l: '', r: 500, a: 'discipline', s: [] };
     if (!d) { closeEditModal(); return; }
-    body.innerHTML = '<div class="m-field"><label>Emoji</label><input id="mf-icon" value="' + escAttr(d.i||'👹') + '"></div><div class="m-field"><label>Nom</label><input id="mf-name" value="' + escAttr(d.n||'') + '"></div><div class="m-field"><label>Difficulte</label><select id="mf-diff">' + ['Normale','Difficile','Extreme','Legendaire'].map(x => '<option' + (d.d===x?' selected':'')+'>'+x+'</option>').join('') + '</select></div><div class="m-field"><label>Lore / Description</label><textarea id="mf-lore" rows="3">' + escAttr(d.l||'') + '</textarea></div><div class="m-field"><label>Recompense PD</label><input id="mf-reward" type="number" value="' + (d.r||500) + '"></div><div class="m-field"><label>Attribut</label><select id="mf-attr">' + ['discipline','physique','nutrition','spiritualite','intelligence','mental','social','execution'].map(a => '<option value="'+a+'"'+(d.a===a?' selected':'')+'>' + a + '</option>').join('') + '</select></div><div class="m-field"><label>Etapes checklist (une par ligne)</label><textarea id="mf-steps" rows="6">' + escAttr((d.s||[]).join('\n')) + '</textarea></div>';
+    const totalBosses = getBosses().length;
+    const posOptions = Array.from({length: totalBosses + (type === 'addboss' ? 1 : 0)}, (_, i) => i + 1)
+      .map(p => `<option value="${p}" ${type === 'editboss' && idx + 1 === p ? 'selected' : type === 'addboss' && p === totalBosses + 1 ? 'selected' : ''}>${p === 1 ? '1 (Semaine 1, 53, 105…)' : `${p} (Sem. ${p}, ${p+52}…)`}</option>`)
+      .join('');
+    body.innerHTML = `
+      <div class="m-field"><label>Emoji</label><input id="mf-icon" value="${escAttr(d.i || '👹')}"></div>
+      <div class="m-field"><label>Nom</label><input id="mf-name" value="${escAttr(d.n || '')}"></div>
+      <div class="m-field"><label>Difficulte</label><select id="mf-diff">${['Normale', 'Difficile', 'Extreme', 'Legendaire'].map(x => `<option ${d.d === x ? 'selected' : ''}>${x}</option>`).join('')}</select></div>
+      <div class="m-field"><label>Lore / Description</label><textarea id="mf-lore" rows="3">${escAttr(d.l || '')}</textarea></div>
+      <div class="m-field"><label>Recompense PD</label><input id="mf-reward" type="number" value="${d.r || 500}"></div>
+      <div class="m-field"><label>Attribut</label><select id="mf-attr">${['discipline', 'physique', 'nutrition', 'spiritualite', 'intelligence', 'mental', 'social', 'execution'].map(a => `<option value="${a}" ${d.a === a ? 'selected' : ''}>${a}</option>`).join('')}</select></div>
+      ${type === 'editboss' ? `<div class="m-field"><label>Position dans la rotation (semaine assignee)</label><select id="mf-pos">${posOptions}</select><div style="font-size:.62rem;color:var(--muted);margin-top:3px;">La position determine quelle semaine ce boss apparait en premier</div></div>` : ''}
+      <div class="m-field"><label>Etapes checklist (une par ligne)</label><textarea id="mf-steps" rows="6">${(d.s || []).join('\n')}</textarea></div>`;
   } else if (type === 'addquest' || type === 'editquest') {
-    const d = type === 'editquest' ? getQuests()[idx] : { i:'🎯',n:'',d:'',diff:'medium',r:150,a:'execution' };
+    const d = type === 'editquest' ? getQuests()[idx] : { i: '🎯', n: '', d: '', diff: 'medium', r: 150, a: 'execution' };
     if (!d) { closeEditModal(); return; }
-    body.innerHTML = '<div class="m-field"><label>Emoji</label><input id="mf-icon" value="' + escAttr(d.i||'🎯') + '"></div><div class="m-field"><label>Nom</label><input id="mf-name" value="' + escAttr(d.n||'') + '"></div><div class="m-field"><label>Description</label><textarea id="mf-desc" rows="2">' + escAttr(d.d||'') + '</textarea></div><div class="m-field"><label>Difficulte</label><select id="mf-diff"><option value="easy"' + (d.diff==='easy'?' selected':'') + '>Facile</option><option value="medium"' + (d.diff==='medium'?' selected':'') + '>Moyen</option><option value="hard"' + (d.diff==='hard'?' selected':'') + '>Difficile</option></select></div><div class="m-field"><label>Recompense PD</label><input id="mf-reward" type="number" value="' + (d.r||150) + '"></div><div class="m-field"><label>Attribut</label><select id="mf-attr">' + ['discipline','physique','nutrition','spiritualite','intelligence','mental','social','execution'].map(a => '<option value="'+a+'"'+(d.a===a?' selected':'')+'>'+a+'</option>').join('') + '</select></div>';
+    body.innerHTML = `
+      <div class="m-field"><label>Emoji</label><input id="mf-icon" value="${escAttr(d.i || '🎯')}"></div>
+      <div class="m-field"><label>Nom</label><input id="mf-name" value="${escAttr(d.n || '')}"></div>
+      <div class="m-field"><label>Description</label><textarea id="mf-desc" rows="2">${escAttr(d.d || '')}</textarea></div>
+      <div class="m-field"><label>Difficulte</label><select id="mf-diff"><option value="easy" ${d.diff === 'easy' ? 'selected' : ''}>Facile</option><option value="medium" ${d.diff === 'medium' ? 'selected' : ''}>Moyen</option><option value="hard" ${d.diff === 'hard' ? 'selected' : ''}>Difficile</option></select></div>
+      <div class="m-field"><label>Recompense PD</label><input id="mf-reward" type="number" value="${d.r || 150}"></div>
+      <div class="m-field"><label>Attribut</label><select id="mf-attr">${['discipline', 'physique', 'nutrition', 'spiritualite', 'intelligence', 'mental', 'social', 'execution'].map(a => `<option value="${a}" ${d.a === a ? 'selected' : ''}>${a}</option>`).join('')}</select></div>`;
   } else if (type === 'addbonus' || type === 'editbonus') {
-    const d = type === 'editbonus' ? getBonuses()[idx] : { e:'🎁',n:'',c:500,cond:'',mr:0 };
+    const d = type === 'editbonus' ? getBonuses()[idx] : { e: '🎁', n: '', c: 500, cond: '', mr: 0 };
     if (!d) { closeEditModal(); return; }
-    body.innerHTML = '<div class="m-field"><label>Emoji</label><input id="mf-icon" value="' + escAttr(d.e||'🎁') + '"></div><div class="m-field"><label>Nom</label><input id="mf-name" value="' + escAttr(d.n||'') + '"></div><div class="m-field"><label>Cout PD</label><input id="mf-cost" type="number" value="' + (d.c||500) + '"></div><div class="m-field"><label>Condition</label><input id="mf-cond" value="' + escAttr(d.cond||'') + '"></div><div class="m-field"><label>Rang min (0-7)</label><input id="mf-minrank" type="number" value="' + (d.mr||0) + '" min="0" max="7"></div>';
+    body.innerHTML = `
+      <div class="m-field"><label>Emoji</label><input id="mf-icon" value="${escAttr(d.e || '🎁')}"></div>
+      <div class="m-field"><label>Nom</label><input id="mf-name" value="${escAttr(d.n || '')}"></div>
+      <div class="m-field"><label>Cout PD</label><input id="mf-cost" type="number" value="${d.c || 500}"></div>
+      <div class="m-field"><label>Condition</label><input id="mf-cond" value="${escAttr(d.cond || '')}"></div>
+      <div class="m-field"><label>Rang min (0-7)</label><input id="mf-minrank" type="number" value="${d.mr || 0}" min="0" max="7"></div>`;
   } else if (type === 'addmalus' || type === 'editmalus') {
-    const d = type === 'editmalus' ? getMaluses()[idx] : { e:'💀',n:'',c:300 };
+    const d = type === 'editmalus' ? getMaluses()[idx] : { e: '💀', n: '', c: 300 };
     if (!d) { closeEditModal(); return; }
-    body.innerHTML = '<div class="m-field"><label>Emoji</label><input id="mf-icon" value="' + escAttr(d.e||'💀') + '"></div><div class="m-field"><label>Nom</label><input id="mf-name" value="' + escAttr(d.n||'') + '"></div><div class="m-field"><label>Penalite PD</label><input id="mf-cost" type="number" value="' + (d.c||300) + '"></div>';
+    body.innerHTML = `
+      <div class="m-field"><label>Emoji</label><input id="mf-icon" value="${escAttr(d.e || '💀')}"></div>
+      <div class="m-field"><label>Nom</label><input id="mf-name" value="${escAttr(d.n || '')}"></div>
+      <div class="m-field"><label>Penalite PD</label><input id="mf-cost" type="number" value="${d.c || 300}"></div>`;
   } else if (type === 'addskill' || type === 'editskill') {
-    const d = editModalCtx.data || { name:'', cat: (getSkillCats()[0]||{cat:'Divers'}).cat };
-    body.innerHTML = '<div class="m-field"><label>Nom du skill</label><input id="mf-skillname" value="' + escAttr(d.name||'') + '"></div><div class="m-field"><label>Categorie</label><select id="mf-skillcat">' + getSkillCats().map(c => '<option value="' + escAttr(c.cat) + '"' + (d.cat===c.cat?' selected':'') + '>' + c.cat + '</option>').join('') + '<option value="__new__">➕ Nouvelle categorie...</option></select></div><div class="m-field" id="mf-newcat-wrap" style="display:none;"><label>Nouvelle categorie</label><input id="mf-newcat" placeholder="ex: Yoga"></div>';
+    const d = editModalCtx.data || { name: '', cat: getSkillCats()[0]?.cat || 'Calisthenics' };
+    body.innerHTML = `
+      <div class="m-field"><label>Nom du skill</label><input id="mf-skillname" value="${escAttr(d.name || '')}"></div>
+      <div class="m-field"><label>Categorie</label><select id="mf-skillcat">
+        ${getSkillCats().map(c => `<option value="${escAttr(c.cat)}" ${d.cat === c.cat ? 'selected' : ''}>${c.cat}</option>`).join('')}
+        <option value="__new__">➕ Nouvelle categorie...</option>
+      </select></div>
+      <div class="m-field" id="mf-newcat-wrap" style="display:none;"><label>Nouvelle categorie</label><input id="mf-newcat" placeholder="ex: Yoga"></div>`;
     setTimeout(() => {
       const sel = document.getElementById('mf-skillcat');
-      if (sel) sel.addEventListener('change', function() {
-        const wrap = document.getElementById('mf-newcat-wrap');
-        if (wrap) wrap.style.display = this.value === '__new__' ? 'block' : 'none';
+      if (sel) sel.addEventListener('change', () => {
+        document.getElementById('mf-newcat-wrap').style.display = sel.value === '__new__' ? 'block' : 'none';
       });
     }, 50);
   }
   document.getElementById('edit-modal').classList.add('open');
 }
-
-function closeEditModal() {
-  const modal = document.getElementById('edit-modal');
-  if (modal) modal.classList.remove('open');
-  editModalCtx = null;
-}
-
+function closeEditModal() { document.getElementById('edit-modal').classList.remove('open'); editModalCtx = null; }
 function saveEditModal() {
   if (!editModalCtx) return;
   const { type, idx } = editModalCtx;
   const g = id => { const el = document.getElementById(id); return el ? el.value : ''; };
-
   if (type === 'addboss' || type === 'editboss') {
     const steps = g('mf-steps').split('\n').map(s => s.trim()).filter(Boolean);
-    const nb = { n:g('mf-name'), i:g('mf-icon')||'👹', d:g('mf-diff'), l:g('mf-lore'), r:parseInt(g('mf-reward'))||500, a:g('mf-attr'), s:steps.length?steps:['Completer le defi'] };
+    const nb = { n: g('mf-name'), i: g('mf-icon') || '👹', d: g('mf-diff'), l: g('mf-lore'), r: parseInt(g('mf-reward')) || 500, a: g('mf-attr'), s: steps.length ? steps : ['Completer le defi'] };
     if (!nb.n) { alert('Nom requis'); return; }
-    const list = JSON.parse(JSON.stringify(getBosses()));
-    if (type === 'editboss' && idx !== null) list[idx] = nb; else list.push(nb);
-    S.saveCustomBosses(list); updateBossWeekUI();
-    closeEditModal(); renderBossCalendar(); renderBoss(toDay());
+    let list = JSON.parse(JSON.stringify(getBosses()));
+    if (type === 'editboss' && idx !== null) {
+      list[idx] = nb;
+      const newPos = parseInt(g('mf-pos')) - 1;
+      if (!isNaN(newPos) && newPos !== idx && newPos >= 0 && newPos < list.length) {
+        const [item] = list.splice(idx, 1);
+        list.splice(newPos, 0, item);
+      }
+    } else {
+      list.push(nb);
+    }
+    S.saveCustomBosses(list); closeEditModal(); renderBossCalendar(); renderBoss(toDay());
   } else if (type === 'addquest' || type === 'editquest') {
-    const nq = { i:g('mf-icon')||'🎯', n:g('mf-name'), d:g('mf-desc'), diff:g('mf-diff'), r:parseInt(g('mf-reward'))||150, a:g('mf-attr') };
+    const nq = { i: g('mf-icon') || '🎯', n: g('mf-name'), d: g('mf-desc'), diff: g('mf-diff'), r: parseInt(g('mf-reward')) || 150, a: g('mf-attr') };
     if (!nq.n) { alert('Nom requis'); return; }
     const list = JSON.parse(JSON.stringify(getQuests()));
     if (type === 'editquest' && idx !== null) list[idx] = nq; else list.push(nq);
     S.saveCustomQuests(list); closeEditModal(); renderQuestList(); renderQuests(toDay());
   } else if (type === 'addbonus' || type === 'editbonus') {
-    const nb = { e:g('mf-icon')||'🎁', n:g('mf-name'), c:parseInt(g('mf-cost'))||500, cond:g('mf-cond'), mr:parseInt(g('mf-minrank'))||0 };
+    const nb = { e: g('mf-icon') || '🎁', n: g('mf-name'), c: parseInt(g('mf-cost')) || 500, cond: g('mf-cond'), mr: parseInt(g('mf-minrank')) || 0 };
     if (!nb.n) { alert('Nom requis'); return; }
     const list = JSON.parse(JSON.stringify(getBonuses()));
     if (type === 'editbonus' && idx !== null) list[idx] = nb; else list.push(nb);
     S.saveCustomBonuses(list); closeEditModal(); renderShop();
   } else if (type === 'addmalus' || type === 'editmalus') {
-    const nm = { e:g('mf-icon')||'💀', n:g('mf-name'), c:parseInt(g('mf-cost'))||300 };
+    const nm = { e: g('mf-icon') || '💀', n: g('mf-name'), c: parseInt(g('mf-cost')) || 300 };
     if (!nm.n) { alert('Nom requis'); return; }
     const list = JSON.parse(JSON.stringify(getMaluses()));
     if (type === 'editmalus' && idx !== null) list[idx] = nm; else list.push(nm);
@@ -1950,15 +2010,7 @@ function saveEditModal() {
 // ══════════════════════════════════════════════
 // DELETE
 // ══════════════════════════════════════════════
-function deleteBoss(idx) {
-  showConfirmDialog('Supprimer ce boss ?', 'Irreversible.', () => {
-    const list = JSON.parse(JSON.stringify(getBosses()));
-    list.splice(idx, 1);
-    S.saveCustomBosses(list);
-    if (selectedBossWeek > list.length) { selectedBossWeek = Math.max(1, list.length); S.saveBossWeek(selectedBossWeek); }
-    updateBossWeekUI(); renderBossCalendar(); renderBoss(toDay());
-  });
-}
+function deleteBoss(idx) { showConfirmDialog('Supprimer ce boss ?', 'Irreversible.', () => { const list = JSON.parse(JSON.stringify(getBosses())); list.splice(idx, 1); S.saveCustomBosses(list); renderBossCalendar(); renderBoss(toDay()); }); }
 function deleteQuest(idx) { showConfirmDialog('Supprimer cette quete ?', '', () => { const list = JSON.parse(JSON.stringify(getQuests())); list.splice(idx, 1); S.saveCustomQuests(list); renderQuestList(); }); }
 function deleteBonus(idx) { showConfirmDialog('Supprimer ce bonus ?', '', () => { const list = JSON.parse(JSON.stringify(getBonuses())); list.splice(idx, 1); S.saveCustomBonuses(list); renderShop(); }); }
 function deleteMalus(idx) { showConfirmDialog('Supprimer ce malus ?', '', () => { const list = JSON.parse(JSON.stringify(getMaluses())); list.splice(idx, 1); S.saveCustomMaluses(list); renderShop(); }); }
@@ -1976,18 +2028,11 @@ function deleteSkillByName(name, cat) {
 // ══════════════════════════════════════════════
 function showConfirmDialog(title, desc, cb) {
   _confirmCb = cb;
-  const tEl = document.getElementById('confirm-title');
-  const dEl = document.getElementById('confirm-desc');
-  if (tEl) tEl.textContent = title;
-  if (dEl) dEl.textContent = desc;
-  const overlay = document.getElementById('confirm-overlay');
-  if (overlay) overlay.classList.add('open');
+  document.getElementById('confirm-title').textContent = title;
+  document.getElementById('confirm-desc').textContent = desc;
+  document.getElementById('confirm-overlay').classList.add('open');
 }
-function closeConfirm() {
-  const overlay = document.getElementById('confirm-overlay');
-  if (overlay) overlay.classList.remove('open');
-  _confirmCb = null;
-}
+function closeConfirm() { document.getElementById('confirm-overlay').classList.remove('open'); _confirmCb = null; }
 function executeConfirm() { const cb = _confirmCb; closeConfirm(); if (cb) cb(); }
 
 // ══════════════════════════════════════════════
@@ -1995,10 +2040,10 @@ function executeConfirm() { const cb = _confirmCb; closeConfirm(); if (cb) cb();
 // ══════════════════════════════════════════════
 function showResetMenu() {
   const opts = [
-    { l:'Reset boss actuel', f:() => confirmReset('boss') },
-    { l:'Reset quetes semaine', f:() => confirmReset('quests') },
-    { l:'Reset boutique', f:() => confirmReset('transactions') },
-    { l:'Reset TOUT', f:() => confirmReset('all') }
+    { l: 'Reset boss semaine', f: () => confirmReset('boss') },
+    { l: 'Reset quetes semaine', f: () => confirmReset('quests') },
+    { l: 'Reset boutique', f: () => confirmReset('transactions') },
+    { l: 'Reset TOUT', f: () => confirmReset('all') }
   ];
   const existing = document.getElementById('reset-menu-popup');
   if (existing) { existing.remove(); return; }
@@ -2007,28 +2052,34 @@ function showResetMenu() {
   menu.style.cssText = 'position:fixed;top:90px;right:8px;background:var(--surface3);border:1px solid var(--border2);border-radius:12px;padding:.5rem;z-index:300;min-width:200px;box-shadow:0 4px 24px rgba(0,0,0,.4);';
   opts.forEach((o, i) => {
     const item = document.createElement('div');
-    item.style.cssText = 'padding:.45rem .75rem;border-radius:8px;font-size:.76rem;cursor:pointer;color:' + (i===3?'#f87171':'var(--text)') + ';transition:background .15s;';
+    item.style.cssText = `padding:.45rem .75rem;border-radius:8px;font-size:.76rem;cursor:pointer;color:${i === 3 ? '#f87171' : 'var(--text)'};transition:background .15s;`;
     item.textContent = o.l;
-    item.addEventListener('mouseenter', () => { item.style.background = 'var(--surface2)'; });
-    item.addEventListener('mouseleave', () => { item.style.background = ''; });
+    item.addEventListener('mouseenter', () => item.style.background = 'var(--surface2)');
+    item.addEventListener('mouseleave', () => item.style.background = '');
     item.addEventListener('click', () => { o.f(); menu.remove(); });
     menu.appendChild(item);
   });
   document.body.appendChild(menu);
-  setTimeout(() => { document.addEventListener('click', () => { if (menu.parentNode) menu.remove(); }, { once: true }); }, 100);
+  setTimeout(() => document.addEventListener('click', () => { menu.remove(); }, { once: true }), 100);
 }
-
 function confirmReset(type) {
-  const labels = { boss:'boss actuel', quests:'quetes de la semaine', attributes:'attributs RPG', transactions:'historique boutique', all:'TOUT le systeme' };
-  showConfirmDialog('Reset ' + (labels[type]||type) + ' ?', 'Irreversible.', () => doReset(type));
+  const labels = { boss: 'boss de la semaine', quests: 'quetes de la semaine', attributes: 'attributs RPG', transactions: 'historique boutique', all: 'TOUT le systeme' };
+  showConfirmDialog(`Reset ${labels[type] || type} ?`, 'Irreversible.', () => doReset(type));
 }
-
 function doReset(type) {
-  const t = toDay(), wn = getActiveBossWeek(), yr = new Date().getFullYear();
-  if (type === 'boss') { const b = S.boss(); delete b['w' + wn + '_' + yr]; S.saveBoss(b); renderBoss(t); }
-  if (type === 'quests') { const q = S.quests(); const qwn = getWN(t); delete q['qw' + qwn + '_' + yr]; S.saveQuests(q); renderQuests(t); }
+  const t = toDay(), wn = getWN(t), yr = new Date().getFullYear();
+  if (type === 'boss') { const b = S.boss(); delete b[`w${wn}_${yr}`]; S.saveBoss(b); renderBoss(t); }
+  if (type === 'quests') { clearQStates(getQKey(t)); renderQuests(t); }
   if (type === 'transactions') { S.saveTx([]); renderShop(); }
-  if (type === 'all') { ['ht_boss','ht_q4','ht_m4','ht_tx'].forEach(k => localStorage.removeItem(k)); }
+  if (type === 'all') {
+    ['ht_boss', 'ht_q4', 'ht_m4', 'ht_tx'].forEach(k => localStorage.removeItem(k));
+    const toRemove = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && k.match(/^qw\d+_\d+__/)) toRemove.push(k);
+    }
+    toRemove.forEach(k => localStorage.removeItem(k));
+  }
   renderXP(); renderToday();
 }
 
@@ -2039,15 +2090,10 @@ function renderStats() {
   const t = toDay(), { streak, best } = computeStreak(t);
   const total = Object.values(allData).reduce((a, d) => a + HABITS.filter(h => d[h]).length, 0);
   const perfect = Object.keys(allData).filter(d => isPerfect(d)).length;
-  const stEl = document.getElementById('stat-streak');
-  const bEl = document.getElementById('stat-best');
-  const toEl = document.getElementById('stat-total');
-  const pfEl = document.getElementById('stat-perfect');
-  if (stEl) stEl.textContent = streak + 'j';
-  if (bEl) bEl.textContent = best + 'j';
-  if (toEl) toEl.textContent = total;
-  if (pfEl) pfEl.textContent = perfect;
-
+  document.getElementById('stat-streak').textContent = streak + 'j';
+  document.getElementById('stat-best').textContent = best + 'j';
+  document.getElementById('stat-total').textContent = total;
+  document.getElementById('stat-perfect').textContent = perfect;
   const now = new Date(t + 'T12:00:00');
   const ws = new Date(now), dow = ws.getDay();
   ws.setDate(ws.getDate() - (dow === 0 ? 6 : dow - 1));
@@ -2056,58 +2102,46 @@ function renderStats() {
     const s = d.toISOString().substring(0, 10);
     if (allData[s]) { wD += HABITS.filter(h => allData[s][h]).length; wT += HABITS.length; }
   }
-  const cwEl = document.getElementById('con-week');
-  if (cwEl) cwEl.textContent = (wT > 0 ? Math.round(wD / wT * 100) : 0) + '%';
-
+  document.getElementById('con-week').textContent = (wT > 0 ? Math.round(wD / wT * 100) : 0) + '%';
   const ms = new Date(now.getFullYear(), now.getMonth(), 1);
   let mD = 0, mT = 0;
   for (let d = new Date(ms); d <= now; d.setDate(d.getDate() + 1)) {
     const s = d.toISOString().substring(0, 10);
     if (allData[s]) { mD += HABITS.filter(h => allData[s][h]).length; mT += HABITS.length; }
   }
-  const cmEl = document.getElementById('con-month');
-  if (cmEl) cmEl.textContent = (mT > 0 ? Math.round(mD / mT * 100) : 0) + '%';
-
+  document.getElementById('con-month').textContent = (mT > 0 ? Math.round(mD / mT * 100) : 0) + '%';
   const aD = Object.values(allData).reduce((a, d) => a + HABITS.filter(h => d[h]).length, 0);
   const aT = Object.keys(allData).length * HABITS.length;
-  const crEl = document.getElementById('con-rate');
-  if (crEl) crEl.textContent = (aT > 0 ? Math.round(aD / aT * 100) : 0) + '%';
-
+  document.getElementById('con-rate').textContent = (aT > 0 ? Math.round(aD / aT * 100) : 0) + '%';
   const dates = Object.keys(allData);
   if (!dates.length) return;
   const rates = HABITS.map((h, i) => ({ h, i, rate: Math.round(dates.filter(d => allData[d][h]).length / dates.length * 100) }));
   const bst = rates.reduce((a, b) => b.rate > a.rate ? b : a);
   const wrst = rates.reduce((a, b) => b.rate < a.rate ? b : a);
-  const bhEl = document.getElementById('best-habit'), bpEl = document.getElementById('best-pct');
-  const whEl = document.getElementById('worst-habit'), wpEl = document.getElementById('worst-pct');
-  if (bhEl) { bhEl.textContent = bst.h; bhEl.style.color = COLORS[bst.i]; }
-  if (bpEl) bpEl.textContent = bst.rate + '%';
-  if (whEl) { whEl.textContent = wrst.h; whEl.style.color = COLORS[wrst.i]; }
-  if (wpEl) wpEl.textContent = wrst.rate + '%';
+  document.getElementById('best-habit').textContent = bst.h;
+  document.getElementById('best-habit').style.color = COLORS[bst.i];
+  document.getElementById('best-pct').textContent = bst.rate + '%';
+  document.getElementById('worst-habit').textContent = wrst.h;
+  document.getElementById('worst-habit').style.color = COLORS[wrst.i];
+  document.getElementById('worst-pct').textContent = wrst.rate + '%';
 }
-
 function renderWeekScores(today) {
-  const days = ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
+  const days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
   const now = new Date(today + 'T12:00:00');
   const ws = new Date(getWS(today, weekOff) + 'T12:00:00');
-  const label = weekOff === 0 ? 'Cette semaine' : weekOff === -1 ? 'Semaine derniere' : 'Il y a ' + Math.abs(weekOff) + ' sem.';
-  const lbl = document.getElementById('week-nav-lbl');
-  const nxt = document.getElementById('week-next');
-  const prv = document.getElementById('week-prev');
-  if (lbl) lbl.textContent = label;
-  if (nxt) nxt.disabled = weekOff >= 0;
-  if (prv) prv.disabled = weekOff <= -20;
+  const label = weekOff === 0 ? 'Cette semaine' : weekOff === -1 ? 'Semaine derniere' : `Il y a ${Math.abs(weekOff)} sem.`;
+  document.getElementById('week-nav-lbl').textContent = label;
+  document.getElementById('week-next').disabled = weekOff >= 0;
+  document.getElementById('week-prev').disabled = weekOff <= -20;
   const el = document.getElementById('week-scores');
-  if (!el) return;
   el.innerHTML = '';
   for (let i = 0; i < 7; i++) {
     const d = new Date(ws); d.setDate(d.getDate() + i);
     const s = d.toISOString().substring(0, 10), score = allData[s] ? scoreDay(s) : null, pct = score !== null ? Math.round(score / HABITS.length * 100) : 0;
     const isFuture = d > now, color = pct >= 100 ? '#22c55e' : pct >= 70 ? '#eab308' : pct >= 40 ? '#f97316' : '#ef4444';
-    el.innerHTML += '<div class="week-row"><span class="week-day">' + days[i] + '</span><div class="week-bar-bg"><div class="week-bar-fill" style="width:' + (isFuture?0:pct) + '%;background:' + color + ';opacity:' + (isFuture?.18:score===null?.28:1) + ';"></div></div><span class="week-score">' + (isFuture?'—':score!==null?score+'/10':'—') + '</span></div>';
+    el.innerHTML += `<div class="week-row"><span class="week-day">${days[i]}</span><div class="week-bar-bg"><div class="week-bar-fill" style="width:${isFuture ? 0 : pct}%;background:${color};opacity:${isFuture ? .18 : score === null ? .28 : 1};"></div></div><span class="week-score">${isFuture ? '—' : score !== null ? score + '/10' : '—'}</span></div>`;
   }
 }
-
 function renderComparison(today) {
   const now = new Date(today + 'T12:00:00');
   function wAvg(off) {
@@ -2123,22 +2157,17 @@ function renderComparison(today) {
     return total > 0 ? Math.round(done / total * 100) : null;
   }
   const tw = wAvg(0), lw = wAvg(-1), tm = mAvg(0), lm = mAvg(1);
-  const delta = (a, b) => { if (a===null||b===null) return '<span class="comp-delta flat">—</span>'; const d = a-b; return '<span class="comp-delta ' + (d>0?'up':d<0?'down':'flat') + '">' + (d>0?'+':'') + d + '%</span>'; };
-  const el = document.getElementById('comp-grid');
-  if (el) el.innerHTML = '<div class="comp-card"><div class="comp-lbl">Cette semaine</div><div class="comp-val">' + (tw!==null?tw+'%':'—') + '</div>' + delta(tw,lw) + '</div><div class="comp-card"><div class="comp-lbl">Sem. derniere</div><div class="comp-val">' + (lw!==null?lw+'%':'—') + '</div></div><div class="comp-card"><div class="comp-lbl">Ce mois</div><div class="comp-val">' + (tm!==null?tm+'%':'—') + '</div>' + delta(tm,lm) + '</div><div class="comp-card"><div class="comp-lbl">Mois dernier</div><div class="comp-val">' + (lm!==null?lm+'%':'—') + '</div></div>';
+  const delta = (a, b) => { if (a === null || b === null) return `<span class="comp-delta flat">—</span>`; const d = a - b; return `<span class="comp-delta ${d > 0 ? 'up' : d < 0 ? 'down' : 'flat'}">${d > 0 ? '+' : ''}${d}%</span>`; };
+  document.getElementById('comp-grid').innerHTML = `<div class="comp-card"><div class="comp-lbl">Cette semaine</div><div class="comp-val">${tw !== null ? tw + '%' : '—'}</div>${delta(tw, lw)}</div><div class="comp-card"><div class="comp-lbl">Sem. derniere</div><div class="comp-val">${lw !== null ? lw + '%' : '—'}</div></div><div class="comp-card"><div class="comp-lbl">Ce mois</div><div class="comp-val">${tm !== null ? tm + '%' : '—'}</div>${delta(tm, lm)}</div><div class="comp-card"><div class="comp-lbl">Mois dernier</div><div class="comp-val">${lm !== null ? lm + '%' : '—'}</div></div>`;
 }
-
 function renderYearSel() {
-  const sel = document.getElementById('year-sel');
-  if (!sel) return;
-  const cy = new Date().getFullYear().toString();
+  const sel = document.getElementById('year-sel'), cy = new Date().getFullYear().toString();
   const years = [...new Set(Object.keys(allData).map(d => d.substring(0, 4)))];
   if (!years.includes(cy)) years.push(cy);
   years.sort((a, b) => b - a);
-  sel.innerHTML = years.map(y => '<option value="' + y + '">' + y + '</option>').join('');
+  sel.innerHTML = years.map(y => `<option value="${y}">${y}</option>`).join('');
   sel.value = cy;
 }
-
 function getHeatColor(count) {
   const dk = document.documentElement.getAttribute('data-theme') === 'dark';
   if (count === 0) return dk ? '#161718' : '#e5e7eb';
@@ -2148,13 +2177,9 @@ function getHeatColor(count) {
   if (count <= 8) return dk ? '#22c55e' : '#22c55e';
   return dk ? '#4ade80' : '#16a34a';
 }
-
 function renderHeatmap() {
-  const selEl = document.getElementById('year-sel');
-  if (!selEl) return;
-  const year = parseInt(selEl.value);
+  const year = parseInt(document.getElementById('year-sel').value);
   const ce = document.getElementById('heatmap-cols'), me = document.getElementById('heatmap-months');
-  if (!ce || !me) return;
   ce.innerHTML = ''; me.innerHTML = '';
   const start = new Date(year, 0, 1), dow = start.getDay();
   start.setDate(start.getDate() - (dow === 0 ? 6 : dow - 1));
@@ -2163,10 +2188,7 @@ function renderHeatmap() {
   let col = null, wc = 0, mp = {}, d = new Date(start);
   while (true) {
     const id = d.getDay() === 0 ? 6 : d.getDay() - 1;
-    if (id === 0) {
-      col = document.createElement('div'); col.className = 'heatmap-col'; ce.appendChild(col);
-      const m = d.getMonth(); if (d.getFullYear() === year && !mp[m]) mp[m] = wc; wc++;
-    }
+    if (id === 0) { col = document.createElement('div'); col.className = 'heatmap-col'; ce.appendChild(col); const m = d.getMonth(); if (d.getFullYear() === year && !mp[m]) mp[m] = wc; wc++; }
     const cell = document.createElement('div');
     cell.className = 'heatmap-cell';
     const ds = d.toISOString().substring(0, 10);
@@ -2174,33 +2196,31 @@ function renderHeatmap() {
       const dd = allData[ds] || {}, cnt = HABITS.filter(h => dd[h]).length;
       cell.style.background = getHeatColor(cnt);
       if (isPerfect(ds)) cell.style.outline = '1.5px solid rgba(74,222,128,.6)';
-      if (tt) {
-        cell.addEventListener('mouseenter', () => {
-          const dn = HABITS.filter(h => dd[h]);
-          tt.innerHTML = '<strong>' + ds + '</strong> · ' + cnt + '/10' + (isPerfect(ds)?' ⭐':'') + '<br><span style="color:var(--muted);font-size:.64rem;">' + (dn.length?dn.join(', '):'Aucune') + '</span>';
-          tt.style.display = 'block';
-        });
-        cell.addEventListener('mousemove', e => { tt.style.left = (e.clientX+10)+'px'; tt.style.top = (e.clientY-42)+'px'; });
-        cell.addEventListener('mouseleave', () => { tt.style.display = 'none'; });
-      }
-    } else { cell.style.opacity = '0'; }
+      cell.addEventListener('mouseenter', () => {
+        const dn = HABITS.filter(h => dd[h]);
+        tt.innerHTML = `<strong>${ds}</strong> · ${cnt}/10${isPerfect(ds) ? ' ⭐' : ''}<br><span style="color:var(--muted);font-size:.64rem;">${dn.length ? dn.join(', ') : 'Aucune'}</span>`;
+        tt.style.display = 'block';
+      });
+      cell.addEventListener('mousemove', e => { tt.style.left = (e.clientX + 10) + 'px'; tt.style.top = (e.clientY - 42) + 'px'; });
+      cell.addEventListener('mouseleave', () => { tt.style.display = 'none'; });
+    } else cell.style.opacity = '0';
     if (col) col.appendChild(cell);
     d.setDate(d.getDate() + 1);
     if (d > end && d.getDay() === 1) break;
   }
-  const months = ['Jan','Fev','Mar','Avr','Mai','Juin','Juil','Aou','Sep','Oct','Nov','Dec'];
+  const months = ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec'];
   for (let m = 0; m < 12; m++) {
-    const pos = mp[m] || 0, nx = mp[m+1] || wc;
+    const pos = mp[m] || 0, nx = mp[m + 1] || wc;
     const sp = document.createElement('div'); sp.className = 'month-lbl';
-    sp.style.width = ((nx-pos)*12)+'px'; sp.textContent = months[m]; me.appendChild(sp);
+    sp.style.width = ((nx - pos) * 12) + 'px';
+    sp.textContent = months[m]; me.appendChild(sp);
   }
   const lg = document.getElementById('hm-legend-cells');
-  if (lg) { lg.innerHTML = ''; [0,2,4,6,8,10].forEach(n => { const c = document.createElement('div'); c.className = 'legend-cell'; c.style.background = getHeatColor(n); lg.appendChild(c); }); }
+  lg.innerHTML = '';
+  [0, 2, 4, 6, 8, 10].forEach(n => { const c = document.createElement('div'); c.className = 'legend-cell'; c.style.background = getHeatColor(n); lg.appendChild(c); });
 }
-
 function renderFilters() {
   const el = document.getElementById('filter-row');
-  if (!el) return;
   el.innerHTML = '';
   Object.keys(CATEGORIES).forEach(cat => {
     const btn = document.createElement('button');
@@ -2210,106 +2230,78 @@ function renderFilters() {
     el.appendChild(btn);
   });
 }
-
 function renderBars(filter) {
   const dates = Object.keys(allData), total = dates.length || 1;
   const catHabits = CATEGORIES[filter];
   const filtered = !catHabits ? HABITS : HABITS.filter(h => catHabits.includes(h));
-  const el = document.getElementById('bar-list');
-  if (!el) return;
-  el.innerHTML = filtered.map(h => {
+  document.getElementById('bar-list').innerHTML = filtered.map(h => {
     const i = HABITS.indexOf(h), count = dates.filter(d => allData[d][h]).length, pct = Math.round(count / total * 100);
-    return '<div class="bar-row"><div class="bar-meta"><div class="bar-nw"><div class="bar-dot" style="background:' + COLORS[i] + '"></div><span>' + h + '</span></div><div class="bar-right"><span class="bar-cnt">' + count + 'j</span><span class="bar-pct">' + pct + '%</span></div></div><div class="bar-track"><div class="bar-fill" style="width:' + pct + '%;background:' + COLORS[i] + '"></div></div></div>';
+    return `<div class="bar-row"><div class="bar-meta"><div class="bar-nw"><div class="bar-dot" style="background:${COLORS[i]}"></div><span>${h}</span></div><div class="bar-right"><span class="bar-cnt">${count}j</span><span class="bar-pct">${pct}%</span></div></div><div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${COLORS[i]}"></div></div></div>`;
   }).join('');
 }
-
 function renderDonut() {
   const counts = HABITS.map(h => Object.values(allData).filter(d => d[h]).length);
   const total = counts.reduce((a, b) => a + b, 0);
-  const dtEl = document.getElementById('donut-total');
-  if (dtEl) dtEl.textContent = total;
-  if (donutCh) { donutCh.destroy(); donutCh = null; }
-  const canvas = document.getElementById('donut-chart');
-  if (!canvas) return;
-  donutCh = new Chart(canvas.getContext('2d'), {
+  document.getElementById('donut-total').textContent = total;
+  if (donutCh) donutCh.destroy();
+  donutCh = new Chart(document.getElementById('donut-chart').getContext('2d'), {
     type: 'doughnut',
     data: { labels: HABITS, datasets: [{ data: counts, backgroundColor: COLORS, borderWidth: 0, hoverOffset: 4 }] },
     options: { cutout: '65%', plugins: { legend: { display: false } }, animation: { duration: 700 } }
   });
-  const lgEl = document.getElementById('donut-legend');
-  if (lgEl) lgEl.innerHTML = HABITS.map((h, i) => '<div class="legend-item"><div class="legend-dot" style="background:' + COLORS[i] + '"></div><span>' + h + '</span><span class="legend-count">' + counts[i] + '</span></div>').join('');
+  document.getElementById('donut-legend').innerHTML = HABITS.map((h, i) => `<div class="legend-item"><div class="legend-dot" style="background:${COLORS[i]}"></div><span>${h}</span><span class="legend-count">${counts[i]}</span></div>`).join('');
 }
 
 // ══════════════════════════════════════════════
 // EVENT LISTENERS
 // ══════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {
-  // Apply saved theme
-  const savedTheme = localStorage.getItem('ht_theme');
-  if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+  const t = localStorage.getItem('ht_theme');
+  if (t) document.documentElement.setAttribute('data-theme', t);
 
-  // Config panel
   document.getElementById('connect-btn').addEventListener('click', connect);
   document.getElementById('db-input').addEventListener('keydown', e => { if (e.key === 'Enter') connect(); });
-  document.getElementById('token-input').addEventListener('keydown', e => { if (e.key === 'Enter') connect(); });
 
-  // Tab bar
   document.querySelector('.tab-bar').addEventListener('click', e => {
     const btn = e.target.closest('.tab-btn');
     if (btn && btn.dataset.tab) switchTab(btn.dataset.tab);
   });
 
-  // Top bar buttons
   document.getElementById('refresh-btn').addEventListener('click', refresh);
   document.getElementById('theme-btn').addEventListener('click', toggleTheme);
   document.getElementById('reset-menu-btn').addEventListener('click', e => { e.stopPropagation(); showResetMenu(); });
   document.getElementById('logout-btn').addEventListener('click', logout);
 
-  // Boss / quests
   document.getElementById('boss-reset-btn').addEventListener('click', () => confirmReset('boss'));
   document.getElementById('reset-quests-btn').addEventListener('click', () => confirmReset('quests'));
 
-  // Add buttons
   document.getElementById('add-quest-today-btn').addEventListener('click', () => openEditModal('addquest'));
   document.getElementById('add-skill-btn').addEventListener('click', () => openEditModal('addskill'));
   document.getElementById('add-bonus-btn').addEventListener('click', () => openEditModal('addbonus'));
   document.getElementById('add-malus-btn').addEventListener('click', () => openEditModal('addmalus'));
 
-  // Attr / ranks
   document.getElementById('reset-attr-btn').addEventListener('click', () => confirmReset('attributes'));
   document.getElementById('ranks-btn').addEventListener('click', toggleRanks);
   document.getElementById('edit-toggle-btn').addEventListener('click', toggleEditMode);
 
-  // Modal
   document.getElementById('modal-close-btn').addEventListener('click', closeEditModal);
   document.getElementById('modal-cancel-btn').addEventListener('click', closeEditModal);
   document.getElementById('modal-save-btn').addEventListener('click', saveEditModal);
-  document.getElementById('edit-modal').addEventListener('click', e => { if (e.target === document.getElementById('edit-modal')) closeEditModal(); });
 
-  // Confirm
   document.getElementById('confirm-yes').addEventListener('click', executeConfirm);
   document.getElementById('confirm-no').addEventListener('click', closeConfirm);
+
+  document.getElementById('edit-modal').addEventListener('click', e => { if (e.target === document.getElementById('edit-modal')) closeEditModal(); });
   document.getElementById('confirm-overlay').addEventListener('click', e => { if (e.target === document.getElementById('confirm-overlay')) closeConfirm(); });
 
-  // Week nav
   document.getElementById('week-prev').addEventListener('click', () => { weekOff--; renderWeekScores(toDay()); });
   document.getElementById('week-next').addEventListener('click', () => { weekOff++; renderWeekScores(toDay()); });
-
-  // Year sel + skills search — listeners safe since elements are always in DOM
   document.getElementById('year-sel').addEventListener('change', renderHeatmap);
   document.getElementById('skills-search').addEventListener('input', filterSkills);
   document.getElementById('clear-tx-btn').addEventListener('click', () => confirmReset('transactions'));
 
-  // Auto-connect if credentials saved
-  const savedDb = S.db();
-  const savedToken = S.token();
-  if (savedDb && savedToken) {
-    document.getElementById('db-input').value = savedDb;
-    document.getElementById('token-input').value = savedToken;
-    curDbId = savedDb;
-    curToken = savedToken;
-    connect();
-  }
+  const db = S.db();
+  if (db) { document.getElementById('db-input').value = db; curDbId = db; connect(); }
 });
 </script>
 </body>
